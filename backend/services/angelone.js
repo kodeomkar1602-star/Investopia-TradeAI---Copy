@@ -2,8 +2,11 @@
 // ANGEL ONE SMARTAPI SERVICE
 // ============================================================
 
-const { SmartAPI } = require("smartapi-javascript");
-const { generate } = require("otplib");
+const { SmartAPI } =
+    require("smartapi-javascript");
+
+const { generate } =
+    require("otplib");
 
 
 // ============================================================
@@ -110,12 +113,13 @@ function createSmartApi() {
     checkAngelOneConfig();
 
 
-    smartApi = new SmartAPI({
+    smartApi =
+        new SmartAPI({
 
-        api_key:
-            ANGELONE_API_KEY
+            api_key:
+                ANGELONE_API_KEY
 
-    });
+        });
 
 
     return smartApi;
@@ -343,14 +347,20 @@ async function searchStock(
             .toUpperCase();
 
 
+    // --------------------------------------------------------
+    // CURRENT SMARTAPI SDK USES OBJECT PARAMETER
+    // --------------------------------------------------------
+
     const response =
-        await api.searchScrip(
+        await api.searchScrip({
 
-            cleanExchange,
+            exchange:
+                cleanExchange,
 
-            cleanSearch
+            searchscrip:
+                cleanSearch
 
-        );
+        });
 
 
     return response;
@@ -389,19 +399,29 @@ async function getStockLTP(
 
 
     // --------------------------------------------------------
-    // ANGEL ONE LTP API
+    // CURRENT SMARTAPI JAVASCRIPT SDK DOES NOT PROVIDE
+    // ltpData() / getLtpData()
+    //
+    // USE LIVE MARKET DATA API IN LTP MODE
     // --------------------------------------------------------
 
     const response =
-        await api.ltpData(
+        await api.marketData({
 
-            cleanExchange,
+            mode:
+                "LTP",
 
-            cleanSymbol,
+            exchangeTokens: {
 
-            cleanToken
+                [cleanExchange]: [
 
-        );
+                    cleanToken
+
+                ]
+
+            }
+
+        });
 
 
     return response;
@@ -422,14 +442,30 @@ async function getMarketData(
         await getSmartApi();
 
 
+    // --------------------------------------------------------
+    // NORMALIZE MODE
+    // --------------------------------------------------------
+
+    const cleanMode =
+        String(mode)
+            .trim()
+            .toUpperCase();
+
+
+    // --------------------------------------------------------
+    // CURRENT SMARTAPI SDK USES OBJECT PARAMETER
+    // --------------------------------------------------------
+
     const response =
-        await api.getMarketData(
+        await api.marketData({
 
-            mode,
+            mode:
+                cleanMode,
 
-            exchangeTokens
+            exchangeTokens:
+                exchangeTokens
 
-        );
+        });
 
 
     return response;
@@ -565,6 +601,7 @@ function clearAngelOneSession() {
     feedToken = null;
 
     sessionCreatedAt = null;
+
 
     console.log(
         "Angel One local session cleared."
