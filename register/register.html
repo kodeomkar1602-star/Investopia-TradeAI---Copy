@@ -1,482 +1,662 @@
-<!DOCTYPE html>
-<html lang="en">
+// ============================================================
+// INVESTOPIA TRADEAI - REGISTER PAGE
+// ============================================================
 
-<head>
+document.addEventListener("DOMContentLoaded", () => {
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Create your Investopia TradeAI account">
-    <meta name="theme-color" content="#16a34a">
+    const body = document.body;
 
-    <title>Create Account | Investopia TradeAI</title>
+    const themeToggle =
+        document.getElementById("themeToggle");
 
-    <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    const themeIcon =
+        document.getElementById("themeIcon");
 
-    <!-- Bootstrap Icons -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
-        rel="stylesheet"
-    >
+    const registerForm =
+        document.getElementById("registerForm");
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="register.css">
+    const password =
+        document.getElementById("password");
 
-</head>
+    const confirmPassword =
+        document.getElementById("confirmPassword");
 
-<body>
+    const passwordToggle =
+        document.getElementById("passwordToggle");
 
-<!-- ================= NAVBAR ================= -->
+    const confirmPasswordToggle =
+        document.getElementById("confirmPasswordToggle");
 
-<nav class="navbar fixed-top">
+    const passwordIcon =
+        document.getElementById("passwordIcon");
 
-    <div class="container">
+    const confirmPasswordIcon =
+        document.getElementById("confirmPasswordIcon");
 
-        <!-- Logo -->
+    const strengthBar =
+        document.getElementById("strengthBar");
 
-        <a
-            href="../home/home.html"
-            class="navbar-brand fw-bold"
-            aria-label="Investopia TradeAI Home"
-        >
+    const strengthText =
+        document.getElementById("strengthText");
 
-            <i class="bi bi-graph-up-arrow"></i>
+    const registerButton =
+        document.getElementById("registerButton");
 
-            Investopia <span>TradeAI</span>
 
-        </a>
+    // ============================================================
+    // CHECK SUPABASE
+    // ============================================================
 
+    if (typeof supabaseClient === "undefined") {
 
-        <!-- Navigation Actions -->
+        console.error(
+            "Supabase client is not available."
+        );
 
-        <div class="d-flex align-items-center gap-2">
+        showMessage(
+            "Supabase configuration could not be loaded.",
+            "error"
+        );
 
-            <!-- Theme -->
+        return;
+    }
 
-            <button
-                class="theme-btn"
-                id="themeToggle"
-                type="button"
-                aria-label="Toggle dark and light theme"
-                title="Toggle theme"
-            >
 
-                <i
-                    class="bi bi-moon-stars"
-                    id="themeIcon"
-                ></i>
+    // ============================================================
+    // THEME
+    // ============================================================
 
-            </button>
+    const savedTheme =
+        localStorage.getItem("investopia-theme");
 
+    if (savedTheme === "dark") {
 
-            <!-- Home -->
+        body.classList.add("dark-theme");
 
-            <a
-                href="../home/home.html"
-                class="btn btn-outline-success d-none d-sm-inline-flex"
-            >
+        updateThemeIcon(true);
 
-                <i class="bi bi-house"></i>
+    }
 
-                Home
 
-            </a>
+    themeToggle?.addEventListener("click", () => {
 
-        </div>
+        const isDark =
+            body.classList.toggle("dark-theme");
 
-    </div>
+        localStorage.setItem(
+            "investopia-theme",
+            isDark ? "dark" : "light"
+        );
 
-</nav>
+        updateThemeIcon(isDark);
 
+    });
 
-<!-- ================= REGISTER PAGE ================= -->
 
-<main class="register-page">
+    function updateThemeIcon(isDark) {
 
-    <div class="container">
+        themeIcon.className = isDark
+            ? "bi bi-sun-fill"
+            : "bi bi-moon-stars";
 
-        <div class="row justify-content-center">
+    }
 
-            <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5">
 
-                <div class="register-card">
+    // ============================================================
+    // PASSWORD VISIBILITY
+    // ============================================================
 
-                    <!-- Header -->
+    passwordToggle?.addEventListener("click", () => {
 
-                    <div class="text-center mb-4">
+        togglePassword(
+            password,
+            passwordIcon,
+            passwordToggle
+        );
 
-                        <div class="register-icon">
+    });
 
-                            <i class="bi bi-person-plus"></i>
 
-                        </div>
+    confirmPasswordToggle?.addEventListener("click", () => {
 
-                        <h1>Create your account</h1>
+        togglePassword(
+            confirmPassword,
+            confirmPasswordIcon,
+            confirmPasswordToggle
+        );
 
-                        <p>
+    });
 
-                            Start your smarter investing journey with
 
-                            <strong>Investopia TradeAI</strong>.
+    function togglePassword(input, icon, button) {
 
-                        </p>
+        const showPassword =
+            input.type === "password";
 
-                    </div>
+        input.type = showPassword
+            ? "text"
+            : "password";
 
+        icon.className = showPassword
+            ? "bi bi-eye-slash"
+            : "bi bi-eye";
 
-                    <!-- Registration Form -->
+        button.setAttribute(
+            "aria-label",
+            showPassword
+                ? "Hide password"
+                : "Show password"
+        );
 
-                    <form id="registerForm">
+    }
 
-                        <!-- Full Name -->
 
-                        <div class="form-group mb-3">
+    // ============================================================
+    // PASSWORD STRENGTH
+    // ============================================================
 
-                            <label for="fullName">
-                                Full Name
-                            </label>
+    password?.addEventListener("input", () => {
 
-                            <div class="input-wrapper">
+        const value = password.value;
 
-                                <i class="bi bi-person"></i>
+        let strength = 0;
 
-                                <input
-                                    type="text"
-                                    id="fullName"
-                                    name="fullName"
-                                    class="form-control"
-                                    placeholder="Enter your full name"
-                                    autocomplete="name"
-                                    required
-                                >
+        if (value.length >= 8)
+            strength++;
 
-                            </div>
+        if (/[A-Z]/.test(value))
+            strength++;
 
-                        </div>
+        if (/[a-z]/.test(value))
+            strength++;
 
+        if (/[0-9]/.test(value))
+            strength++;
 
-                        <!-- Email -->
+        if (/[^A-Za-z0-9]/.test(value))
+            strength++;
 
-                        <div class="form-group mb-3">
 
-                            <label for="email">
-                                Email Address
-                            </label>
+        const percentage =
+            strength * 20;
 
-                            <div class="input-wrapper">
+        strengthBar.style.width =
+            `${percentage}%`;
 
-                                <i class="bi bi-envelope"></i>
 
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    class="form-control"
-                                    placeholder="Enter your email"
-                                    autocomplete="email"
-                                    required
-                                >
+        if (!value) {
 
-                            </div>
+            strengthText.textContent =
+                "Use at least 8 characters";
 
-                        </div>
+        }
+        else if (strength <= 2) {
 
+            strengthText.textContent =
+                "Weak password";
 
-                        <!-- Password -->
+        }
+        else if (strength === 3) {
 
-                        <div class="form-group mb-3">
+            strengthText.textContent =
+                "Moderate password";
 
-                            <label for="password">
-                                Password
-                            </label>
+        }
+        else if (strength === 4) {
 
-                            <div class="input-wrapper">
+            strengthText.textContent =
+                "Strong password";
 
-                                <i class="bi bi-lock"></i>
+        }
+        else {
 
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    class="form-control"
-                                    placeholder="Create a password"
-                                    autocomplete="new-password"
-                                    minlength="8"
-                                    required
-                                >
+            strengthText.textContent =
+                "Very strong password";
 
-                                <button
-                                    type="button"
-                                    class="password-toggle"
-                                    id="passwordToggle"
-                                    aria-label="Show password"
-                                >
+        }
 
-                                    <i
-                                        class="bi bi-eye"
-                                        id="passwordIcon"
-                                    ></i>
+    });
 
-                                </button>
 
-                            </div>
+    // ============================================================
+    // FORM SUBMISSION
+    // ============================================================
 
+    registerForm?.addEventListener(
+        "submit",
+        async (event) => {
 
-                            <!-- Password Strength -->
+            event.preventDefault();
 
-                            <div class="password-strength mt-2">
 
-                                <div class="strength-bar">
+            // ----------------------------------------------------
+            // GET FORM VALUES
+            // ----------------------------------------------------
 
-                                    <span id="strengthBar"></span>
+            const fullName =
+                document
+                    .getElementById("fullName")
+                    .value
+                    .trim();
 
-                                </div>
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
 
-                                <small id="strengthText">
-                                    Use at least 8 characters
-                                </small>
+            const passwordValue =
+                password.value;
 
-                            </div>
+            const confirmValue =
+                confirmPassword.value;
 
-                        </div>
+            const riskLevel =
+                document
+                    .getElementById("riskLevel")
+                    .value;
 
+            const terms =
+                document
+                    .getElementById("terms")
+                    .checked;
 
-                        <!-- Confirm Password -->
 
-                        <div class="form-group mb-3">
+            // ----------------------------------------------------
+            // REQUIRED FIELDS
+            // ----------------------------------------------------
 
-                            <label for="confirmPassword">
-                                Confirm Password
-                            </label>
+            if (
+                !fullName ||
+                !email ||
+                !passwordValue ||
+                !confirmValue
+            ) {
 
-                            <div class="input-wrapper">
+                showMessage(
+                    "Please complete all required fields.",
+                    "error"
+                );
 
-                                <i class="bi bi-shield-lock"></i>
+                return;
+            }
 
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    class="form-control"
-                                    placeholder="Confirm your password"
-                                    autocomplete="new-password"
-                                    required
-                                >
 
-                                <button
-                                    type="button"
-                                    class="password-toggle"
-                                    id="confirmPasswordToggle"
-                                    aria-label="Show confirm password"
-                                >
+            // ----------------------------------------------------
+            // EMAIL VALIDATION
+            // ----------------------------------------------------
 
-                                    <i
-                                        class="bi bi-eye"
-                                        id="confirmPasswordIcon"
-                                    ></i>
+            if (!isValidEmail(email)) {
 
-                                </button>
+                showMessage(
+                    "Please enter a valid email address.",
+                    "error"
+                );
 
-                            </div>
+                return;
+            }
 
-                        </div>
 
+            // ----------------------------------------------------
+            // PASSWORD VALIDATION
+            // ----------------------------------------------------
 
-                        <!-- Risk Preference -->
+            if (passwordValue.length < 8) {
 
-                        <div class="form-group mb-3">
+                showMessage(
+                    "Password must contain at least 8 characters.",
+                    "error"
+                );
 
-                            <label for="riskLevel">
-                                Investment Experience
-                            </label>
+                return;
+            }
 
-                            <div class="input-wrapper select-wrapper">
 
-                                <i class="bi bi-bar-chart"></i>
+            // ----------------------------------------------------
+            // CONFIRM PASSWORD
+            // ----------------------------------------------------
 
-                                <select
-                                    id="riskLevel"
-                                    name="riskLevel"
-                                    class="form-select"
-                                >
+            if (passwordValue !== confirmValue) {
 
-                                    <option value="" selected>
-                                        Select your experience level
-                                    </option>
+                showMessage(
+                    "Passwords do not match.",
+                    "error"
+                );
 
-                                    <option value="beginner">
-                                        Beginner
-                                    </option>
+                return;
+            }
 
-                                    <option value="intermediate">
-                                        Intermediate
-                                    </option>
 
-                                    <option value="advanced">
-                                        Advanced
-                                    </option>
+            // ----------------------------------------------------
+            // INVESTMENT EXPERIENCE
+            // ----------------------------------------------------
 
-                                </select>
+            if (!riskLevel) {
 
-                            </div>
+                showMessage(
+                    "Please select your investment experience.",
+                    "error"
+                );
 
-                        </div>
+                return;
+            }
 
 
-                        <!-- Terms -->
+            // ----------------------------------------------------
+            // TERMS
+            // ----------------------------------------------------
 
-                        <div class="form-check my-3">
+            if (!terms) {
 
-                            <input
-                                class="form-check-input"
-                                type="checkbox"
-                                id="terms"
-                                required
-                            >
+                showMessage(
+                    "Please agree to the Terms & Conditions.",
+                    "error"
+                );
 
-                            <label
-                                class="form-check-label"
-                                for="terms"
-                            >
+                return;
+            }
 
-                                I agree to the
 
-                                <a href="#">
-                                    Terms & Conditions
-                                </a>
+            // ====================================================
+            // SUPABASE REGISTRATION
+            // ====================================================
 
-                                and
+            try {
 
-                                <a href="#">
-                                    Privacy Policy
-                                </a>.
+                // Disable button while registering
 
-                            </label>
+                registerButton.disabled = true;
 
-                        </div>
+                registerButton.innerHTML =
+                    `
+                    Creating Account...
+                    <span
+                        class="spinner-border spinner-border-sm ms-2"
+                        role="status"
+                        aria-hidden="true">
+                    </span>
+                    `;
 
 
-                        <!-- Register Button -->
+                // ------------------------------------------------
+                // CREATE SUPABASE ACCOUNT
+                // ------------------------------------------------
 
-                        <button
-                            type="submit"
-                            class="btn btn-success register-btn w-100"
-                            id="registerButton"
-                        >
+                const { data, error } =
+                    await supabaseClient.auth.signUp({
 
-                            Create My Account
+                        email: email,
 
-                            <i class="bi bi-arrow-right"></i>
+                        password: passwordValue,
 
-                        </button>
+                        options: {
 
-                    </form>
+                            // ------------------------------------------------
+                            // PRODUCTION EMAIL CONFIRMATION REDIRECT
+                            // ------------------------------------------------
 
+                            emailRedirectTo:
+                                "https://investopia-tradeai-copy-1.onrender.com/login/login.html",
 
-                    <!-- Divider -->
+                            data: {
 
-                    <div class="divider">
+                                full_name: fullName,
 
-                        <span>
-                            Already registered?
-                        </span>
+                                risk_level: riskLevel
 
-                    </div>
+                            }
 
+                        }
 
-                    <!-- Login -->
+                    });
 
-                    <a
-                        href="../login/login.html"
-                        class="login-link-btn w-100"
-                    >
 
-                        <i class="bi bi-box-arrow-in-right"></i>
+                // ------------------------------------------------
+                // SUPABASE ERROR
+                // ------------------------------------------------
 
-                        Login to your account
+                if (error) {
 
-                    </a>
+                    console.error(
+                        "Supabase Registration Error:",
+                        error
+                    );
 
+                    showMessage(
+                        getSupabaseErrorMessage(error),
+                        "error"
+                    );
 
-                    <!-- Security -->
+                    resetRegisterButton();
 
-                    <div class="security-note text-center">
+                    return;
+                }
 
-                        <i class="bi bi-shield-check"></i>
 
-                        Your information is securely protected.
+                // =================================================
+                // REGISTRATION SUCCESS
+                // =================================================
 
-                    </div>
+                console.log(
+                    "Supabase registration successful:",
+                    data
+                );
 
-                </div>
 
-            </div>
+                // ------------------------------------------------
+                // EMAIL CONFIRMATION ENABLED
+                // ------------------------------------------------
 
-        </div>
+                if (
+                    data.user &&
+                    !data.session
+                ) {
 
-    </div>
+                    showMessage(
+                        "Account created successfully! Please check your email and confirm your account before logging in.",
+                        "success"
+                    );
 
-</main>
 
+                    setTimeout(() => {
 
-<!-- ================= FOOTER ================= -->
+                        window.location.href =
+                            "../login/login.html";
 
-<footer>
+                    }, 3000);
 
-    <div class="container text-center">
 
-        <p class="mb-1">
-            © 2026 Investopia TradeAI
-        </p>
+                    return;
+                }
 
-        <div class="footer-links">
 
-            <a href="../home/home.html">
-                Home
-            </a>
+                // ------------------------------------------------
+                // EMAIL CONFIRMATION DISABLED
+                // ------------------------------------------------
 
-            <a href="../login/login.html">
-                Login
-            </a>
+                if (data.session) {
 
-            <a href="../learning/learning.html">
-                Learning
-            </a>
+                    showMessage(
+                        "Account created successfully! Redirecting to login...",
+                        "success"
+                    );
 
-        </div>
 
-    </div>
+                    setTimeout(() => {
 
-</footer>
+                        window.location.href =
+                            "../login/login.html";
 
+                    }, 2000);
 
-<!-- Bootstrap JS -->
 
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-></script>
+                    return;
+                }
 
 
-<!-- ============================================================
-     SUPABASE
-     ============================================================ -->
+            }
+            catch (error) {
 
-<!-- Supabase JavaScript Library -->
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
+                console.error(
+                    "Registration Error:",
+                    error
+                );
 
-<!-- Your Supabase Configuration -->
-<script src="../auth/supabase.js"></script>
+                showMessage(
+                    "Something went wrong while creating your account. Please try again.",
+                    "error"
+                );
 
+                resetRegisterButton();
 
-<!-- Page JS -->
+            }
 
-<script src="register.js"></script>
+        }
+    );
 
-</body>
 
-</html>
+    // ============================================================
+    // EMAIL VALIDATION
+    // ============================================================
+
+    function isValidEmail(email) {
+
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    }
+
+
+    // ============================================================
+    // SUPABASE ERROR HANDLER
+    // ============================================================
+
+    function getSupabaseErrorMessage(error) {
+
+        const message =
+            error?.message || "";
+
+        const lowerMessage =
+            message.toLowerCase();
+
+
+        if (
+            lowerMessage.includes(
+                "user already registered"
+            )
+        ) {
+
+            return "An account with this email already exists. Please login instead.";
+
+        }
+
+
+        if (
+            lowerMessage.includes(
+                "email address"
+            ) &&
+            lowerMessage.includes(
+                "invalid"
+            )
+        ) {
+
+            return "Please enter a valid email address.";
+
+        }
+
+
+        if (
+            lowerMessage.includes(
+                "password"
+            ) &&
+            lowerMessage.includes(
+                "weak"
+            )
+        ) {
+
+            return "Your password is too weak. Please choose a stronger password.";
+
+        }
+
+
+        if (
+            lowerMessage.includes(
+                "rate limit"
+            )
+        ) {
+
+            return "Too many registration attempts. Please wait and try again.";
+
+        }
+
+
+        return message ||
+            "Unable to create your account. Please try again.";
+
+    }
+
+
+    // ============================================================
+    // RESET REGISTER BUTTON
+    // ============================================================
+
+    function resetRegisterButton() {
+
+        registerButton.disabled = false;
+
+        registerButton.innerHTML =
+            `
+            Create My Account
+            <i class="bi bi-arrow-right"></i>
+            `;
+
+    }
+
+
+    // ============================================================
+    // MESSAGE
+    // ============================================================
+
+    function showMessage(message, type) {
+
+        let messageBox =
+            document.getElementById(
+                "registerMessage"
+            );
+
+
+        if (!messageBox) {
+
+            messageBox =
+                document.createElement("div");
+
+            messageBox.id =
+                "registerMessage";
+
+            registerForm.insertBefore(
+                messageBox,
+                registerForm.firstElementChild
+            );
+
+        }
+
+
+        messageBox.textContent =
+            message;
+
+        messageBox.className =
+            `register-message ${type}`;
+
+
+        setTimeout(() => {
+
+            if (messageBox) {
+
+                messageBox.remove();
+
+            }
+
+        }, 5000);
+
+    }
+
+});
