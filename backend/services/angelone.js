@@ -388,8 +388,12 @@ async function getStockLTP(
         String(symbolToken);
 
 
+    // --------------------------------------------------------
+    // ANGEL ONE LTP API
+    // --------------------------------------------------------
+
     const response =
-        await api.getLtpData(
+        await api.ltpData(
 
             cleanExchange,
 
