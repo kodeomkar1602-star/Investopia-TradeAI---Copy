@@ -5,7 +5,6 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-
     /* =====================================================
        SESSION PROTECTION
     ===================================================== */
@@ -13,36 +12,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     const session =
         await requireAuth();
 
-
     if (!session) {
         return;
     }
 
-
     listenForAuthChanges();
-
 
     const user =
         session.user;
-
 
     console.log(
         "Investopia logged-in user:",
         user
     );
 
-
     console.log(
         "User ID:",
         user.id
     );
 
-
     console.log(
         "User Email:",
         user.email
     );
-
 
 
     /* =====================================================
@@ -54,7 +46,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const metadata =
             user.user_metadata || {};
 
-
         return (
             metadata.full_name ||
             metadata.name ||
@@ -65,16 +56,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
-
     const userName =
         getUserName();
-
 
     console.log(
         "Investopia user name:",
         userName
     );
-
 
 
     /* =====================================================
@@ -88,30 +76,25 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "profileName"
             );
 
-
         const profileAvatar =
             document.getElementById(
                 "profileAvatar"
             );
-
 
         const contextUserName =
             document.getElementById(
                 "contextUserName"
             );
 
-
         const aiWelcomeText =
             document.getElementById(
                 "aiWelcomeText"
             );
 
-
         const initialGreeting =
             document.getElementById(
                 "initialGreeting"
             );
-
 
         if (profileName) {
 
@@ -119,7 +102,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 userName;
 
         }
-
 
         if (profileAvatar) {
 
@@ -131,7 +113,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
-
         if (contextUserName) {
 
             contextUserName.textContent =
@@ -139,14 +120,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
-
         if (aiWelcomeText) {
 
             aiWelcomeText.textContent =
                 `Your AI-powered investment research assistant for ${userName}.`;
 
         }
-
 
         if (initialGreeting) {
 
@@ -161,7 +140,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateUserInformation();
 
 
-
     /* =====================================================
        ELEMENTS
     ===================================================== */
@@ -171,84 +149,70 @@ document.addEventListener("DOMContentLoaded", async () => {
             "sidebar"
         );
 
-
     const sidebarToggle =
         document.getElementById(
             "sidebarToggle"
         );
-
 
     const sidebarClose =
         document.getElementById(
             "sidebarClose"
         );
 
-
     const sidebarOverlay =
         document.getElementById(
             "sidebarOverlay"
         );
-
 
     const themeToggle =
         document.getElementById(
             "themeToggle"
         );
 
-
     const themeIcon =
         document.getElementById(
             "themeIcon"
         );
-
 
     const globalSearch =
         document.getElementById(
             "globalSearch"
         );
 
-
     const chatMessages =
         document.getElementById(
             "chatMessages"
         );
-
 
     const messageInput =
         document.getElementById(
             "messageInput"
         );
 
-
     const sendMessage =
         document.getElementById(
             "sendMessage"
         );
-
 
     const typingIndicator =
         document.getElementById(
             "typingIndicator"
         );
 
-
     const characterCount =
         document.getElementById(
             "characterCount"
         );
-
 
     const newChatBtn =
         document.getElementById(
             "newChatBtn"
         );
 
-
     const clearChatBtn =
         document.getElementById(
             "clearChatBtn"
         );
-
 
 
     /* =====================================================
@@ -262,7 +226,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let lastAIResponse = "";
 
     let waitingForAI = false;
-
 
 
     /* =====================================================
@@ -447,7 +410,6 @@ Do not add unnecessary closing sentences.
 `;
 
 
-
     /* =====================================================
        SIDEBAR
     ===================================================== */
@@ -457,7 +419,6 @@ Do not add unnecessary closing sentences.
         sidebar?.classList.add(
             "sidebar-open"
         );
-
 
         sidebarOverlay?.classList.add(
             "active"
@@ -471,7 +432,6 @@ Do not add unnecessary closing sentences.
         sidebar?.classList.remove(
             "sidebar-open"
         );
-
 
         sidebarOverlay?.classList.remove(
             "active"
@@ -530,7 +490,6 @@ Do not add unnecessary closing sentences.
         });
 
 
-
     /* =====================================================
        THEME
     ===================================================== */
@@ -541,12 +500,10 @@ Do not add unnecessary closing sentences.
             return;
         }
 
-
         const dark =
             document.body.classList.contains(
                 "dark-theme"
             );
-
 
         themeIcon.className =
             dark
@@ -563,12 +520,10 @@ Do not add unnecessary closing sentences.
             theme === "dark"
         );
 
-
         localStorage.setItem(
             "investopia-theme",
             theme
         );
-
 
         updateThemeIcon();
 
@@ -600,7 +555,6 @@ Do not add unnecessary closing sentences.
                     "dark-theme"
                 );
 
-
             applyTheme(
                 dark
                     ? "light"
@@ -609,7 +563,6 @@ Do not add unnecessary closing sentences.
 
         }
     );
-
 
 
     /* =====================================================
@@ -628,15 +581,12 @@ Do not add unnecessary closing sentences.
 
             }
 
-
             const query =
                 globalSearch.value.trim();
-
 
             if (!query) {
                 return;
             }
-
 
             window.location.href =
                 `../market/market.html?search=${encodeURIComponent(query)}`;
@@ -667,7 +617,6 @@ Do not add unnecessary closing sentences.
     );
 
 
-
     /* =====================================================
        SAFE HTML
     ===================================================== */
@@ -679,15 +628,12 @@ Do not add unnecessary closing sentences.
                 "div"
             );
 
-
         div.textContent =
             text ?? "";
-
 
         return div.innerHTML;
 
     }
-
 
 
     /* =====================================================
@@ -699,7 +645,6 @@ Do not add unnecessary closing sentences.
         if (!text) {
             return "";
         }
-
 
         let source =
             String(text)
@@ -744,13 +689,11 @@ Do not add unnecessary closing sentences.
                 const index =
                     codeBlocks.length;
 
-
                 codeBlocks.push(
                     escapeHTML(
                         code.trim()
                     )
                 );
-
 
                 return `@@CODE_${index}@@`;
 
@@ -789,7 +732,7 @@ Do not add unnecessary closing sentences.
 
 
         source = source.replace(
-            /(?<!\*)\*([^\*\n]+)\*(?!\*)/g,
+            /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
             "<em>$1</em>"
         );
 
@@ -817,12 +760,10 @@ Do not add unnecessary closing sentences.
                 return;
             }
 
-
             output +=
                 listType === "ol"
                     ? "</ol>"
                     : "</ul>";
-
 
             inList = false;
 
@@ -841,10 +782,8 @@ Do not add unnecessary closing sentences.
 
                 closeList();
 
-
                 output +=
                     '<div class="ai-space"></div>';
-
 
                 return;
 
@@ -858,7 +797,6 @@ Do not add unnecessary closing sentences.
             ) {
 
                 closeList();
-
 
                 const index =
                     Number(
@@ -879,7 +817,6 @@ Do not add unnecessary closing sentences.
                         <code>${codeBlocks[index]}</code>
                     </pre>
                 `;
-
 
                 return;
 
@@ -922,10 +859,8 @@ Do not add unnecessary closing sentences.
 
                     closeList();
 
-
                     output +=
                         '<ul class="ai-list">';
-
 
                     inList = true;
 
@@ -936,7 +871,6 @@ Do not add unnecessary closing sentences.
 
                 output +=
                     `<li>${bullet[1]}</li>`;
-
 
                 return;
 
@@ -958,10 +892,8 @@ Do not add unnecessary closing sentences.
 
                     closeList();
 
-
                     output +=
                         '<ol class="ai-list">';
-
 
                     inList = true;
 
@@ -972,7 +904,6 @@ Do not add unnecessary closing sentences.
 
                 output +=
                     `<li>${numbered[1]}</li>`;
-
 
                 return;
 
@@ -1004,7 +935,6 @@ Do not add unnecessary closing sentences.
                     </div>
                 `;
 
-
                 return;
 
             }
@@ -1027,7 +957,6 @@ Do not add unnecessary closing sentences.
     }
 
 
-
     /* =====================================================
        TIME
     ===================================================== */
@@ -1046,7 +975,6 @@ Do not add unnecessary closing sentences.
     }
 
 
-
     /* =====================================================
        SCROLL
     ===================================================== */
@@ -1057,12 +985,10 @@ Do not add unnecessary closing sentences.
             return;
         }
 
-
         chatMessages.scrollTop =
             chatMessages.scrollHeight;
 
     }
-
 
 
     /* =====================================================
@@ -1075,7 +1001,6 @@ Do not add unnecessary closing sentences.
             document.createElement(
                 "div"
             );
-
 
         message.className =
             "message user-message";
@@ -1114,7 +1039,6 @@ Do not add unnecessary closing sentences.
         scrollChat();
 
     }
-
 
 
     /* =====================================================
@@ -1206,7 +1130,6 @@ Do not add unnecessary closing sentences.
     }
 
 
-
     /* =====================================================
        TYPING INDICATOR
     ===================================================== */
@@ -1240,10 +1163,8 @@ Do not add unnecessary closing sentences.
     }
 
 
-
     /* =====================================================
        OPENROUTER REQUEST
-       
        API key remains in backend/.env
     ===================================================== */
 
@@ -1254,7 +1175,7 @@ Do not add unnecessary closing sentences.
 
         const response =
             await fetch(
-                "https://investopia-tradeai-copy.onrender.com",
+                "https://investopia-tradeai-copy.onrender.com/api/chat",
                 {
 
                     method: "POST",
@@ -1296,14 +1217,29 @@ Do not add unnecessary closing sentences.
             );
 
 
-        const data =
-            await response.json();
+        let data = null;
+
+
+        try {
+
+            data =
+                await response.json();
+
+        }
+
+        catch (error) {
+
+            throw new Error(
+                "Backend returned an invalid response."
+            );
+
+        }
 
 
         if (!response.ok) {
 
             throw new Error(
-                data.error ||
+                data?.error ||
                 "AI request failed."
             );
 
@@ -1326,7 +1262,6 @@ Do not add unnecessary closing sentences.
         return answer;
 
     }
-
 
 
     /* =====================================================
@@ -1439,6 +1374,7 @@ Do not repeat unnecessary introductory text.
 
 
         }
+
         catch (error) {
 
             console.error(
@@ -1453,20 +1389,22 @@ Do not repeat unnecessary introductory text.
             addAIMessage(`
 **AI Connection Problem**
 
-I couldn't connect to the AI service.
+${escapeHTML(
+    error?.message ||
+    "I couldn't connect to the AI service."
+)}
 
 Please check:
 
 - OpenRouter API key
-- Model name
-- Internet connection
+- OpenRouter model name
+- Backend deployment
 - OpenRouter account or model availability
 `);
 
         }
 
     }
-
 
 
     /* =====================================================
@@ -1481,7 +1419,6 @@ Please check:
 
         }
     );
-
 
 
     /* =====================================================
@@ -1505,7 +1442,6 @@ Please check:
 
         }
     );
-
 
 
     /* =====================================================
@@ -1550,7 +1486,6 @@ Please check:
     );
 
 
-
     /* =====================================================
        QUICK QUESTIONS
     ===================================================== */
@@ -1587,7 +1522,6 @@ Please check:
             );
 
         });
-
 
 
     /* =====================================================
@@ -1629,7 +1563,6 @@ Please check:
         );
 
     }
-
 
 
     /* =====================================================
@@ -1699,7 +1632,6 @@ Please check:
     );
 
 
-
     /* =====================================================
        CLEAR CHAT
     ===================================================== */
@@ -1767,7 +1699,6 @@ Please check:
     );
 
 
-
     /* =====================================================
        RESPONSIVE SIDEBAR
     ===================================================== */
@@ -1789,7 +1720,6 @@ Please check:
 
         }
     );
-
 
 
     /* =====================================================

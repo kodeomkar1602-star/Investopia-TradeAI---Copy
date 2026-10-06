@@ -37,9 +37,7 @@ const app = express();
 
 app.use(cors());
 
-app.use(
-    express.json()
-);
+app.use(express.json());
 
 // ============================================================
 // PORT
@@ -109,6 +107,40 @@ app.post(
             }
 
             // =================================================
+            // CHECK OPENROUTER CONFIGURATION
+            // =================================================
+
+            if (!process.env.OPENROUTER_API_KEY) {
+
+                console.error(
+                    "OPENROUTER_API_KEY is missing."
+                );
+
+                return res.status(500).json({
+
+                    error:
+                        "OpenRouter API key is not configured on the backend."
+
+                });
+
+            }
+
+            if (!process.env.OPENROUTER_MODEL) {
+
+                console.error(
+                    "OPENROUTER_MODEL is missing."
+                );
+
+                return res.status(500).json({
+
+                    error:
+                        "OpenRouter model is not configured on the backend."
+
+                });
+
+            }
+
+            // =================================================
             // CREATE MESSAGES
             // =================================================
 
@@ -127,9 +159,22 @@ app.post(
 
             }
 
-            messages.push(
-                ...conversation
-            );
+            if (Array.isArray(conversation)) {
+
+                messages.push(
+                    ...conversation.filter(
+                        message =>
+                            message &&
+                            (
+                                message.role === "user" ||
+                                message.role === "assistant" ||
+                                message.role === "system"
+                            ) &&
+                            typeof message.content === "string"
+                    )
+                );
+
+            }
 
             messages.push({
 
@@ -143,6 +188,15 @@ app.post(
             // =================================================
             // CALL OPENROUTER
             // =================================================
+
+            console.log(
+                "Sending request to OpenRouter..."
+            );
+
+            console.log(
+                "OpenRouter model:",
+                process.env.OPENROUTER_MODEL
+            );
 
             const response =
                 await fetch(
@@ -163,7 +217,7 @@ app.post(
 
                             "HTTP-Referer":
                                 process.env.FRONTEND_URL ||
-                                "http://localhost:5500",
+                                "https://investopia-tradeai-copy-1.onrender.com",
 
                             "X-Title":
                                 "Investopia TradeAI"
@@ -206,7 +260,7 @@ app.post(
 
             if (!response.ok) {
 
-                console.log(
+                console.error(
                     "OpenRouter Error:",
                     data
                 );
@@ -236,6 +290,11 @@ app.post(
 
             if (!answer) {
 
+                console.error(
+                    "OpenRouter returned no answer:",
+                    data
+                );
+
                 return res.status(500).json({
 
                     error:
@@ -251,6 +310,9 @@ app.post(
 
             res.json({
 
+                success:
+                    true,
+
                 answer:
                     answer
 
@@ -261,13 +323,14 @@ app.post(
         catch (error) {
 
             console.error(
-                "Server Error:",
+                "AI Server Error:",
                 error
             );
 
             res.status(500).json({
 
                 error:
+                    error.message ||
                     "AI server error."
 
             });
@@ -786,6 +849,10 @@ app.listen(
 
         console.log(
             "Market Data Provider: Angel One SmartAPI"
+        );
+
+        console.log(
+            "AI Provider: OpenRouter"
         );
 
         console.log(
