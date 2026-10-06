@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Learning | Investopia TradeAI</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="learning.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <a href="../home/home.html" class="brand">
+
+            <span class="brand-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </span>
+
+            <span>
+                <strong>Investopia</strong>
+                <small>TradeAI</small>
+            </span>
+
+        </a>
+
+        <button
+            class="sidebar-close"
+            id="sidebarClose"
+            aria-label="Close menu">
+
+            <i class="bi bi-x-lg"></i>
+
+        </button>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <a
+            href="../dashboard/dashboard.html"
+            class="sidebar-link">
+
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a
+            href="../market/market.html"
+            class="sidebar-link">
+
+            <i class="bi bi-bar-chart-line"></i>
+            <span>Market</span>
+
+        </a>
+
+
+        <a
+            href="../stock-details/stock-details.html"
+            class="sidebar-link">
+
+            <i class="bi bi-search"></i>
+            <span>Stock Details</span>
+
+        </a>
+
+
+        <a
+            href="../portfolio/portfolio.html"
+            class="sidebar-link">
+
+            <i class="bi bi-pie-chart"></i>
+            <span>Portfolio</span>
+
+        </a>
+
+
+        <a
+            href="../ai-advisor/ai-advisor.html"
+            class="sidebar-link">
+
+            <i class="bi bi-stars"></i>
+            <span>AI Advisor</span>
+
+        </a>
+
+
+        <a
+            href="../planner/planner.html"
+            class="sidebar-link">
+
+            <i class="bi bi-bullseye"></i>
+            <span>Planner</span>
+
+        </a>
+
+
+        <a
+            href="../insights/insights.html"
+            class="sidebar-link">
+
+            <i class="bi bi-lightbulb"></i>
+            <span>Insights</span>
+
+        </a>
+
+
+        <a
+            href="../news/news.html"
+            class="sidebar-link">
+
+            <i class="bi bi-newspaper"></i>
+            <span>News</span>
+
+        </a>
+
+
+        <a
+            href="learning.html"
+            class="sidebar-link active">
+
+            <i class="bi bi-mortarboard"></i>
+            <span>Learning</span>
+
+        </a>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="../profile/profile.html"
+            class="sidebar-link">
+
+            <i class="bi bi-person-circle"></i>
+            <span>Profile</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <div class="sidebar-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+                <strong>Investopia AI</strong>
+                <small>Ready to assist</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================= -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="menu-toggle"
+                id="sidebarToggle"
+                aria-label="Open menu">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <span class="eyebrow">
+                    INVESTOPIA TRADEAI
+                </span>
+
+                <h1>
+                    Learning Center
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <div class="global-search">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    id="globalSearch"
+                    placeholder="Search stocks, ETFs, funds..."
+                    autocomplete="off">
+
+                <span class="search-shortcut">
+                    Ctrl K
+                </span>
+
+            </div>
+
+
+            <button
+                class="icon-button"
+                id="themeToggle"
+                aria-label="Toggle theme">
+
+                <i
+                    class="bi bi-moon-stars"
+                    id="themeIcon">
+                </i>
+
+            </button>
+
+
+            <a
+                href="../profile/profile.html"
+                class="profile-button">
+
+                <span class="profile-avatar">
+
+                    <i class="bi bi-person"></i>
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         PAGE CONTENT
+    ================================================= -->
+
+    <section class="page-content">
+
+
+        <!-- =================================================
+             INTRO
+        ================================================= -->
+
+        <div class="learning-intro">
+
+            <div>
+
+                <span class="section-label">
+                    INVESTOPIA LEARNING
+                </span>
+
+                <h2>
+                    Learn investing with confidence
+                </h2>
+
+                <p>
+                    Understand stocks, ETFs, mutual funds, trading,
+                    risk and personal finance through simple,
+                    beginner-friendly lessons.
+                </p>
+
+            </div>
+
+
+            <div class="intro-icon">
+
+                <i class="bi bi-mortarboard"></i>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SEARCH
+        ================================================= -->
+
+        <div class="learning-search">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="search"
+                id="learningSearch"
+                placeholder="Search a topic, lesson or concept...">
+
+        </div>
+
+
+        <!-- =================================================
+             CATEGORIES
+        ================================================= -->
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    LEARN BY TOPIC
+                </span>
+
+                <h3>
+                    Explore investing topics
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="category-grid"
+            id="categoryGrid">
+
+
+            <button
+                class="category-card active"
+                data-category="all">
+
+                <span class="category-icon">
+                    <i class="bi bi-grid"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        All Topics
+                    </strong>
+
+                    <small>
+                        Explore everything
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="stocks">
+
+                <span class="category-icon">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        Stocks
+                    </strong>
+
+                    <small>
+                        Understand companies
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="mutual-funds">
+
+                <span class="category-icon">
+                    <i class="bi bi-collection"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        Mutual Funds
+                    </strong>
+
+                    <small>
+                        Learn fund investing
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="etfs">
+
+                <span class="category-icon">
+                    <i class="bi bi-layers"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        ETFs
+                    </strong>
+
+                    <small>
+                        Explore exchange traded funds
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="trading">
+
+                <span class="category-icon">
+                    <i class="bi bi-bar-chart"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        Trading
+                    </strong>
+
+                    <small>
+                        Learn trading basics
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="risk">
+
+                <span class="category-icon">
+                    <i class="bi bi-shield-check"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        Risk
+                    </strong>
+
+                    <small>
+                        Understand investment risk
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="personal-finance">
+
+                <span class="category-icon">
+                    <i class="bi bi-wallet2"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        Personal Finance
+                    </strong>
+
+                    <small>
+                        Manage your money
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-category="advanced">
+
+                <span class="category-icon">
+                    <i class="bi bi-stars"></i>
+                </span>
+
+                <span>
+
+                    <strong>
+                        Advanced
+                    </strong>
+
+                    <small>
+                        Go beyond the basics
+                    </small>
+
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             POPULAR LESSONS
+        ================================================= -->
+
+        <div class="section-header lessons-header">
+
+            <div>
+
+                <span class="section-label">
+                    LESSONS
+                </span>
+
+                <h3>
+                    Popular lessons
+                </h3>
+
+            </div>
+
+            <span
+                class="result-count"
+                id="resultCount">
+
+                8 lessons
+
+            </span>
+
+        </div>
+
+
+        <div
+            class="lesson-grid"
+            id="lessonGrid">
+
+
+            <!-- Lesson 1 -->
+
+            <article
+                class="lesson-card"
+                data-category="stocks"
+                data-title="What is a stock">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-building"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        STOCKS
+                    </span>
+
+                    <h3>
+                        What is a Stock?
+                    </h3>
+
+                    <p>
+                        Learn what stocks represent, how companies
+                        issue shares and how investors can potentially
+                        benefit from owning them.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            5 min
+                        </span>
+
+                        <span>
+                            Beginner
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="What is a Stock?">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 2 -->
+
+            <article
+                class="lesson-card"
+                data-category="mutual-funds"
+                data-title="What are mutual funds">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-collection"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        MUTUAL FUNDS
+                    </span>
+
+                    <h3>
+                        What are Mutual Funds?
+                    </h3>
+
+                    <p>
+                        Understand how mutual funds work, how money
+                        is pooled and what role fund managers play.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            6 min
+                        </span>
+
+                        <span>
+                            Beginner
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="What are Mutual Funds?">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 3 -->
+
+            <article
+                class="lesson-card"
+                data-category="etfs"
+                data-title="What is an ETF">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-layers"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        ETFS
+                    </span>
+
+                    <h3>
+                        What is an ETF?
+                    </h3>
+
+                    <p>
+                        Learn how exchange traded funds work and how
+                        they differ from individual stocks and mutual funds.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            6 min
+                        </span>
+
+                        <span>
+                            Beginner
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="What is an ETF?">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 4 -->
+
+            <article
+                class="lesson-card"
+                data-category="trading"
+                data-title="Trading vs investing">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-bar-chart-line"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        TRADING
+                    </span>
+
+                    <h3>
+                        Trading vs Investing
+                    </h3>
+
+                    <p>
+                        Understand the difference between short-term
+                        trading and long-term investing strategies.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            7 min
+                        </span>
+
+                        <span>
+                            Beginner
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="Trading vs Investing">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 5 -->
+
+            <article
+                class="lesson-card"
+                data-category="risk"
+                data-title="Understanding investment risk">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-shield-check"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        RISK
+                    </span>
+
+                    <h3>
+                        Understanding Investment Risk
+                    </h3>
+
+                    <p>
+                        Learn why investments carry risk and how
+                        diversification and time horizon can affect it.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            8 min
+                        </span>
+
+                        <span>
+                            Beginner
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="Understanding Investment Risk">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 6 -->
+
+            <article
+                class="lesson-card"
+                data-category="personal-finance"
+                data-title="Building an emergency fund">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-wallet2"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        PERSONAL FINANCE
+                    </span>
+
+                    <h3>
+                        Building an Emergency Fund
+                    </h3>
+
+                    <p>
+                        Learn why an emergency fund matters before
+                        putting money into long-term investments.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            5 min
+                        </span>
+
+                        <span>
+                            Beginner
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="Building an Emergency Fund">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 7 -->
+
+            <article
+                class="lesson-card"
+                data-category="stocks"
+                data-title="Understanding fundamental analysis">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-search"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        STOCKS
+                    </span>
+
+                    <h3>
+                        Fundamental Analysis
+                    </h3>
+
+                    <p>
+                        Understand revenue, profit, EPS, P/E, debt,
+                        ROE and other common company metrics.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            10 min
+                        </span>
+
+                        <span>
+                            Intermediate
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="Fundamental Analysis">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- Lesson 8 -->
+
+            <article
+                class="lesson-card"
+                data-category="advanced"
+                data-title="Understanding portfolio diversification">
+
+                <div class="lesson-icon">
+
+                    <i class="bi bi-diagram-3"></i>
+
+                </div>
+
+
+                <div class="lesson-content">
+
+                    <span class="lesson-category">
+                        ADVANCED
+                    </span>
+
+                    <h3>
+                        Portfolio Diversification
+                    </h3>
+
+                    <p>
+                        Learn how spreading investments across assets
+                        and sectors can help manage concentration risk.
+                    </p>
+
+
+                    <div class="lesson-meta">
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            9 min
+                        </span>
+
+                        <span>
+                            Intermediate
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="lesson-button"
+                    data-lesson="Portfolio Diversification">
+
+                    Start Lesson
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </article>
+
+        </div>
+
+
+        <!-- =================================================
+             LEARNING PATH
+        ================================================= -->
+
+        <div class="section-header path-header">
+
+            <div>
+
+                <span class="section-label">
+                    RECOMMENDED
+                </span>
+
+                <h3>
+                    Your learning path
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="learning-path">
+
+            <div class="path-step completed">
+
+                <span class="path-number">
+                    <i class="bi bi-check"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Investment Basics
+                    </strong>
+
+                    <small>
+                        Understand the fundamentals
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="path-line"></div>
+
+
+            <div class="path-step">
+
+                <span class="path-number">
+                    2
+                </span>
+
+                <div>
+
+                    <strong>
+                        Understand Assets
+                    </strong>
+
+                    <small>
+                        Stocks, ETFs and mutual funds
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="path-line"></div>
+
+
+            <div class="path-step">
+
+                <span class="path-number">
+                    3
+                </span>
+
+                <div>
+
+                    <strong>
+                        Build a Portfolio
+                    </strong>
+
+                    <small>
+                        Learn allocation and diversification
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="path-line"></div>
+
+
+            <div class="path-step">
+
+                <span class="path-number">
+                    4
+                </span>
+
+                <div>
+
+                    <strong>
+                        Practice Virtually
+                    </strong>
+
+                    <small>
+                        Use Investopia virtual trading
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             AI LEARNING
+        ================================================= -->
+
+        <div class="ai-learning-card">
+
+            <div class="ai-learning-header">
+
+                <div>
+
+                    <span class="section-label">
+                        INVESTOPIA AI
+                    </span>
+
+                    <h3>
+                        Learn anything about investing
+                    </h3>
+
+                    <p>
+                        Confused about P/E, SIP, F&O, ETFs,
+                        diversification or any financial concept?
+                        Ask Investopia AI for a simple explanation.
+                    </p>
+
+                </div>
+
+
+                <div class="ai-learning-icon">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="../ai-advisor/ai-advisor.html"
+                class="ai-button">
+
+                <i class="bi bi-chat-stars"></i>
+
+                Ask Investopia AI
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             DISCLAIMER
+        ================================================= -->
+
+        <div class="learning-disclaimer">
+
+            <i class="bi bi-info-circle"></i>
+
+            <span>
+                Educational content is provided for learning purposes
+                only and should not be considered financial advice.
+                Always conduct your own research before investing.
+                Invest at your own risk.
+            </span>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     SCRIPTS
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../auth/supabase.js"></script>
+<script src="../auth/session.js"></script>
+
+<script src="learning.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered investment analysis | Investopia TradeAI">
+    <title>Stock Details | Investopia TradeAI</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="stock-details.css">
+</head>
+
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ==================== SIDEBAR ==================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <a href="../home/home.html" class="brand">
+
+            <span class="brand-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </span>
+
+            <span class="brand-text">
+                Investopia
+                <small>TradeAI</small>
+            </span>
+
+        </a>
+
+        <button
+            class="sidebar-close d-lg-none"
+            id="sidebarClose"
+            type="button">
+
+            <i class="bi bi-x-lg"></i>
+
+        </button>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <p class="nav-label">MAIN</p>
+
+        <a href="../dashboard/dashboard.html" class="sidebar-link">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="../market/market.html" class="sidebar-link">
+            <i class="bi bi-graph-up"></i>
+            <span>Market</span>
+        </a>
+
+        <a href="stock-details.html" class="sidebar-link active">
+            <i class="bi bi-bar-chart-line"></i>
+            <span>Stock Details</span>
+        </a>
+
+        <a href="../portfolio/portfolio.html" class="sidebar-link">
+            <i class="bi bi-wallet2"></i>
+            <span>Portfolio</span>
+        </a>
+
+
+        <p class="nav-label mt-4">SMART TOOLS</p>
+
+        <a href="../ai-advisor/ai-advisor.html"
+           class="sidebar-link ai-link">
+
+            <i class="bi bi-stars"></i>
+            <span>AI Advisor</span>
+            <span class="ai-badge">AI</span>
+
+        </a>
+
+        <a href="../planner/planner.html" class="sidebar-link">
+            <i class="bi bi-bullseye"></i>
+            <span>Planner</span>
+        </a>
+
+        <a href="../insights/insights.html" class="sidebar-link">
+            <i class="bi bi-lightbulb"></i>
+            <span>Insights</span>
+        </a>
+
+
+        <p class="nav-label mt-4">EXPLORE</p>
+
+        <a href="../news/news.html" class="sidebar-link">
+            <i class="bi bi-newspaper"></i>
+            <span>News</span>
+        </a>
+
+        <a href="../learning/learning.html" class="sidebar-link">
+            <i class="bi bi-book"></i>
+            <span>Learning</span>
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="../profile/profile.html" class="sidebar-link">
+            <i class="bi bi-person-circle"></i>
+            <span>Profile</span>
+        </a>
+
+        <a href="../home/home.html"
+           class="sidebar-link logout-link">
+
+            <i class="bi bi-box-arrow-left"></i>
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ==================== MAIN ==================== -->
+
+<div class="main-wrapper">
+
+    <header class="top-header">
+
+        <div class="header-left">
+
+            <button
+                class="menu-btn"
+                id="sidebarToggle"
+                type="button">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div class="global-search">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    id="stockSearch"
+                    placeholder="Search stocks, ETFs, mutual funds..."
+                    autocomplete="off">
+
+                <kbd>⌘ K</kbd>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                class="header-icon-btn"
+                type="button"
+                aria-label="Notifications">
+
+                <i class="bi bi-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+            <button
+                class="header-icon-btn"
+                id="themeToggle"
+                type="button"
+                title="Toggle theme">
+
+                <i
+                    class="bi bi-moon-stars"
+                    id="themeIcon">
+                </i>
+
+            </button>
+
+
+            <a
+                href="../profile/profile.html"
+                class="profile-mini">
+
+                <span class="profile-avatar">
+                    A
+                </span>
+
+                <span class="profile-info d-none d-md-block">
+
+                    <strong>Anurag</strong>
+                    <small>Investor</small>
+
+                </span>
+
+                <i class="bi bi-chevron-down d-none d-md-block"></i>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main class="stock-content">
+
+
+        <!-- ==================== BREADCRUMB ==================== -->
+
+        <div class="breadcrumb-row">
+
+            <a href="../market/market.html">
+                <i class="bi bi-arrow-left"></i>
+                Market
+            </a>
+
+            <span>/</span>
+
+            <span id="breadcrumbAsset">
+                TCS
+            </span>
+
+        </div>
+
+
+        <!-- ==================== ASSET HEADER ==================== -->
+
+        <section class="asset-header-card">
+
+            <div class="asset-main-info">
+
+                <div
+                    class="asset-logo-large"
+                    id="assetLogo">
+                    T
+                </div>
+
+                <div>
+
+                    <div class="asset-title-row">
+
+                        <h1 id="assetName">
+                            TCS
+                        </h1>
+
+                        <span
+                            class="asset-badge"
+                            id="assetType">
+                            STOCK
+                        </span>
+
+                    </div>
+
+                    <p id="companyName">
+                        Tata Consultancy Services
+                    </p>
+
+                    <span class="exchange">
+                        NSE • BSE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="asset-price-info">
+
+                <div
+                    class="current-price"
+                    id="currentPrice">
+                    ₹3,421.50
+                </div>
+
+                <div
+                    class="price-change positive"
+                    id="priceChange">
+
+                    <i class="bi bi-arrow-up"></i>
+                    +1.24% Today
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== SCORE + AI SUMMARY ==================== -->
+
+        <section class="row g-4 mb-4">
+
+
+            <!-- INVESTOPIA SCORE -->
+
+            <div class="col-xl-4">
+
+                <div class="analysis-card score-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Investopia Score
+                            </h2>
+
+                            <p>
+                                Overall asset assessment
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-stars title-icon"></i>
+
+                    </div>
+
+
+                    <div class="score-display">
+
+                        <div class="score-circle">
+
+                            <strong id="investopiaScore">
+                                78
+                            </strong>
+
+                            <span>/100</span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="score-label">
+                                GOOD
+                            </span>
+
+                            <p>
+                                Based on current available data
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="score-bars">
+
+                        <div class="score-bar-item">
+
+                            <span>
+                                Fundamentals
+                            </span>
+
+                            <strong>
+                                82
+                            </strong>
+
+                            <div class="progress">
+                                <div style="width:82%"></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="score-bar-item">
+
+                            <span>
+                                Momentum
+                            </span>
+
+                            <strong>
+                                76
+                            </strong>
+
+                            <div class="progress">
+                                <div style="width:76%"></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="score-bar-item">
+
+                            <span>
+                                Risk
+                            </span>
+
+                            <strong>
+                                71
+                            </strong>
+
+                            <div class="progress">
+                                <div style="width:71%"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI ANALYSIS -->
+
+            <div class="col-xl-8">
+
+                <div class="analysis-card ai-analysis-card">
+
+                    <div class="ai-card-header">
+
+                        <div class="ai-icon">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Investopia AI View
+                            </h2>
+
+                            <p>
+                                AI-generated educational analysis
+                            </p>
+
+                        </div>
+
+                        <span class="confidence">
+                            Confidence <strong>78%</strong>
+                        </span>
+
+                    </div>
+
+
+                    <div class="ai-view">
+
+                        <span class="ai-view-label">
+                            AI View
+                        </span>
+
+                        <h3 id="aiRecommendation">
+                            Suitable for further research
+                        </h3>
+
+                    </div>
+
+
+                    <div class="ai-reasons">
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>
+                                Strong recent financial performance
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>
+                                Positive price momentum
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>
+                                Good business fundamentals
+                            </span>
+                        </div>
+
+                        <div class="warning">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <span>
+                                Valuation should be monitored
+                            </span>
+                        </div>
+
+                        <div class="warning">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <span>
+                                IT-sector exposure may increase portfolio concentration
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <p class="ai-disclaimer">
+                        AI analysis is informational and should not be treated
+                        as guaranteed financial advice.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== PRICE + TRADING ==================== -->
+
+        <section class="row g-4 mb-4">
+
+            <div class="col-xl-8">
+
+                <div class="analysis-card chart-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Price Chart
+                            </h2>
+
+                            <p>
+                                Historical price movement
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="chart-periods"
+                            id="chartPeriods">
+
+                            <button
+                                class="active"
+                                data-period="1D">
+                                1D
+                            </button>
+
+                            <button data-period="1W">
+                                1W
+                            </button>
+
+                            <button data-period="1M">
+                                1M
+                            </button>
+
+                            <button data-period="1Y">
+                                1Y
+                            </button>
+
+                            <button data-period="5Y">
+                                5Y
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="price-chart">
+
+                        <canvas id="stockChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-4">
+
+                <div class="analysis-card trade-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Virtual Trading
+                            </h2>
+
+                            <p>
+                                Practice without real money
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-currency-exchange title-icon"></i>
+
+                    </div>
+
+
+                    <div class="virtual-cash">
+
+                        <span>
+                            Available Virtual Cash
+                        </span>
+
+                        <strong>
+                            ₹1,00,000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="trade-input">
+
+                        <label for="quantity">
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            min="1"
+                            value="1"
+                            placeholder="Enter quantity">
+
+                    </div>
+
+
+                    <div class="trade-summary">
+
+                        <span>
+                            Estimated Value
+                        </span>
+
+                        <strong id="tradeValue">
+                            ₹3,421.50
+                        </strong>
+
+                    </div>
+
+
+                    <div class="trade-buttons">
+
+                        <button
+                            class="buy-btn"
+                            id="buyButton">
+
+                            <i class="bi bi-cart-plus"></i>
+                            Buy Virtually
+
+                        </button>
+
+
+                        <button
+                            class="sell-btn"
+                            id="sellButton">
+
+                            <i class="bi bi-cart-dash"></i>
+                            Sell Virtually
+
+                        </button>
+
+                    </div>
+
+
+                    <small class="trade-note">
+                        Simulated trading only. No real money is involved.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== FUNDAMENTALS ==================== -->
+
+        <section class="analysis-card mb-4">
+
+            <div class="card-title-row">
+
+                <div>
+
+                    <h2>
+                        Fundamental Analysis
+                    </h2>
+
+                    <p>
+                        Key financial indicators
+                    </p>
+
+                </div>
+
+                <i class="bi bi-building title-icon"></i>
+
+            </div>
+
+
+            <div class="metrics-grid">
+
+                <div class="metric">
+                    <span>P/E Ratio</span>
+                    <strong>28.42</strong>
+                    <small>Valuation</small>
+                </div>
+
+                <div class="metric">
+                    <span>EPS</span>
+                    <strong>₹120.40</strong>
+                    <small>Earnings</small>
+                </div>
+
+                <div class="metric">
+                    <span>Revenue</span>
+                    <strong>₹2.64L Cr</strong>
+                    <small>Annual</small>
+                </div>
+
+                <div class="metric">
+                    <span>Profit</span>
+                    <strong>₹46,553 Cr</strong>
+                    <small>Annual</small>
+                </div>
+
+                <div class="metric">
+                    <span>Debt</span>
+                    <strong>Low</strong>
+                    <small>Financial risk</small>
+                </div>
+
+                <div class="metric">
+                    <span>ROE</span>
+                    <strong>52.8%</strong>
+                    <small>Efficiency</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== TECHNICAL + RISK ==================== -->
+
+        <section class="row g-4 mb-4">
+
+            <div class="col-xl-7">
+
+                <div class="analysis-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Technical Analysis
+                            </h2>
+
+                            <p>
+                                Current price behaviour
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-activity title-icon"></i>
+
+                    </div>
+
+
+                    <div class="technical-grid">
+
+                        <div class="technical-item">
+                            <span>Trend</span>
+                            <strong class="positive">
+                                Bullish
+                            </strong>
+                        </div>
+
+                        <div class="technical-item">
+                            <span>50-Day MA</span>
+                            <strong>₹3,285</strong>
+                        </div>
+
+                        <div class="technical-item">
+                            <span>200-Day MA</span>
+                            <strong>₹3,050</strong>
+                        </div>
+
+                        <div class="technical-item">
+                            <span>RSI</span>
+                            <strong>61.4</strong>
+                        </div>
+
+                        <div class="technical-item">
+                            <span>Support</span>
+                            <strong>₹3,300</strong>
+                        </div>
+
+                        <div class="technical-item">
+                            <span>Resistance</span>
+                            <strong>₹3,550</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-5">
+
+                <div class="analysis-card risk-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Risk Analysis
+                            </h2>
+
+                            <p>
+                                Estimated investment risk
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-shield-exclamation title-icon"></i>
+
+                    </div>
+
+
+                    <div class="risk-level">
+
+                        <div class="risk-indicator">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                        <strong>
+                            Moderate Risk
+                        </strong>
+
+                    </div>
+
+
+                    <div class="risk-factors">
+
+                        <div>
+                            <span>Market Risk</span>
+                            <strong>Moderate</strong>
+                        </div>
+
+                        <div>
+                            <span>Volatility</span>
+                            <strong>Moderate</strong>
+                        </div>
+
+                        <div>
+                            <span>Business Risk</span>
+                            <strong>Low</strong>
+                        </div>
+
+                        <div>
+                            <span>Valuation Risk</span>
+                            <strong>Moderate</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== NEWS + PORTFOLIO IMPACT ==================== -->
+
+        <section class="row g-4 mb-4">
+
+            <div class="col-xl-7">
+
+                <div class="analysis-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Latest News
+                            </h2>
+
+                            <p>
+                                Recent news related to this investment
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="../news/news.html"
+                            class="card-link">
+
+                            View All
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="news-list">
+
+                        <a
+                            href="../news/news.html"
+                            class="news-item">
+
+                            <span class="news-icon">
+                                <i class="bi bi-newspaper"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    TCS announces latest business update
+                                </strong>
+
+                                <small>
+                                    2 hours ago
+                                </small>
+
+                            </div>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                        </a>
+
+
+                        <a
+                            href="../news/news.html"
+                            class="news-item">
+
+                            <span class="news-icon">
+                                <i class="bi bi-bar-chart"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    IT sector outlook remains in focus
+                                </strong>
+
+                                <small>
+                                    5 hours ago
+                                </small>
+
+                            </div>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                        </a>
+
+
+                        <a
+                            href="../news/news.html"
+                            class="news-item">
+
+                            <span class="news-icon">
+                                <i class="bi bi-globe2"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Investors track global market developments
+                                </strong>
+
+                                <small>
+                                    Yesterday
+                                </small>
+
+                            </div>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-5">
+
+                <div class="analysis-card portfolio-impact">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <h2>
+                                Your Portfolio
+                            </h2>
+
+                            <p>
+                                How this investment could affect you
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-wallet2 title-icon"></i>
+
+                    </div>
+
+
+                    <div class="portfolio-stat">
+
+                        <span>
+                            Current IT Exposure
+                        </span>
+
+                        <strong>
+                            35%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="portfolio-progress">
+
+                        <div style="width:35%"></div>
+
+                    </div>
+
+
+                    <div class="portfolio-message">
+
+                        <i class="bi bi-lightbulb"></i>
+
+                        <p>
+                            Adding more IT exposure may increase
+                            sector concentration in your portfolio.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="../portfolio/portfolio.html"
+                        class="btn btn-outline-success w-100">
+
+                        View My Portfolio
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================== AI EXPLANATION ==================== -->
+
+        <section class="analysis-card ai-explanation mb-4">
+
+            <div class="ai-card-header">
+
+                <div class="ai-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        What should you know?
+                    </h2>
+
+                    <p>
+                        Investopia AI explanation
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="ai-message">
+
+                <p>
+                    TCS currently shows relatively strong fundamentals
+                    and positive price momentum. However, valuation and
+                    your existing exposure to the IT sector should be
+                    considered before adding it to your portfolio.
+                </p>
+
+                <p>
+                    Instead of relying only on the score, review the
+                    company's financial performance, current valuation,
+                    market conditions and your own investment goal.
+                </p>
+
+            </div>
+
+
+            <a
+                href="../ai-advisor/ai-advisor.html"
+                class="ai-chat-link">
+
+                <i class="bi bi-chat-dots"></i>
+                Ask Investopia AI about this investment
+
+            </a>
+
+        </section>
+
+
+        <!-- ==================== WARNING ==================== -->
+
+        <div class="investment-warning">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <div>
+
+                <strong>
+                    Important Investment Warning
+                </strong>
+
+                <p>
+                    Investopia TradeAI provides educational, simulated
+                    and AI-generated information. Scores, risk levels,
+                    news summaries and AI views are not guaranteed
+                    predictions or financial advice.
+                    <strong>Invest at your own risk.</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ==================== FLOATING AI ==================== -->
+
+<a
+    href="../ai-advisor/ai-advisor.html"
+    class="floating-ai"
+    title="Ask Investopia AI">
+
+    <i class="bi bi-stars"></i>
+
+    <span>
+        Ask AI
+    </span>
+
+</a>
+
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Supabase Configuration -->
+
+<script src="../auth/supabase.js"></script>
+
+<!-- Session Handling -->
+
+<script src="../auth/session.js"></script>
+
+<!-- Stock Details JS -->
+
+<script src="stock-details.js"></script>
+
+</body>
+</html>

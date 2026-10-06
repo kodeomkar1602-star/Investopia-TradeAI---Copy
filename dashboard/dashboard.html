@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Investopia TradeAI investment dashboard">
+    <meta name="theme-color" content="#16a34a">
+
+    <title>Dashboard | Investopia TradeAI</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <!-- Logo -->
+
+    <div class="sidebar-header">
+
+        <a href="../home/home.html" class="brand">
+
+            <span class="brand-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </span>
+
+            <span class="brand-text">
+                Investopia
+                <small>TradeAI</small>
+            </span>
+
+        </a>
+
+        <button
+            class="sidebar-close d-lg-none"
+            id="sidebarClose"
+            type="button"
+            aria-label="Close sidebar">
+
+            <i class="bi bi-x-lg"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <nav class="sidebar-nav">
+
+        <p class="nav-label">MAIN</p>
+
+        <a href="dashboard.html" class="sidebar-link active">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="../market/market.html" class="sidebar-link">
+            <i class="bi bi-graph-up"></i>
+            <span>Market</span>
+        </a>
+
+        <!-- Stock Details -->
+
+        <a href="../stock-details/stock-details.html" class="sidebar-link">
+            <i class="bi bi-bar-chart-line"></i>
+            <span>Stock Details</span>
+        </a>
+
+        <a href="../portfolio/portfolio.html" class="sidebar-link">
+            <i class="bi bi-wallet2"></i>
+            <span>Portfolio</span>
+        </a>
+
+
+        <p class="nav-label mt-4">SMART TOOLS</p>
+
+        <a href="../ai-advisor/ai-advisor.html"
+           class="sidebar-link ai-link">
+
+            <i class="bi bi-stars"></i>
+
+            <span>AI Advisor</span>
+
+            <span class="ai-badge">
+                AI
+            </span>
+
+        </a>
+
+        <a href="../planner/planner.html" class="sidebar-link">
+
+            <i class="bi bi-bullseye"></i>
+
+            <span>Planner</span>
+
+        </a>
+
+        <a href="../insights/insights.html" class="sidebar-link">
+
+            <i class="bi bi-lightbulb"></i>
+
+            <span>Insights</span>
+
+        </a>
+
+
+        <p class="nav-label mt-4">EXPLORE</p>
+
+        <a href="../news/news.html" class="sidebar-link">
+
+            <i class="bi bi-newspaper"></i>
+
+            <span>News</span>
+
+        </a>
+
+        <a href="../learning/learning.html" class="sidebar-link">
+
+            <i class="bi bi-book"></i>
+
+            <span>Learning</span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- Bottom Navigation -->
+
+    <div class="sidebar-bottom">
+
+        <a href="../profile/profile.html" class="sidebar-link">
+
+            <i class="bi bi-person-circle"></i>
+
+            <span>Profile</span>
+
+        </a>
+
+        <a href="../home/home.html"
+           class="sidebar-link logout-link">
+
+            <i class="bi bi-box-arrow-left"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN WRAPPER
+===================================================== -->
+
+<div class="main-wrapper">
+
+
+    <!-- =================================================
+         TOP HEADER
+    ================================================== -->
+
+    <header class="top-header">
+
+        <div class="header-left">
+
+            <button
+                class="menu-btn"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <!-- Universal Search -->
+
+            <div class="global-search">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    id="globalSearch"
+                    placeholder="Search stocks, ETFs, mutual funds..."
+                    aria-label="Search investments">
+
+                <kbd>⌘ K</kbd>
+
+            </div>
+
+        </div>
+
+
+        <!-- Header Actions -->
+
+        <div class="header-actions">
+
+            <!-- Notifications -->
+
+            <button
+                class="header-icon-btn"
+                type="button"
+                aria-label="Notifications">
+
+                <i class="bi bi-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+            <!-- Theme -->
+
+            <button
+                class="header-icon-btn"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle dark and light theme"
+                title="Toggle theme">
+
+                <i
+                    class="bi bi-moon-stars"
+                    id="themeIcon">
+                </i>
+
+            </button>
+
+
+            <!-- Profile -->
+
+            <a href="../profile/profile.html"
+               class="profile-mini">
+
+                <span class="profile-avatar">
+                    A
+                </span>
+
+                <span class="profile-info d-none d-md-block">
+
+                    <strong>
+                        Anurag
+                    </strong>
+
+                    <small>
+                        Investor
+                    </small>
+
+                </span>
+
+                <i class="bi bi-chevron-down d-none d-md-block"></i>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         DASHBOARD CONTENT
+    ================================================== -->
+
+    <main class="dashboard-content">
+
+
+        <!-- Welcome -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <p class="eyebrow">
+                    INVESTOPIA DASHBOARD
+                </p>
+
+                <h1>
+                    Good afternoon, Anurag 👋
+                </h1>
+
+                <p class="welcome-text">
+                    Here's what's happening with your investments today.
+                </p>
+
+            </div>
+
+
+            <a href="../ai-advisor/ai-advisor.html"
+               class="btn btn-success">
+
+                <i class="bi bi-stars"></i>
+
+                Ask AI Advisor
+
+            </a>
+
+        </section>
+
+
+        <!-- =================================================
+             PORTFOLIO STATISTICS
+        ================================================== -->
+
+        <section class="row g-3 mb-4">
+
+
+            <!-- Portfolio Value -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span>
+                            Portfolio Value
+                        </span>
+
+                        <div class="stat-icon green">
+
+                            <i class="bi bi-wallet2"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h2>
+                        ₹1,24,580
+                    </h2>
+
+                    <div class="stat-change positive">
+
+                        <i class="bi bi-arrow-up"></i>
+
+                        ₹2,840 today
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Invested -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span>
+                            Total Invested
+                        </span>
+
+                        <div class="stat-icon blue">
+
+                            <i class="bi bi-cash-stack"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h2>
+                        ₹1,10,200
+                    </h2>
+
+                    <div class="stat-change neutral">
+                        Across 8 assets
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Returns -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span>
+                            Total Returns
+                        </span>
+
+                        <div class="stat-icon purple">
+
+                            <i class="bi bi-graph-up-arrow"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h2 class="positive">
+                        +₹14,380
+                    </h2>
+
+                    <div class="stat-change positive">
+
+                        <i class="bi bi-arrow-up"></i>
+
+                        +13.05%
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Today's P&L -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span>
+                            Today's P&L
+                        </span>
+
+                        <div class="stat-icon orange">
+
+                            <i class="bi bi-activity"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h2 class="positive">
+                        +₹2,840
+                    </h2>
+
+                    <div class="stat-change positive">
+
+                        <i class="bi bi-arrow-up"></i>
+
+                        +2.31%
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PORTFOLIO CHART + ALLOCATION
+        ================================================== -->
+
+        <section class="row g-4 mb-4">
+
+
+            <!-- Portfolio Performance -->
+
+            <div class="col-xl-8">
+
+                <div class="dashboard-card chart-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Portfolio Performance
+                            </h3>
+
+                            <p>
+                                Track your portfolio growth over time.
+                            </p>
+
+                        </div>
+
+
+                        <select
+                            class="period-select"
+                            id="chartPeriod">
+
+                            <option>1W</option>
+                            <option>1M</option>
+                            <option selected>6M</option>
+                            <option>1Y</option>
+                            <option>All</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="chart-container">
+
+                        <canvas id="portfolioChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Asset Allocation -->
+
+            <div class="col-xl-4">
+
+                <div class="dashboard-card allocation-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Asset Allocation
+                            </h3>
+
+                            <p>
+                                Your portfolio distribution.
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="../portfolio/portfolio.html"
+                            class="card-link">
+
+                            View
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="allocation-chart">
+
+                        <canvas id="allocationChart"></canvas>
+
+                        <div class="allocation-center">
+
+                            <strong>
+                                8
+                            </strong>
+
+                            <span>
+                                Assets
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="allocation-list">
+
+                        <div>
+
+                            <span>
+
+                                <i class="allocation-dot stocks"></i>
+
+                                Stocks
+
+                            </span>
+
+                            <strong>
+                                58%
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+
+                                <i class="allocation-dot mutual"></i>
+
+                                Mutual Funds
+
+                            </span>
+
+                            <strong>
+                                27%
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+
+                                <i class="allocation-dot cash"></i>
+
+                                Cash
+
+                            </span>
+
+                            <strong>
+                                15%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MARKET + AI INSIGHT
+        ================================================== -->
+
+        <section class="row g-4 mb-4">
+
+
+            <!-- Market Watchlist -->
+
+            <div class="col-xl-7">
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Market Watchlist
+                            </h3>
+
+                            <p>
+                                Quick look at selected investments.
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="../market/market.html"
+                            class="card-link">
+
+                            View Market
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="market-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Asset</th>
+                                    <th>Price</th>
+                                    <th>Change</th>
+                                    <th class="text-end">Action</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <!-- TCS -->
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="asset-info">
+
+                                            <span class="asset-logo">
+                                                T
+                                            </span>
+
+                                            <div>
+
+                                                <strong>
+                                                    TCS
+                                                </strong>
+
+                                                <small>
+                                                    NSE
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        ₹3,421.50
+                                    </td>
+
+                                    <td class="positive">
+                                        +1.24%
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <a
+                                            href="../stock-details/stock-details.html"
+                                            class="view-btn">
+
+                                            View
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- Reliance -->
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="asset-info">
+
+                                            <span class="asset-logo">
+                                                R
+                                            </span>
+
+                                            <div>
+
+                                                <strong>
+                                                    RELIANCE
+                                                </strong>
+
+                                                <small>
+                                                    NSE
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        ₹1,425.20
+                                    </td>
+
+                                    <td class="positive">
+                                        +0.84%
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <a
+                                            href="../stock-details/stock-details.html"
+                                            class="view-btn">
+
+                                            View
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- Infosys -->
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="asset-info">
+
+                                            <span class="asset-logo">
+                                                I
+                                            </span>
+
+                                            <div>
+
+                                                <strong>
+                                                    INFY
+                                                </strong>
+
+                                                <small>
+                                                    NSE
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        ₹1,512.30
+                                    </td>
+
+                                    <td class="negative">
+                                        -0.32%
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <a
+                                            href="../stock-details/stock-details.html"
+                                            class="view-btn">
+
+                                            View
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- HDFC Bank -->
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="asset-info">
+
+                                            <span class="asset-logo">
+                                                H
+                                            </span>
+
+                                            <div>
+
+                                                <strong>
+                                                    HDFC BANK
+                                                </strong>
+
+                                                <small>
+                                                    NSE
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        ₹1,746.80
+                                    </td>
+
+                                    <td class="positive">
+                                        +1.12%
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <a
+                                            href="../stock-details/stock-details.html"
+                                            class="view-btn">
+
+                                            View
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI Insight -->
+
+            <div class="col-xl-5">
+
+                <div class="dashboard-card ai-insight-card">
+
+                    <div class="ai-heading">
+
+                        <div class="ai-heading-icon">
+
+                            <i class="bi bi-stars"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                AI Portfolio Insight
+                            </h3>
+
+                            <span>
+                                Updated recently
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-insight-content">
+
+                        <p>
+
+                            Your portfolio has a healthy mix
+                            of equities and mutual funds.
+                            Your technology exposure is slightly
+                            higher than the rest of your portfolio.
+
+                        </p>
+
+
+                        <div class="insight-tip">
+
+                            <i class="bi bi-lightbulb"></i>
+
+                            <span>
+
+                                Consider reviewing your sector
+                                allocation to maintain better
+                                diversification.
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="../insights/insights.html"
+                        class="btn btn-outline-success w-100">
+
+                        View Full Insights
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================== -->
+
+        <section class="dashboard-card quick-actions-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h3>
+                        Quick Actions
+                    </h3>
+
+                    <p>
+                        Access your most-used investment tools.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+
+                <!-- Explore Market -->
+
+                <a
+                    href="../market/market.html"
+                    class="quick-action">
+
+                    <span>
+                        <i class="bi bi-search"></i>
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Explore Market
+                        </strong>
+
+                        <small>
+                            Find stocks, ETFs & funds
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </a>
+
+
+                <!-- Virtual Trading -->
+
+                <a
+                    href="../stock-details/stock-details.html"
+                    class="quick-action">
+
+                    <span>
+                        <i class="bi bi-currency-exchange"></i>
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Virtual Trading
+                        </strong>
+
+                        <small>
+                            Practice buying & selling
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </a>
+
+
+                <!-- Portfolio -->
+
+                <a
+                    href="../portfolio/portfolio.html"
+                    class="quick-action">
+
+                    <span>
+                        <i class="bi bi-wallet2"></i>
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            View Portfolio
+                        </strong>
+
+                        <small>
+                            Check your holdings
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </a>
+
+
+                <!-- AI Advisor -->
+
+                <a
+                    href="../ai-advisor/ai-advisor.html"
+                    class="quick-action ai-action">
+
+                    <span>
+                        <i class="bi bi-stars"></i>
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Ask Investopia AI
+                        </strong>
+
+                        <small>
+                            Get investment guidance
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     FLOATING AI BUTTON
+===================================================== -->
+
+<a
+    href="../ai-advisor/ai-advisor.html"
+    class="floating-ai"
+    aria-label="Open Investopia AI"
+    title="Ask Investopia AI">
+
+    <i class="bi bi-stars"></i>
+
+    <span>
+        Ask AI
+    </span>
+
+</a>
+
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Dashboard JS -->
+
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../auth/supabase.js"></script>
+
+<script src="../auth/session.js"></script>
+
+<!-- Dashboard -->
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

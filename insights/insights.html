@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Insights | Investopia TradeAI</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="insights.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <a href="../home/home.html" class="brand">
+
+            <span class="brand-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </span>
+
+            <span>
+                <strong>Investopia</strong>
+                <small>TradeAI</small>
+            </span>
+
+        </a>
+
+        <button
+            class="sidebar-close"
+            id="sidebarClose"
+            aria-label="Close menu">
+
+            <i class="bi bi-x-lg"></i>
+
+        </button>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <a
+            href="../dashboard/dashboard.html"
+            class="sidebar-link">
+
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a
+            href="../market/market.html"
+            class="sidebar-link">
+
+            <i class="bi bi-bar-chart-line"></i>
+            <span>Market</span>
+
+        </a>
+
+
+        <a
+            href="../stock-details/stock-details.html"
+            class="sidebar-link">
+
+            <i class="bi bi-search"></i>
+            <span>Stock Details</span>
+
+        </a>
+
+
+        <a
+            href="../portfolio/portfolio.html"
+            class="sidebar-link">
+
+            <i class="bi bi-pie-chart"></i>
+            <span>Portfolio</span>
+
+        </a>
+
+
+        <a
+            href="../ai-advisor/ai-advisor.html"
+            class="sidebar-link">
+
+            <i class="bi bi-stars"></i>
+            <span>AI Advisor</span>
+
+        </a>
+
+
+        <a
+            href="../planner/planner.html"
+            class="sidebar-link">
+
+            <i class="bi bi-bullseye"></i>
+            <span>Planner</span>
+
+        </a>
+
+
+        <a
+            href="insights.html"
+            class="sidebar-link active">
+
+            <i class="bi bi-lightbulb"></i>
+            <span>Insights</span>
+
+        </a>
+
+
+        <a
+            href="../news/news.html"
+            class="sidebar-link">
+
+            <i class="bi bi-newspaper"></i>
+            <span>News</span>
+
+        </a>
+
+
+        <a
+            href="../learning/learning.html"
+            class="sidebar-link">
+
+            <i class="bi bi-mortarboard"></i>
+            <span>Learning</span>
+
+        </a>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="../profile/profile.html"
+            class="sidebar-link">
+
+            <i class="bi bi-person-circle"></i>
+            <span>Profile</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <div class="sidebar-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+
+                <strong>Investopia AI</strong>
+
+                <small>
+                    Ready to assist
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================= -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="menu-toggle"
+                id="sidebarToggle"
+                aria-label="Open menu">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <span class="eyebrow">
+                    INVESTOPIA TRADEAI
+                </span>
+
+                <h1>Insights</h1>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+
+            <!-- Search -->
+
+            <div class="global-search">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    id="globalSearch"
+                    placeholder="Search stocks, ETFs, funds..."
+                    autocomplete="off">
+
+                <span class="search-shortcut">
+                    Ctrl K
+                </span>
+
+            </div>
+
+
+            <!-- Theme -->
+
+            <button
+                class="icon-button"
+                id="themeToggle"
+                aria-label="Toggle theme">
+
+                <i
+                    class="bi bi-moon-stars"
+                    id="themeIcon">
+                </i>
+
+            </button>
+
+
+            <!-- Profile -->
+
+            <a
+                href="../profile/profile.html"
+                class="profile-button">
+
+                <span class="profile-avatar">
+                    <i class="bi bi-person"></i>
+                </span>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         PAGE CONTENT
+    ================================================= -->
+
+    <section class="page-content">
+
+
+        <!-- =================================================
+             INTRO
+        ================================================= -->
+
+        <div class="insights-intro">
+
+            <div>
+
+                <span class="section-label">
+                    SMART MARKET INSIGHTS
+                </span>
+
+                <h2>
+                    Understand what matters
+                </h2>
+
+                <p>
+                    Get simple insights about the market,
+                    your portfolio and potential investment
+                    risks without having to analyze everything
+                    yourself.
+                </p>
+
+            </div>
+
+
+            <div class="intro-icon">
+
+                <i class="bi bi-lightbulb"></i>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MARKET SNAPSHOT
+        ================================================= -->
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    MARKET SNAPSHOT
+                </span>
+
+                <h3>
+                    Today's market view
+                </h3>
+
+            </div>
+
+
+            <a
+                href="../market/market.html"
+                class="section-link">
+
+                View Market
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <div class="row g-3 mb-4">
+
+
+            <!-- NIFTY -->
+
+            <div class="col-12 col-md-4">
+
+                <div class="market-card">
+
+                    <div class="market-card-top">
+
+                        <div>
+
+                            <span>
+                                NIFTY 50
+                            </span>
+
+                            <strong id="niftyValue">
+                                --
+                            </strong>
+
+                        </div>
+
+                        <div class="market-icon">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="market-change positive"
+                        id="niftyChange">
+
+                        Market data unavailable
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SENSEX -->
+
+            <div class="col-12 col-md-4">
+
+                <div class="market-card">
+
+                    <div class="market-card-top">
+
+                        <div>
+
+                            <span>
+                                SENSEX
+                            </span>
+
+                            <strong id="sensexValue">
+                                --
+                            </strong>
+
+                        </div>
+
+                        <div class="market-icon">
+                            <i class="bi bi-bar-chart-line"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="market-change"
+                        id="sensexChange">
+
+                        Market data unavailable
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MARKET MOOD -->
+
+            <div class="col-12 col-md-4">
+
+                <div class="market-card">
+
+                    <div class="market-card-top">
+
+                        <div>
+
+                            <span>
+                                MARKET MOOD
+                            </span>
+
+                            <strong id="marketMood">
+                                Neutral
+                            </strong>
+
+                        </div>
+
+                        <div class="market-icon">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="market-change"
+                        id="moodDescription">
+
+                        Waiting for market data
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PERSONALIZED INSIGHTS
+        ================================================= -->
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    PERSONALIZED
+                </span>
+
+                <h3>
+                    Insights for you
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- Portfolio Insight -->
+
+            <div class="col-12 col-lg-7">
+
+                <div class="insight-card large-card">
+
+                    <div class="insight-card-header">
+
+                        <div class="insight-title">
+
+                            <span class="insight-icon">
+                                <i class="bi bi-pie-chart"></i>
+                            </span>
+
+                            <div>
+
+                                <span class="section-label">
+                                    PORTFOLIO
+                                </span>
+
+                                <h3>
+                                    Portfolio Insight
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <a
+                            href="../portfolio/portfolio.html"
+                            class="small-link">
+
+                            View Portfolio
+
+                            <i class="bi bi-arrow-up-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="portfolio-insight"
+                        id="portfolioInsight">
+
+                        <div class="empty-insight">
+
+                            <i class="bi bi-pie-chart"></i>
+
+                            <div>
+
+                                <strong>
+                                    Portfolio data not available
+                                </strong>
+
+                                <p>
+                                    Add virtual holdings to your
+                                    portfolio to receive personalized
+                                    allocation and risk insights.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="insight-footer">
+
+                        <a
+                            href="../portfolio/portfolio.html"
+                            class="outline-button">
+
+                            <i class="bi bi-plus-lg"></i>
+
+                            Manage Portfolio
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Risk -->
+
+            <div class="col-12 col-lg-5">
+
+                <div class="insight-card">
+
+                    <div class="insight-card-header">
+
+                        <div class="insight-title">
+
+                            <span class="insight-icon risk-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </span>
+
+                            <div>
+
+                                <span class="section-label">
+                                    RISK
+                                </span>
+
+                                <h3>
+                                    Risk Insight
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-display">
+
+                        <div class="risk-circle">
+
+                            <span id="riskScore">
+                                --
+                            </span>
+
+                            <small>
+                                Risk
+                            </small>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong id="riskLevel">
+                                Not enough data
+                            </strong>
+
+                            <p id="riskText">
+                                Add portfolio holdings to
+                                calculate a simple risk view.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="../portfolio/portfolio.html"
+                        class="text-link">
+
+                        Analyze Portfolio
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Diversification -->
+
+            <div class="col-12 col-lg-5">
+
+                <div class="insight-card">
+
+                    <div class="insight-card-header">
+
+                        <div class="insight-title">
+
+                            <span class="insight-icon">
+                                <i class="bi bi-diagram-3"></i>
+                            </span>
+
+                            <div>
+
+                                <span class="section-label">
+                                    DIVERSIFICATION
+                                </span>
+
+                                <h3>
+                                    Allocation Check
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="allocation-bars">
+
+                        <div class="allocation-row">
+
+                            <div>
+
+                                <span>
+                                    Equity
+                                </span>
+
+                                <strong>
+                                    0%
+                                </strong>
+
+                            </div>
+
+                            <div class="allocation-track">
+
+                                <div
+                                    class="allocation-fill"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="allocation-row">
+
+                            <div>
+
+                                <span>
+                                    ETF
+                                </span>
+
+                                <strong>
+                                    0%
+                                </strong>
+
+                            </div>
+
+                            <div class="allocation-track">
+
+                                <div
+                                    class="allocation-fill"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="allocation-row">
+
+                            <div>
+
+                                <span>
+                                    Mutual Funds
+                                </span>
+
+                                <strong>
+                                    0%
+                                </strong>
+
+                            </div>
+
+                            <div class="allocation-track">
+
+                                <div
+                                    class="allocation-fill"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="card-note">
+                        Your allocation will appear here once
+                        portfolio data is available.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI Insight -->
+
+            <div class="col-12 col-lg-7">
+
+                <div class="ai-insight-card">
+
+                    <div class="ai-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                INVESTOPIA AI
+                            </span>
+
+                            <h3>
+                                AI Market Insight
+                            </h3>
+
+                        </div>
+
+
+                        <span class="ai-icon">
+                            <i class="bi bi-stars"></i>
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="ai-insight-content"
+                        id="aiInsightContent">
+
+                        <div class="ai-message">
+
+                            <div class="ai-avatar">
+                                <i class="bi bi-stars"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Your AI insight will appear here
+                                </strong>
+
+                                <p>
+                                    Connect market and portfolio
+                                    data to receive personalized
+                                    explanations from Investopia AI.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="../ai-advisor/ai-advisor.html"
+                        class="ai-button">
+
+                        <i class="bi bi-chat-stars"></i>
+
+                        Ask Investopia AI
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SECTOR INSIGHTS
+        ================================================= -->
+
+        <div class="section-header sector-header">
+
+            <div>
+
+                <span class="section-label">
+                    SECTOR WATCH
+                </span>
+
+                <h3>
+                    Sectors to watch
+                </h3>
+
+            </div>
+
+            <span class="data-status">
+                Demo view
+            </span>
+
+        </div>
+
+
+        <div class="row g-3">
+
+
+            <div class="col-12 col-md-4">
+
+                <div class="sector-card">
+
+                    <div class="sector-icon">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+
+                    <div class="sector-info">
+
+                        <span>
+                            Information Technology
+                        </span>
+
+                        <strong>
+                            IT
+                        </strong>
+
+                        <small>
+                            Track sector trends and valuations
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-12 col-md-4">
+
+                <div class="sector-card">
+
+                    <div class="sector-icon">
+                        <i class="bi bi-bank"></i>
+                    </div>
+
+                    <div class="sector-info">
+
+                        <span>
+                            Financial Services
+                        </span>
+
+                        <strong>
+                            BANKING
+                        </strong>
+
+                        <small>
+                            Monitor financial sector movements
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-12 col-md-4">
+
+                <div class="sector-card">
+
+                    <div class="sector-icon">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+
+                    <div class="sector-info">
+
+                        <span>
+                            Energy
+                        </span>
+
+                        <strong>
+                            ENERGY
+                        </strong>
+
+                        <small>
+                            Watch energy and commodity trends
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================= -->
+
+        <div class="quick-actions">
+
+            <a
+                href="../stock-details/stock-details.html"
+                class="quick-action">
+
+                <i class="bi bi-search"></i>
+
+                <div>
+
+                    <strong>
+                        Analyze a Stock
+                    </strong>
+
+                    <span>
+                        Fundamentals, technicals and AI view
+                    </span>
+
+                </div>
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+
+            <a
+                href="../planner/planner.html"
+                class="quick-action">
+
+                <i class="bi bi-bullseye"></i>
+
+                <div>
+
+                    <strong>
+                        Plan an Investment
+                    </strong>
+
+                    <span>
+                        Create a goal-based investment plan
+                    </span>
+
+                </div>
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+
+            <a
+                href="../ai-advisor/ai-advisor.html"
+                class="quick-action">
+
+                <i class="bi bi-stars"></i>
+
+                <div>
+
+                    <strong>
+                        Ask Investopia AI
+                    </strong>
+
+                    <span>
+                        Get answers about markets and more
+                    </span>
+
+                </div>
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             DISCLAIMER
+        ================================================= -->
+
+        <div class="insights-disclaimer">
+
+            <i class="bi bi-info-circle"></i>
+
+            <span>
+                Insights are educational and may use simulated
+                or delayed information until live market APIs
+                are connected. They are not financial advice.
+                Invest at your own risk.
+            </span>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     BOOTSTRAP
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../auth/supabase.js"></script>
+
+
+<!-- =====================================================
+     SESSION HANDLING
+===================================================== -->
+
+<script src="../auth/session.js"></script>
+
+
+<!-- =====================================================
+     INSIGHTS JS
+===================================================== -->
+
+<script src="insights.js"></script>
+
+</body>
+</html>

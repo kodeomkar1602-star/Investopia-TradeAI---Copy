@@ -1,0 +1,655 @@
+// ============================================================
+// INVESTOPIA TRADEAI - REGISTER PAGE
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const body = document.body;
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    const themeIcon =
+        document.getElementById("themeIcon");
+
+    const registerForm =
+        document.getElementById("registerForm");
+
+    const password =
+        document.getElementById("password");
+
+    const confirmPassword =
+        document.getElementById("confirmPassword");
+
+    const passwordToggle =
+        document.getElementById("passwordToggle");
+
+    const confirmPasswordToggle =
+        document.getElementById("confirmPasswordToggle");
+
+    const passwordIcon =
+        document.getElementById("passwordIcon");
+
+    const confirmPasswordIcon =
+        document.getElementById("confirmPasswordIcon");
+
+    const strengthBar =
+        document.getElementById("strengthBar");
+
+    const strengthText =
+        document.getElementById("strengthText");
+
+    const registerButton =
+        document.getElementById("registerButton");
+
+
+    // ============================================================
+    // CHECK SUPABASE
+    // ============================================================
+
+    if (typeof supabaseClient === "undefined") {
+
+        console.error(
+            "Supabase client is not available."
+        );
+
+        showMessage(
+            "Supabase configuration could not be loaded.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    // ============================================================
+    // THEME
+    // ============================================================
+
+    const savedTheme =
+        localStorage.getItem("investopia-theme");
+
+    if (savedTheme === "dark") {
+
+        body.classList.add("dark-theme");
+
+        updateThemeIcon(true);
+
+    }
+
+
+    themeToggle?.addEventListener("click", () => {
+
+        const isDark =
+            body.classList.toggle("dark-theme");
+
+        localStorage.setItem(
+            "investopia-theme",
+            isDark ? "dark" : "light"
+        );
+
+        updateThemeIcon(isDark);
+
+    });
+
+
+    function updateThemeIcon(isDark) {
+
+        themeIcon.className = isDark
+            ? "bi bi-sun-fill"
+            : "bi bi-moon-stars";
+
+    }
+
+
+    // ============================================================
+    // PASSWORD VISIBILITY
+    // ============================================================
+
+    passwordToggle?.addEventListener("click", () => {
+
+        togglePassword(
+            password,
+            passwordIcon,
+            passwordToggle
+        );
+
+    });
+
+
+    confirmPasswordToggle?.addEventListener("click", () => {
+
+        togglePassword(
+            confirmPassword,
+            confirmPasswordIcon,
+            confirmPasswordToggle
+        );
+
+    });
+
+
+    function togglePassword(input, icon, button) {
+
+        const showPassword =
+            input.type === "password";
+
+        input.type = showPassword
+            ? "text"
+            : "password";
+
+        icon.className = showPassword
+            ? "bi bi-eye-slash"
+            : "bi bi-eye";
+
+        button.setAttribute(
+            "aria-label",
+            showPassword
+                ? "Hide password"
+                : "Show password"
+        );
+
+    }
+
+
+    // ============================================================
+    // PASSWORD STRENGTH
+    // ============================================================
+
+    password?.addEventListener("input", () => {
+
+        const value = password.value;
+
+        let strength = 0;
+
+        if (value.length >= 8)
+            strength++;
+
+        if (/[A-Z]/.test(value))
+            strength++;
+
+        if (/[a-z]/.test(value))
+            strength++;
+
+        if (/[0-9]/.test(value))
+            strength++;
+
+        if (/[^A-Za-z0-9]/.test(value))
+            strength++;
+
+
+        const percentage =
+            strength * 20;
+
+        strengthBar.style.width =
+            `${percentage}%`;
+
+
+        if (!value) {
+
+            strengthText.textContent =
+                "Use at least 8 characters";
+
+        }
+        else if (strength <= 2) {
+
+            strengthText.textContent =
+                "Weak password";
+
+        }
+        else if (strength === 3) {
+
+            strengthText.textContent =
+                "Moderate password";
+
+        }
+        else if (strength === 4) {
+
+            strengthText.textContent =
+                "Strong password";
+
+        }
+        else {
+
+            strengthText.textContent =
+                "Very strong password";
+
+        }
+
+    });
+
+
+    // ============================================================
+    // FORM SUBMISSION
+    // ============================================================
+
+    registerForm?.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+
+            // ----------------------------------------------------
+            // GET FORM VALUES
+            // ----------------------------------------------------
+
+            const fullName =
+                document
+                    .getElementById("fullName")
+                    .value
+                    .trim();
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+            const passwordValue =
+                password.value;
+
+            const confirmValue =
+                confirmPassword.value;
+
+            const riskLevel =
+                document
+                    .getElementById("riskLevel")
+                    .value;
+
+            const terms =
+                document
+                    .getElementById("terms")
+                    .checked;
+
+
+            // ----------------------------------------------------
+            // REQUIRED FIELDS
+            // ----------------------------------------------------
+
+            if (
+                !fullName ||
+                !email ||
+                !passwordValue ||
+                !confirmValue
+            ) {
+
+                showMessage(
+                    "Please complete all required fields.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ----------------------------------------------------
+            // EMAIL VALIDATION
+            // ----------------------------------------------------
+
+            if (!isValidEmail(email)) {
+
+                showMessage(
+                    "Please enter a valid email address.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ----------------------------------------------------
+            // PASSWORD VALIDATION
+            // ----------------------------------------------------
+
+            if (passwordValue.length < 8) {
+
+                showMessage(
+                    "Password must contain at least 8 characters.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ----------------------------------------------------
+            // CONFIRM PASSWORD
+            // ----------------------------------------------------
+
+            if (passwordValue !== confirmValue) {
+
+                showMessage(
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ----------------------------------------------------
+            // INVESTMENT EXPERIENCE
+            // ----------------------------------------------------
+
+            if (!riskLevel) {
+
+                showMessage(
+                    "Please select your investment experience.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ----------------------------------------------------
+            // TERMS
+            // ----------------------------------------------------
+
+            if (!terms) {
+
+                showMessage(
+                    "Please agree to the Terms & Conditions.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ====================================================
+            // SUPABASE REGISTRATION
+            // ====================================================
+
+            try {
+
+                // Disable button while registering
+
+                registerButton.disabled = true;
+
+                registerButton.innerHTML =
+                    `
+                    Creating Account...
+                    <span
+                        class="spinner-border spinner-border-sm ms-2"
+                        role="status"
+                        aria-hidden="true">
+                    </span>
+                    `;
+
+
+                // ------------------------------------------------
+                // CREATE SUPABASE ACCOUNT
+                // ------------------------------------------------
+
+                const { data, error } =
+                    await supabaseClient.auth.signUp({
+
+                        email: email,
+
+                        password: passwordValue,
+
+                        options: {
+
+                            data: {
+
+                                full_name: fullName,
+
+                                risk_level: riskLevel
+
+                            }
+
+                        }
+
+                    });
+
+
+                // ------------------------------------------------
+                // SUPABASE ERROR
+                // ------------------------------------------------
+
+                if (error) {
+
+                    console.error(
+                        "Supabase Registration Error:",
+                        error
+                    );
+
+                    showMessage(
+                        getSupabaseErrorMessage(error),
+                        "error"
+                    );
+
+                    resetRegisterButton();
+
+                    return;
+                }
+
+
+                // =================================================
+                // REGISTRATION SUCCESS
+                // =================================================
+
+                console.log(
+                    "Supabase registration successful:",
+                    data
+                );
+
+
+                // ------------------------------------------------
+                // EMAIL CONFIRMATION ENABLED
+                // ------------------------------------------------
+
+                if (
+                    data.user &&
+                    !data.session
+                ) {
+
+                    showMessage(
+                        "Account created successfully! Please check your email and confirm your account before logging in.",
+                        "success"
+                    );
+
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "../login/login.html";
+
+                    }, 3000);
+
+
+                    return;
+                }
+
+
+                // ------------------------------------------------
+                // EMAIL CONFIRMATION DISABLED
+                // ------------------------------------------------
+
+                if (data.session) {
+
+                    showMessage(
+                        "Account created successfully! Redirecting to login...",
+                        "success"
+                    );
+
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "../login/login.html";
+
+                    }, 2000);
+
+
+                    return;
+                }
+
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Registration Error:",
+                    error
+                );
+
+                showMessage(
+                    "Something went wrong while creating your account. Please try again.",
+                    "error"
+                );
+
+                resetRegisterButton();
+
+            }
+
+        }
+    );
+
+
+    // ============================================================
+    // EMAIL VALIDATION
+    // ============================================================
+
+    function isValidEmail(email) {
+
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    }
+
+
+    // ============================================================
+    // SUPABASE ERROR HANDLER
+    // ============================================================
+
+    function getSupabaseErrorMessage(error) {
+
+        const message =
+            error?.message || "";
+
+        const lowerMessage =
+            message.toLowerCase();
+
+
+        if (
+            lowerMessage.includes(
+                "user already registered"
+            )
+        ) {
+
+            return "An account with this email already exists. Please login instead.";
+
+        }
+
+
+        if (
+            lowerMessage.includes(
+                "email address"
+            ) &&
+            lowerMessage.includes(
+                "invalid"
+            )
+        ) {
+
+            return "Please enter a valid email address.";
+
+        }
+
+
+        if (
+            lowerMessage.includes(
+                "password"
+            ) &&
+            lowerMessage.includes(
+                "weak"
+            )
+        ) {
+
+            return "Your password is too weak. Please choose a stronger password.";
+
+        }
+
+
+        if (
+            lowerMessage.includes(
+                "rate limit"
+            )
+        ) {
+
+            return "Too many registration attempts. Please wait and try again.";
+
+        }
+
+
+        return message ||
+            "Unable to create your account. Please try again.";
+
+    }
+
+
+    // ============================================================
+    // RESET REGISTER BUTTON
+    // ============================================================
+
+    function resetRegisterButton() {
+
+        registerButton.disabled = false;
+
+        registerButton.innerHTML =
+            `
+            Create My Account
+            <i class="bi bi-arrow-right"></i>
+            `;
+
+    }
+
+
+    // ============================================================
+    // MESSAGE
+    // ============================================================
+
+    function showMessage(message, type) {
+
+        let messageBox =
+            document.getElementById(
+                "registerMessage"
+            );
+
+
+        if (!messageBox) {
+
+            messageBox =
+                document.createElement("div");
+
+            messageBox.id =
+                "registerMessage";
+
+            registerForm.insertBefore(
+                messageBox,
+                registerForm.firstElementChild
+            );
+
+        }
+
+
+        messageBox.textContent =
+            message;
+
+        messageBox.className =
+            `register-message ${type}`;
+
+
+        setTimeout(() => {
+
+            if (messageBox) {
+
+                messageBox.remove();
+
+            }
+
+        }, 5000);
+
+    }
+
+});

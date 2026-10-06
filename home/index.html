@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Investopia TradeAI - AI-powered investment and virtual trading platform">
+    <meta name="theme-color" content="#16a34a">
+
+    <title>Investopia TradeAI | Smart Investing</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold" href="index.html" aria-label="Investopia TradeAI Home">
+            <i class="bi bi-graph-up-arrow"></i>
+            Investopia <span>TradeAI</span>
+        </a>
+
+        <!-- Mobile Menu -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Navigation -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav mx-auto gap-lg-2">
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="home.html">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../market/market.html">Market</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../news/news.html">News</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../learning/learning.html">Learning</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../ai-advisor/ai-advisor.html">
+                        AI Advisor
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- Right Navigation -->
+            <div class="d-flex align-items-center gap-2 nav-actions">
+
+                <!-- Theme -->
+                <button class="theme-btn"
+                        id="themeToggle"
+                        type="button"
+                        aria-label="Toggle dark and light theme"
+                        title="Toggle theme">
+                    <i class="bi bi-moon-stars" id="themeIcon"></i>
+                </button>
+
+                <a href="../dashboard/dashboard.html"
+   class="btn btn-success dashboard-nav-btn">
+
+    <i class="bi bi-grid-1x2"></i>
+    Dashboard
+
+</a>
+
+                <!-- Login -->
+                <a href="../login/login.html"
+                   class="btn btn-outline-success">
+                    Login
+                </a>
+
+                <!-- Register -->
+                <a href="../register/register.html"
+                   class="btn btn-success">
+                    Get Started
+                </a>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ================= HERO ================= -->
+<main>
+
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+
+            <!-- Hero Content -->
+            <div class="col-lg-6">
+
+                <span class="badge hero-badge">
+                    <i class="bi bi-stars"></i>
+                    AI-Powered Investing
+                </span>
+
+                <h1 class="hero-title mt-4">
+                    Invest smarter.<br>
+                    <span>Trade with confidence.</span>
+                </h1>
+
+                <p class="hero-text">
+                    Learn, practice and make smarter investment decisions
+                    with AI-powered insights, virtual trading and
+                    real-time market intelligence.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3 mt-4">
+
+                    <a href="../register/register.html"
+                       class="btn btn-success btn-lg px-4">
+                        Start Investing
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                    <a href="../market/market.html"
+                       class="btn btn-outline-secondary btn-lg px-4">
+                        Explore Market
+                    </a>
+
+                </div>
+
+                <!-- Trust Points -->
+                <div class="hero-trust mt-4">
+
+                    <span>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Virtual Trading
+                    </span>
+
+                    <span>
+                        <i class="bi bi-check-circle-fill"></i>
+                        AI Insights
+                    </span>
+
+                    <span>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Beginner Friendly
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Dashboard Preview -->
+            <div class="col-lg-6">
+
+                <div class="dashboard-preview">
+
+                    <div class="preview-header">
+
+                        <div>
+                            <small>Portfolio Value</small>
+                            <h3>₹1,24,580</h3>
+                        </div>
+
+                        <span class="profit">
+                            +12.48%
+                        </span>
+
+                    </div>
+
+
+                    <!-- Chart -->
+                    <div class="chart">
+
+                        <svg viewBox="0 0 500 180"
+                             preserveAspectRatio="none"
+                             aria-label="Portfolio growth chart"
+                             role="img">
+
+                            <defs>
+                                <linearGradient id="chartFill"
+                                                x1="0"
+                                                x2="0"
+                                                y1="0"
+                                                y2="1">
+                                    <stop offset="0%" stop-opacity=".25"/>
+                                    <stop offset="100%" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path class="chart-area"
+                                  d="M0 145 C60 125 70 135 110 105
+                                  S180 125 220 90 S280 105 320 65
+                                  S390 80 430 40 S470 55 500 20 V180 H0Z">
+                            </path>
+
+                            <path class="chart-line"
+                                  d="M0 145 C60 125 70 135 110 105
+                                  S180 125 220 90 S280 105 320 65
+                                  S390 80 430 40 S470 55 500 20">
+                            </path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <!-- Preview Stats -->
+                    <div class="preview-stats">
+
+                        <div>
+                            <small>Invested</small>
+                            <strong>₹1,10,200</strong>
+                        </div>
+
+                        <div>
+                            <small>Today's Gain</small>
+                            <strong class="profit">+₹2,840</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+<section class="features py-5" id="features">
+
+    <div class="container py-lg-4">
+
+        <div class="section-heading text-center mx-auto">
+
+            <span class="section-label">
+                WHY INVESTOPIA
+            </span>
+
+            <h2>
+                Everything you need to invest smarter
+            </h2>
+
+            <p>
+                A simple platform designed to help you understand markets,
+                practice trading and build better investment habits.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+            <!-- AI Advisor -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-robot"></i>
+                    </div>
+
+                    <h4>AI Investment Advisor</h4>
+
+                    <p>
+                        Get personalized insights and investment guidance
+                        powered by artificial intelligence.
+                    </p>
+
+                    <a href="../ai-advisor/ai-advisor.html">
+                        Explore AI Advisor
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Virtual Trading -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+
+                    <h4>Virtual Trading</h4>
+
+                    <p>
+                        Practice buying and selling stocks with virtual
+                        money without risking your real capital.
+                    </p>
+
+                    <a href="../market/market.html">
+                        Explore Market
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Portfolio -->
+            <div class="col-md-6 col-lg-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-pie-chart"></i>
+                    </div>
+
+                    <h4>Portfolio Insights</h4>
+
+                    <p>
+                        Track your investments, returns, allocation and
+                        overall portfolio performance.
+                    </p>
+
+                    <a href="../portfolio/portfolio.html">
+                        View Portfolio
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AI ADVISOR ================= -->
+<section class="ai-section py-5">
+
+    <div class="container py-lg-5">
+
+        <div class="row align-items-center g-5">
+
+            <!-- AI Content -->
+            <div class="col-lg-6">
+
+                <span class="section-label">
+                    YOUR AI COMPANION
+                </span>
+
+                <h2 class="display-6 fw-bold mt-2">
+                    Meet your personal
+                    <span>AI Investment Advisor.</span>
+                </h2>
+
+                <p class="mt-3">
+                    Understand market trends, analyze investments and get
+                    easy-to-understand answers to your financial questions.
+                </p>
+
+                <a href="../ai-advisor/ai-advisor.html"
+                   class="btn btn-success mt-3">
+                    Try AI Advisor
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <!-- Chat Preview -->
+            <div class="col-lg-6">
+
+                <div class="ai-card">
+
+                    <div class="ai-card-head">
+
+                        <div class="ai-avatar">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <div>
+                            <strong>Investopia AI</strong>
+                            <small>Online • Ready to help</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat user-chat">
+                        Which investment option is suitable for a beginner?
+                    </div>
+
+
+                    <div class="chat ai-chat">
+
+                        <i class="bi bi-stars"></i>
+
+                        I can help you compare options based on your goals,
+                        risk level and investment horizon.
+
+                    </div>
+
+
+                    <div class="chat-input">
+
+                        <span>Ask Investopia AI...</span>
+
+                        <i class="bi bi-send-fill"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PLATFORM PREVIEW ================= -->
+<section class="platform-section py-5">
+
+    <div class="container py-lg-4">
+
+        <div class="section-heading text-center mx-auto">
+
+            <span class="section-label">
+                EXPLORE INVESTOPIA
+            </span>
+
+            <h2>
+                Your complete investment workspace
+            </h2>
+
+            <p>
+                Everything is organized in one simple and easy-to-use platform.
+            </p>
+
+        </div>
+
+
+        <div class="row g-3 mt-4">
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../dashboard/dashboard.html" class="quick-card">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../market/market.html" class="quick-card">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Market</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../stock-details/stock-details.html" class="quick-card">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Stock Details</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../portfolio/portfolio.html" class="quick-card">
+                    <i class="bi bi-wallet2"></i>
+                    <span>Portfolio</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../ai-advisor/ai-advisor.html" class="quick-card">
+                    <i class="bi bi-robot"></i>
+                    <span>AI Advisor</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../planner/planner.html" class="quick-card">
+                    <i class="bi bi-bullseye"></i>
+                    <span>Planner</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../insights/insights.html" class="quick-card">
+                    <i class="bi bi-lightbulb"></i>
+                    <span>Insights</span>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="../profile/profile.html" class="quick-card">
+                    <i class="bi bi-person-circle"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+<section class="cta-section py-5">
+
+    <div class="container py-4">
+
+        <div class="cta-box text-center">
+
+            <span class="section-label">
+                START YOUR JOURNEY
+            </span>
+
+            <h2 class="mt-2">
+                Your smarter investing journey starts here.
+            </h2>
+
+            <p>
+                Learn. Practice. Analyze. Invest smarter.
+            </p>
+
+            <a href="../register/register.html"
+               class="btn btn-success btn-lg px-4">
+                Create Free Account
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+<footer>
+
+    <div class="container py-4">
+
+        <div class="row gy-4 align-items-center">
+
+            <div class="col-md-6">
+
+                <a class="footer-brand" href="home.html">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    Investopia TradeAI
+                </a>
+
+                <p class="mb-0 mt-2">
+                    Smart investing powered by technology and AI.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6 text-md-end footer-links">
+
+                <a href="home.html">Home</a>
+                <a href="../dashboard/dashboard.html">Dashboard</a>
+                <a href="../news/news.html">News</a>
+                <a href="../learning/learning.html">Learning</a>
+                <a href="../profile/profile.html">Profile</a>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="d-flex flex-column flex-md-row
+                    justify-content-between gap-2">
+
+            <p class="small mb-0">
+                © 2026 Investopia TradeAI. All rights reserved.
+            </p>
+
+            <p class="small mb-0">
+                Educational & virtual trading platform.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ================= SCRIPTS ================= -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Page JavaScript -->
+<script src="home.js"></script>
+
+</body>
+</html>

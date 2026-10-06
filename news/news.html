@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Market News | Investopia TradeAI</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="news.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <a href="../home/home.html" class="brand">
+
+                <span class="brand-icon">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </span>
+
+                <span>
+                    <strong>Investopia</strong>
+                    <small>TradeAI</small>
+                </span>
+
+            </a>
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Close menu">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="../dashboard/dashboard.html"
+                class="sidebar-link">
+
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a
+                href="../market/market.html"
+                class="sidebar-link">
+
+                <i class="bi bi-bar-chart-line"></i>
+                <span>Market</span>
+
+            </a>
+
+
+            <a
+                href="../stock-details/stock-details.html"
+                class="sidebar-link">
+
+                <i class="bi bi-search"></i>
+                <span>Stock Details</span>
+
+            </a>
+
+
+            <a
+                href="../portfolio/portfolio.html"
+                class="sidebar-link">
+
+                <i class="bi bi-pie-chart"></i>
+                <span>Portfolio</span>
+
+            </a>
+
+
+            <a
+                href="../ai-advisor/ai-advisor.html"
+                class="sidebar-link">
+
+                <i class="bi bi-stars"></i>
+                <span>AI Advisor</span>
+
+            </a>
+
+
+            <a
+                href="../planner/planner.html"
+                class="sidebar-link">
+
+                <i class="bi bi-bullseye"></i>
+                <span>Planner</span>
+
+            </a>
+
+
+            <a
+                href="../insights/insights.html"
+                class="sidebar-link">
+
+                <i class="bi bi-lightbulb"></i>
+                <span>Insights</span>
+
+            </a>
+
+
+            <a
+                href="news.html"
+                class="sidebar-link active">
+
+                <i class="bi bi-newspaper"></i>
+                <span>News</span>
+
+            </a>
+
+
+            <a
+                href="../learning/learning.html"
+                class="sidebar-link">
+
+                <i class="bi bi-mortarboard"></i>
+                <span>Learning</span>
+
+            </a>
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <a
+                href="../profile/profile.html"
+                class="sidebar-link">
+
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>Investopia AI</strong>
+                    <small>Ready to assist</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MOBILE OVERLAY
+    ===================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay">
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================= -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="menu-toggle"
+                    id="sidebarToggle"
+                    aria-label="Open menu">
+
+                    <i class="bi bi-list"></i>
+
+                </button>
+
+
+                <div class="page-heading">
+
+                    <span class="eyebrow">
+                        INVESTOPIA TRADEAI
+                    </span>
+
+                    <h1>Market News</h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <div class="global-search">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        id="globalSearch"
+                        placeholder="Search stocks, ETFs, funds..."
+                        autocomplete="off">
+
+                    <span class="search-shortcut">
+                        Ctrl K
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="icon-button"
+                    id="themeToggle"
+                    aria-label="Toggle theme">
+
+                    <i
+                        class="bi bi-moon-stars"
+                        id="themeIcon">
+                    </i>
+
+                </button>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="profile-button">
+
+                    <span class="profile-avatar">
+
+                        <i class="bi bi-person"></i>
+
+                    </span>
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================= -->
+
+        <section class="page-content">
+
+
+            <!-- =================================================
+                 INTRO
+            ================================================= -->
+
+            <div class="news-intro">
+
+                <div>
+
+                    <span class="section-label">
+                        MARKET INTELLIGENCE
+                    </span>
+
+                    <h2>
+                        Stay ahead of the market
+                    </h2>
+
+                    <p>
+                        Follow important market, company and
+                        investment news and understand how major
+                        events could affect your investments.
+                    </p>
+
+                </div>
+
+
+                <div class="intro-icon">
+
+                    <i class="bi bi-newspaper"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 NEWS CONTROLS
+            ================================================= -->
+
+            <div class="news-controls">
+
+                <div class="news-search">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        id="newsSearch"
+                        placeholder="Search news, companies or topics...">
+
+                </div>
+
+
+                <div
+                    class="news-filters"
+                    id="newsFilters">
+
+                    <button
+                        class="filter-button active"
+                        data-category="all">
+
+                        All
+
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="stocks">
+
+                        Stocks
+
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="market">
+
+                        Market
+
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="economy">
+
+                        Economy
+
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="business">
+
+                        Business
+
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="global">
+
+                        Global
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MARKET NEWS SUMMARY
+            ================================================= -->
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        MARKET PULSE
+                    </span>
+
+                    <h3>
+                        Today's market view
+                    </h3>
+
+                </div>
+
+                <span
+                    class="data-status"
+                    id="newsStatus">
+
+                    Demo data
+
+                </span>
+
+            </div>
+
+
+            <div class="market-pulse">
+
+                <div class="pulse-item">
+
+                    <span>
+                        Market Trend
+                    </span>
+
+                    <strong id="marketTrend">
+                        Neutral
+                    </strong>
+
+                    <small>
+                        Waiting for live data
+                    </small>
+
+                </div>
+
+
+                <div class="pulse-item">
+
+                    <span>
+                        Major Indexes
+                    </span>
+
+                    <strong id="indexStatus">
+                        --
+                    </strong>
+
+                    <small>
+                        Live data will appear here
+                    </small>
+
+                </div>
+
+
+                <div class="pulse-item">
+
+                    <span>
+                        News Sentiment
+                    </span>
+
+                    <strong id="newsSentiment">
+                        Neutral
+                    </strong>
+
+                    <small>
+                        Based on available news
+                    </small>
+
+                </div>
+
+
+                <div class="pulse-item">
+
+                    <span>
+                        Last Updated
+                    </span>
+
+                    <strong id="lastUpdated">
+                        --
+                    </strong>
+
+                    <small>
+                        News refresh time
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURED NEWS
+            ================================================= -->
+
+            <div class="section-header featured-header">
+
+                <div>
+
+                    <span class="section-label">
+                        FEATURED
+                    </span>
+
+                    <h3>
+                        Important stories
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="featured-news"
+                id="featuredNews">
+
+
+                <article
+                    class="featured-main news-card"
+                    data-category="market"
+                    data-title="Market news">
+
+                    <div class="news-image">
+
+                        <div class="image-placeholder">
+
+                            <i class="bi bi-bar-chart-line"></i>
+
+                        </div>
+
+                        <span class="news-category">
+                            MARKET
+                        </span>
+
+                    </div>
+
+
+                    <div class="featured-content">
+
+                        <span class="news-time">
+                            Market Update
+                        </span>
+
+                        <h3>
+                            Important market developments
+                        </h3>
+
+                        <p>
+                            Live market news will appear here once
+                            the news API is connected to Investopia.
+                        </p>
+
+                        <div class="news-meta">
+
+                            <span>
+                                Investopia News
+                            </span>
+
+                            <span>
+                                <i class="bi bi-clock"></i>
+                                Latest
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <div class="featured-side">
+
+                    <article
+                        class="mini-news news-card"
+                        data-category="stocks"
+                        data-title="Stock market company news">
+
+                        <div class="mini-news-icon">
+
+                            <i class="bi bi-building"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span class="news-category">
+                                STOCKS
+                            </span>
+
+                            <h4>
+                                Company and stock updates
+                            </h4>
+
+                            <span class="news-time">
+                                Live news will appear here
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="mini-news news-card"
+                        data-category="economy"
+                        data-title="Economic developments">
+
+                        <div class="mini-news-icon">
+
+                            <i class="bi bi-bank"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span class="news-category">
+                                ECONOMY
+                            </span>
+
+                            <h4>
+                                Important economic developments
+                            </h4>
+
+                            <span class="news-time">
+                                Live news will appear here
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="mini-news news-card"
+                        data-category="global"
+                        data-title="Global financial markets">
+
+                        <div class="mini-news-icon">
+
+                            <i class="bi bi-globe2"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span class="news-category">
+                                GLOBAL
+                            </span>
+
+                            <h4>
+                                Global markets and financial news
+                            </h4>
+
+                            <span class="news-time">
+                                Live news will appear here
+                            </span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 LATEST NEWS
+            ================================================= -->
+
+            <div class="section-header latest-header">
+
+                <div>
+
+                    <span class="section-label">
+                        LATEST
+                    </span>
+
+                    <h3>
+                        Latest market news
+                    </h3>
+
+                </div>
+
+                <span
+                    class="result-count"
+                    id="resultCount">
+
+                    6 stories
+
+                </span>
+
+            </div>
+
+
+            <div
+                class="news-list"
+                id="newsList">
+
+
+                <article
+                    class="latest-news news-card"
+                    data-category="stocks"
+                    data-title="Corporate earnings and stock market">
+
+                    <div class="latest-icon">
+
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                    </div>
+
+                    <div class="latest-content">
+
+                        <div class="latest-top">
+
+                            <span class="news-category">
+                                STOCKS
+                            </span>
+
+                            <span class="news-time">
+                                Latest
+                            </span>
+
+                        </div>
+
+                        <h4>
+                            Corporate earnings and stock market updates
+                        </h4>
+
+                        <p>
+                            Track important company announcements,
+                            earnings and developments that may affect
+                            stock prices.
+                        </p>
+
+                        <div class="news-source">
+
+                            <i class="bi bi-newspaper"></i>
+                            Market News
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="read-news"
+                        aria-label="Open news">
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </article>
+
+
+                <article
+                    class="latest-news news-card"
+                    data-category="market"
+                    data-title="Indian market indices">
+
+                    <div class="latest-icon">
+
+                        <i class="bi bi-bar-chart"></i>
+
+                    </div>
+
+                    <div class="latest-content">
+
+                        <div class="latest-top">
+
+                            <span class="news-category">
+                                MARKET
+                            </span>
+
+                            <span class="news-time">
+                                Latest
+                            </span>
+
+                        </div>
+
+                        <h4>
+                            Indian market index developments
+                        </h4>
+
+                        <p>
+                            Follow major movements in NIFTY, SENSEX
+                            and other important market indicators.
+                        </p>
+
+                        <div class="news-source">
+
+                            <i class="bi bi-newspaper"></i>
+                            Market News
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="read-news"
+                        aria-label="Open news">
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </article>
+
+
+                <article
+                    class="latest-news news-card"
+                    data-category="business"
+                    data-title="Business company developments">
+
+                    <div class="latest-icon">
+
+                        <i class="bi bi-briefcase"></i>
+
+                    </div>
+
+                    <div class="latest-content">
+
+                        <div class="latest-top">
+
+                            <span class="news-category">
+                                BUSINESS
+                            </span>
+
+                            <span class="news-time">
+                                Latest
+                            </span>
+
+                        </div>
+
+                        <h4>
+                            Major business developments to watch
+                        </h4>
+
+                        <p>
+                            Follow important business announcements,
+                            acquisitions, expansions and company events.
+                        </p>
+
+                        <div class="news-source">
+
+                            <i class="bi bi-newspaper"></i>
+                            Business News
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="read-news"
+                        aria-label="Open news">
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </article>
+
+
+                <article
+                    class="latest-news news-card"
+                    data-category="economy"
+                    data-title="Indian economy inflation interest rates">
+
+                    <div class="latest-icon">
+
+                        <i class="bi bi-currency-rupee"></i>
+
+                    </div>
+
+                    <div class="latest-content">
+
+                        <div class="latest-top">
+
+                            <span class="news-category">
+                                ECONOMY
+                            </span>
+
+                            <span class="news-time">
+                                Latest
+                            </span>
+
+                        </div>
+
+                        <h4>
+                            Economic indicators and policy updates
+                        </h4>
+
+                        <p>
+                            Understand major economic developments,
+                            interest rates, inflation and policy changes.
+                        </p>
+
+                        <div class="news-source">
+
+                            <i class="bi bi-newspaper"></i>
+                            Economy News
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="read-news"
+                        aria-label="Open news">
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </article>
+
+
+                <article
+                    class="latest-news news-card"
+                    data-category="global"
+                    data-title="Global market financial news">
+
+                    <div class="latest-icon">
+
+                        <i class="bi bi-globe2"></i>
+
+                    </div>
+
+                    <div class="latest-content">
+
+                        <div class="latest-top">
+
+                            <span class="news-category">
+                                GLOBAL
+                            </span>
+
+                            <span class="news-time">
+                                Latest
+                            </span>
+
+                        </div>
+
+                        <h4>
+                            Global financial market developments
+                        </h4>
+
+                        <p>
+                            Follow international events that can
+                            influence Indian and global markets.
+                        </p>
+
+                        <div class="news-source">
+
+                            <i class="bi bi-newspaper"></i>
+                            Global News
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="read-news"
+                        aria-label="Open news">
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </article>
+
+
+                <article
+                    class="latest-news news-card"
+                    data-category="market"
+                    data-title="Market sentiment investor outlook">
+
+                    <div class="latest-icon">
+
+                        <i class="bi bi-speedometer2"></i>
+
+                    </div>
+
+                    <div class="latest-content">
+
+                        <div class="latest-top">
+
+                            <span class="news-category">
+                                MARKET
+                            </span>
+
+                            <span class="news-time">
+                                Latest
+                            </span>
+
+                        </div>
+
+                        <h4>
+                            Investor sentiment and market outlook
+                        </h4>
+
+                        <p>
+                            Explore market sentiment, sector trends
+                            and factors investors are watching.
+                        </p>
+
+                        <div class="news-source">
+
+                            <i class="bi bi-newspaper"></i>
+                            Market News
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="read-news"
+                        aria-label="Open news">
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </article>
+
+            </div>
+
+
+            <!-- =================================================
+                 AI NEWS SUMMARY
+            ================================================= -->
+
+            <div class="ai-news-card">
+
+                <div class="ai-news-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            INVESTOPIA AI
+                        </span>
+
+                        <h3>
+                            Understand the news
+                        </h3>
+
+                        <p>
+                            Instead of only reading headlines,
+                            use Investopia AI to understand what
+                            a news event could mean for an investment.
+                        </p>
+
+                    </div>
+
+
+                    <div class="ai-news-icon">
+
+                        <i class="bi bi-stars"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-news-features">
+
+                    <div>
+
+                        <i class="bi bi-check-circle"></i>
+
+                        <span>
+                            Simple news summaries
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="bi bi-check-circle"></i>
+
+                        <span>
+                            Potential market impact
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="bi bi-check-circle"></i>
+
+                        <span>
+                            Company-specific context
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="../ai-advisor/ai-advisor.html"
+                    class="ai-button">
+
+                    <i class="bi bi-chat-stars"></i>
+
+                    Ask Investopia AI
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 DISCLAIMER
+            ================================================= -->
+
+            <div class="news-disclaimer">
+
+                <i class="bi bi-info-circle"></i>
+
+                <span>
+                    News and market information may be delayed or
+                    simulated until live APIs are connected.
+                    News summaries are for educational purposes only
+                    and should not be treated as financial advice.
+                    Invest at your own risk.
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         SCRIPTS
+    ===================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Investopia Authentication -->
+    <script src="../auth/supabase.js"></script>
+    <script src="../auth/session.js"></script>
+
+    <!-- News JavaScript -->
+    <script src="news.js"></script>
+
+</body>
+
+</html>
