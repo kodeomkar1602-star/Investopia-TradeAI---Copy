@@ -1007,7 +1007,7 @@ Do not add unnecessary closing sentences.
 
         const response =
             await fetch(
-                "http://localhost:5000/api/chat",
+                "https://investopia-tradeai-copy.onrender.com",
                 {
                     method: "POST",
 
