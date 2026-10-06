@@ -4,7 +4,6 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-
     /* =====================================================
        SESSION PROTECTION
     ===================================================== */
@@ -19,20 +18,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = session.user;
 
-    console.log(
-        "Investopia logged-in user:",
-        user
-    );
-
-    console.log(
-        "User ID:",
-        user.id
-    );
-
-    console.log(
-        "User Email:",
-        user.email
-    );
+    console.log("Investopia logged-in user:", user);
+    console.log("User ID:", user.id);
+    console.log("User Email:", user.email);
 
 
     /* =====================================================
@@ -59,6 +47,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const globalSearch =
         document.getElementById("globalSearch");
+
+    const profileAvatar =
+        document.getElementById("profileAvatar");
+
+    const profileName =
+        document.getElementById("profileName");
 
     const plannerForm =
         document.getElementById("plannerForm");
@@ -96,8 +90,85 @@ document.addEventListener("DOMContentLoaded", async () => {
     const progressFill =
         document.getElementById("progressFill");
 
+    const progressCurrent =
+        document.getElementById("progressCurrent");
+
     const progressTarget =
         document.getElementById("progressTarget");
+
+    const progressSource =
+        document.getElementById("progressSource");
+
+
+    /* =====================================================
+       USER NAME
+    ===================================================== */
+
+    function getUserName() {
+
+        const metadata =
+            user?.user_metadata || {};
+
+        return (
+            metadata.full_name ||
+            metadata.name ||
+            metadata.username ||
+            user?.email?.split("@")[0] ||
+            "User"
+        );
+    }
+
+
+    function getInitials(name) {
+
+        const words =
+            String(name)
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+        if (!words.length) {
+            return "U";
+        }
+
+        if (words.length === 1) {
+            return words[0]
+                .substring(0, 2)
+                .toUpperCase();
+        }
+
+        return (
+            words[0][0] +
+            words[words.length - 1][0]
+        ).toUpperCase();
+    }
+
+
+    const userName =
+        getUserName();
+
+
+    if (profileName) {
+        profileName.textContent =
+            userName;
+    }
+
+
+    if (profileAvatar) {
+        profileAvatar.textContent =
+            getInitials(userName);
+    }
+
+
+    /* =====================================================
+       USER-SPECIFIC STORAGE
+    ===================================================== */
+
+    const plannerStorageKey =
+        `investopia-planner-${user.id}`;
+
+    const aiPlannerStorageKey =
+        `investopia-ai-planner-context-${user.id}`;
 
 
     /* =====================================================
@@ -143,6 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else {
 
                 openSidebar();
+
             }
 
         }
@@ -172,7 +244,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     if (
                         window.innerWidth <= 991
                     ) {
+
                         closeSidebar();
+
                     }
 
                 }
@@ -187,7 +261,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function updateThemeIcon() {
 
-        if (!themeIcon) return;
+        if (!themeIcon) {
+            return;
+        }
 
         const dark =
             document.body.classList.contains(
@@ -228,6 +304,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.body.classList.add(
             "dark-theme"
         );
+
     }
 
 
@@ -272,14 +349,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                 globalSearch.value.trim();
 
 
-            if (!query) return;
+            if (!query) {
+                return;
+            }
 
 
             window.location.href =
                 `../market/market.html?search=${encodeURIComponent(query)}`;
+
         }
     );
 
+
+    /* =====================================================
+       CTRL + K
+    ===================================================== */
 
     document.addEventListener(
         "keydown",
@@ -294,6 +378,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 event.preventDefault();
 
                 globalSearch?.focus();
+
             }
 
         }
@@ -309,12 +394,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         const number =
             Number(value) || 0;
 
-
         return "₹" +
             number.toLocaleString(
                 "en-IN",
                 {
                     maximumFractionDigits: 0
+                }
+            );
+    }
+
+
+    function formatCurrencyDecimal(value) {
+
+        const number =
+            Number(value) || 0;
+
+        return "₹" +
+            number.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
                 }
             );
     }
@@ -371,12 +471,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        if (value === "20") {
+        if (String(value) === "20") {
             return "20+ Years";
         }
 
 
-        return `${value} Year${value === "1" ? "" : "s"}`;
+        return `${value} Year${String(value) === "1" ? "" : "s"}`;
     }
 
 
@@ -420,32 +520,58 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
-       BASIC ESTIMATION
+       VALIDATE NUMBER
+    ===================================================== */
 
-       This is only a simple educational simulation.
-       It is NOT a guaranteed return calculation.
+    function getPositiveNumber(input) {
+
+        if (!input) {
+            return 0;
+        }
+
+        const value =
+            Number(input.value);
+
+        if (
+            !Number.isFinite(value) ||
+            value < 0
+        ) {
+            return 0;
+        }
+
+        return value;
+    }
+
+
+    /* =====================================================
+       BASIC EDUCATIONAL ESTIMATION
+       
+       IMPORTANT:
+       These rates are assumptions used only for simulation.
+       They are NOT Angel One prices and are NOT guaranteed
+       market returns.
     ===================================================== */
 
     function calculatePlan() {
 
         const target =
-            Number(targetValue.value) || 0;
+            getPositiveNumber(targetValue);
 
         const initial =
-            Number(initialAmount.value) || 0;
+            getPositiveNumber(initialAmount);
 
         const monthly =
-            Number(monthlyAmount.value) || 0;
+            getPositiveNumber(monthlyAmount);
 
         const years =
-            Number(timeline.value) || 0;
+            Number(timeline?.value) || 0;
 
         const risk =
             getRisk();
 
 
         if (
-            !goalType.value ||
+            !goalType?.value ||
             target <= 0 ||
             years <= 0 ||
             monthly <= 0 ||
@@ -468,9 +594,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         /*
-           Simple simulated annual assumptions.
+            Educational planning assumptions only.
 
-           These are NOT promises or predictions.
+            Conservative = 7%
+            Moderate     = 10%
+            Growth       = 12%
+
+            These are not predictions and do not represent
+            live market returns.
         */
 
         const assumedRates = {
@@ -511,6 +642,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             estimatedValue +=
                 monthly;
+
         }
 
 
@@ -527,6 +659,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 getGoalName(
                     goalType.value
                 ),
+
+            goalType:
+                goalType.value,
 
             target,
 
@@ -549,19 +684,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             estimatedValue,
 
-            goalProgress
+            goalProgress,
+
+            createdAt:
+                new Date().toISOString()
 
         };
+
     }
 
 
     /* =====================================================
-       VALIDATION
+       VALIDATION MESSAGE
     ===================================================== */
 
     function showValidation() {
 
+        if (!aiPlanContent) {
+            return;
+        }
+
+
         aiPlanContent.innerHTML = `
+
             <div class="empty-state">
 
                 <div class="empty-icon">
@@ -581,45 +726,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </p>
 
             </div>
+
         `;
+
     }
 
 
     /* =====================================================
-       CREATE PLAN
-    ===================================================== */
-
-    plannerForm?.addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-
-            const plan =
-                calculatePlan();
-
-
-            if (!plan) return;
-
-
-            displayPlan(plan);
-
-            updateStats(plan);
-
-            updateProgress(plan);
-
-            savePlan(plan);
-
-        }
-    );
-
-
-    /* =====================================================
-       DISPLAY AI PLAN
+       DISPLAY PLAN
     ===================================================== */
 
     function displayPlan(plan) {
+
+        if (!aiPlanContent) {
+            return;
+        }
+
 
         aiPlanContent.innerHTML = `
 
@@ -738,9 +860,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 </div>
 
+
+                <div class="plan-item">
+
+                    <span>
+                        Assumed Annual Rate
+                    </span>
+
+                    <strong>
+                        ${(plan.annualRate * 100).toFixed(1)}%
+                    </strong>
+
+                </div>
+
             </div>
 
         `;
+
     }
 
 
@@ -754,6 +890,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             activeGoal.textContent =
                 plan.goal;
+
         }
 
 
@@ -763,6 +900,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 formatCurrency(
                     plan.target
                 );
+
         }
 
 
@@ -772,33 +910,289 @@ document.addEventListener("DOMContentLoaded", async () => {
                 getTimelineText(
                     String(plan.years)
                 );
+
         }
+
+    }
+
+
+    /* =====================================================
+       PAPER PORTFOLIO VALUE
+       
+       Reads Investopia's existing paper-trading storage.
+       
+       No stock price is invented here.
+       Only stored portfolio values are used.
+    ===================================================== */
+
+    function getPaperPortfolioValue() {
+
+        let cash = 0;
+        let holdingsValue = 0;
+        let foundPortfolioData = false;
+
+
+        /* -----------------------------------------------
+           CASH
+        ------------------------------------------------ */
+
+        const possibleCashKeys = [
+
+            "investopiaVirtualCash",
+
+            `investopiaVirtualCash-${user.id}`
+
+        ];
+
+
+        for (const key of possibleCashKeys) {
+
+            const raw =
+                localStorage.getItem(key);
+
+            if (raw === null) {
+                continue;
+            }
+
+
+            const parsed =
+                Number(
+                    String(raw)
+                        .replace(/,/g, "")
+                        .replace(/[₹$]/g, "")
+                );
+
+
+            if (
+                Number.isFinite(parsed) &&
+                parsed >= 0
+            ) {
+
+                cash = parsed;
+
+                foundPortfolioData = true;
+
+                break;
+
+            }
+
+        }
+
+
+        /* -----------------------------------------------
+           HOLDINGS
+        ------------------------------------------------ */
+
+        const possibleHoldingKeys = [
+
+            "investopiaHoldings",
+
+            `investopiaHoldings-${user.id}`
+
+        ];
+
+
+        let holdings = null;
+
+
+        for (const key of possibleHoldingKeys) {
+
+            const raw =
+                localStorage.getItem(key);
+
+            if (!raw) {
+                continue;
+            }
+
+
+            try {
+
+                const parsed =
+                    JSON.parse(raw);
+
+
+                if (parsed) {
+
+                    holdings = parsed;
+
+                    foundPortfolioData = true;
+
+                    break;
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "Could not parse holdings:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        if (!holdings) {
+
+            return {
+
+                value: cash,
+
+                hasData:
+                    foundPortfolioData
+
+            };
+
+        }
+
+
+        /*
+            The planner does not invent prices.
+
+            If the holdings already contain a current/market
+            value, use that stored value.
+
+            If only quantities are available, they are not
+            converted into money here because doing so would
+            require a live Angel One price for every holding.
+        */
+
+        if (Array.isArray(holdings)) {
+
+            holdings.forEach(holding => {
+
+                const marketValue =
+                    Number(
+                        holding.marketValue ??
+                        holding.currentValue ??
+                        holding.value ??
+                        0
+                    );
+
+
+                if (
+                    Number.isFinite(marketValue) &&
+                    marketValue >= 0
+                ) {
+
+                    holdingsValue +=
+                        marketValue;
+
+                }
+
+            });
+
+        } else if (
+            typeof holdings === "object"
+        ) {
+
+            Object.values(holdings)
+                .forEach(holding => {
+
+                    if (
+                        !holding ||
+                        typeof holding !== "object"
+                    ) {
+                        return;
+                    }
+
+
+                    const marketValue =
+                        Number(
+                            holding.marketValue ??
+                            holding.currentValue ??
+                            holding.value ??
+                            0
+                        );
+
+
+                    if (
+                        Number.isFinite(marketValue) &&
+                        marketValue >= 0
+                    ) {
+
+                        holdingsValue +=
+                            marketValue;
+
+                    }
+
+                });
+
+        }
+
+
+        return {
+
+            value:
+                cash + holdingsValue,
+
+            hasData:
+                foundPortfolioData
+
+        };
+
     }
 
 
     /* =====================================================
        UPDATE PROGRESS
+       
+       Progress uses current paper portfolio value when
+       available.
+
+       It does NOT use the simulated future value.
     ===================================================== */
 
     function updateProgress(plan) {
 
+        const portfolio =
+            getPaperPortfolioValue();
+
+
+        const currentValue =
+            portfolio.value;
+
+
         const percentage =
+            Math.min(
+                Math.max(
+                    (currentValue / plan.target) * 100,
+                    0
+                ),
+                100
+            );
+
+
+        const roundedPercentage =
             Math.round(
-                plan.goalProgress
+                percentage
             );
 
 
         if (progressPercent) {
 
             progressPercent.textContent =
-                `${percentage}%`;
+                `${roundedPercentage}%`;
+
         }
 
 
         if (progressFill) {
 
             progressFill.style.width =
-                `${percentage}%`;
+                `${roundedPercentage}%`;
+
+        }
+
+
+        if (progressCurrent) {
+
+            progressCurrent.textContent =
+                `Current: ${formatCurrencyDecimal(
+                    currentValue
+                )}`;
+
         }
 
 
@@ -808,20 +1202,51 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `Target: ${formatCurrency(
                     plan.target
                 )}`;
+
         }
+
+
+        if (progressSource) {
+
+            if (portfolio.hasData) {
+
+                progressSource.textContent =
+                    "Current value is based on your Investopia paper-trading portfolio data.";
+
+            } else {
+
+                progressSource.textContent =
+                    "No paper-trading portfolio value is available yet. Start paper trading to track actual progress.";
+
+            }
+
+        }
+
     }
 
 
     /* =====================================================
-       LOCAL STORAGE
+       SAVE PLAN
     ===================================================== */
 
     function savePlan(plan) {
 
-        localStorage.setItem(
-            "investopia-planner",
-            JSON.stringify(plan)
-        );
+        try {
+
+            localStorage.setItem(
+                plannerStorageKey,
+                JSON.stringify(plan)
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Could not save planner:",
+                error
+            );
+
+        }
+
     }
 
 
@@ -831,13 +1256,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function loadSavedPlan() {
 
-        const saved =
-            localStorage.getItem(
-                "investopia-planner"
+        let saved = null;
+
+
+        try {
+
+            saved =
+                localStorage.getItem(
+                    plannerStorageKey
+                );
+
+        } catch (error) {
+
+            console.error(
+                "Could not access saved planner:",
+                error
             );
 
+            return;
 
-        if (!saved) return;
+        }
+
+
+        if (!saved) {
+            return;
+        }
 
 
         try {
@@ -856,39 +1299,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (goalType) {
 
-                const goalMap = {
-
-                    "Wealth Creation":
-                        "wealth",
-
-                    "Retirement":
-                        "retirement",
-
-                    "Education":
-                        "education",
-
-                    "Buying a Home":
-                        "home",
-
-                    "Buying a Vehicle":
-                        "vehicle",
-
-                    "Travel":
-                        "travel",
-
-                    "Emergency Fund":
-                        "emergency",
-
-                    "Other Goal":
-                        "other"
-
-                };
-
-
                 goalType.value =
-                    goalMap[
+                    plan.goalType ||
+                    getGoalValueFromName(
                         plan.goal
-                    ] || "";
+                    );
+
             }
 
 
@@ -896,20 +1312,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 targetValue.value =
                     plan.target;
+
             }
 
 
             if (initialAmount) {
 
                 initialAmount.value =
-                    plan.initial;
+                    plan.initial || 0;
+
             }
 
 
             if (monthlyAmount) {
 
                 monthlyAmount.value =
-                    plan.monthly;
+                    plan.monthly || 0;
+
             }
 
 
@@ -919,12 +1338,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                     String(
                         plan.years
                     );
+
             }
 
 
             const riskRadio =
                 document.querySelector(
-                    `input[name="risk"][value="${plan.risk}"]`
+                    `input[name="risk"][value="${CSS.escape(
+                        String(plan.risk || "")
+                    )}"]`
                 );
 
 
@@ -932,6 +1354,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 riskRadio.checked =
                     true;
+
             }
 
 
@@ -947,7 +1370,49 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Could not load saved plan:",
                 error
             );
+
         }
+
+    }
+
+
+    /* =====================================================
+       GOAL VALUE FROM OLD SAVED DATA
+    ===================================================== */
+
+    function getGoalValueFromName(name) {
+
+        const goalMap = {
+
+            "Wealth Creation":
+                "wealth",
+
+            "Retirement":
+                "retirement",
+
+            "Education":
+                "education",
+
+            "Buying a Home":
+                "home",
+
+            "Buying a Vehicle":
+                "vehicle",
+
+            "Travel":
+                "travel",
+
+            "Emergency Fund":
+                "emergency",
+
+            "Other Goal":
+                "other"
+
+        };
+
+
+        return goalMap[name] || "";
+
     }
 
 
@@ -970,9 +1435,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (activeGoal) {
 
                 activeGoal.textContent =
-                    getGoalName(
-                        goalType.value
-                    );
+                    goalType.value
+                        ? getGoalName(
+                            goalType.value
+                        )
+                        : "No goal set";
+
             }
 
         }
@@ -994,11 +1462,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             "input",
             () => {
 
+                const value =
+                    Number(input.value);
+
+
                 if (
-                    Number(input.value) < 0
+                    !Number.isFinite(value) ||
+                    value < 0
                 ) {
 
                     input.value = 0;
+
                 }
 
             }
@@ -1008,26 +1482,90 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
+       CREATE PLAN
+    ===================================================== */
+
+    plannerForm?.addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            const plan =
+                calculatePlan();
+
+
+            if (!plan) {
+                return;
+            }
+
+
+            displayPlan(plan);
+
+            updateStats(plan);
+
+            updateProgress(plan);
+
+            savePlan(plan);
+
+        }
+    );
+
+
+    /* =====================================================
        AI ADVISOR LINK
     ===================================================== */
 
-    /*
-       Send planner information to AI Advisor
-       through localStorage.
-
-       The AI Advisor can use this later.
-    */
-
     document
-        .querySelector(
-            ".ai-chat-link"
-        )
+        .querySelector(".ai-chat-link")
         ?.addEventListener(
             "click",
             () => {
 
-                const plan =
+                /*
+                    If the form is complete, create the latest
+                    planner context.
+
+                    If the user already has a saved plan,
+                    use that instead.
+                */
+
+                const calculatedPlan =
                     calculatePlan();
+
+
+                let plan =
+                    calculatedPlan;
+
+
+                if (!plan) {
+
+                    try {
+
+                        const saved =
+                            localStorage.getItem(
+                                plannerStorageKey
+                            );
+
+
+                        if (saved) {
+
+                            plan =
+                                JSON.parse(saved);
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Could not read saved plan:",
+                            error
+                        );
+
+                    }
+
+                }
 
 
                 if (!plan) {
@@ -1037,11 +1575,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 const plannerContext = {
 
+                    userName,
+
                     goal:
                         plan.goal,
 
                     target:
                         plan.target,
+
+                    initialInvestment:
+                        plan.initial,
 
                     monthlyInvestment:
                         plan.monthly,
@@ -1050,20 +1593,89 @@ document.addEventListener("DOMContentLoaded", async () => {
                         plan.years,
 
                     risk:
-                        plan.riskText
+                        plan.riskText,
+
+                    estimatedValue:
+                        plan.estimatedValue,
+
+                    annualAssumption:
+                        plan.annualRate,
+
+                    createdAt:
+                        new Date().toISOString()
 
                 };
 
 
-                localStorage.setItem(
-                    "investopia-ai-planner-context",
-                    JSON.stringify(
-                        plannerContext
-                    )
-                );
+                try {
+
+                    localStorage.setItem(
+                        aiPlannerStorageKey,
+                        JSON.stringify(
+                            plannerContext
+                        )
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Could not save AI planner context:",
+                        error
+                    );
+
+                }
 
             }
         );
+
+
+    /* =====================================================
+       REFRESH PAPER PORTFOLIO PROGRESS
+    ===================================================== */
+
+    window.addEventListener(
+        "storage",
+        event => {
+
+            if (
+                event.key ===
+                    "investopiaVirtualCash" ||
+                event.key ===
+                    "investopiaHoldings"
+            ) {
+
+                const saved =
+                    localStorage.getItem(
+                        plannerStorageKey
+                    );
+
+
+                if (!saved) {
+                    return;
+                }
+
+
+                try {
+
+                    const plan =
+                        JSON.parse(saved);
+
+
+                    updateProgress(plan);
+
+                } catch (error) {
+
+                    console.error(
+                        "Could not refresh planner progress:",
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+    );
 
 
     /* =====================================================
@@ -1079,6 +1691,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ) {
 
                 closeSidebar();
+
             }
 
         }
@@ -1092,5 +1705,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadSavedPlan();
 
     updateThemeIcon();
+
+
+    console.log(
+        "Investopia Investment Planner initialized successfully."
+    );
 
 });

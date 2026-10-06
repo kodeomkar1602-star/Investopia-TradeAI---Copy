@@ -10,17 +10,14 @@
 
     <title>Market | Investopia TradeAI</title>
 
-    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
         rel="stylesheet">
 
-    <!-- Market CSS -->
     <link rel="stylesheet" href="market.css">
 </head>
 
@@ -70,24 +67,39 @@
 
         <p class="nav-label">MAIN</p>
 
-        <a href="../dashboard/dashboard.html" class="sidebar-link">
+        <a href="../dashboard/dashboard.html"
+           class="sidebar-link">
+
             <i class="bi bi-grid-1x2-fill"></i>
             <span>Dashboard</span>
+
         </a>
 
-        <a href="market.html" class="sidebar-link active">
+
+        <a href="market.html"
+           class="sidebar-link active">
+
             <i class="bi bi-graph-up"></i>
             <span>Market</span>
+
         </a>
 
-        <a href="../stock-details/stock-details.html" class="sidebar-link">
+
+        <a href="../stock-details/stock-details.html"
+           class="sidebar-link">
+
             <i class="bi bi-bar-chart-line"></i>
             <span>Stock Details</span>
+
         </a>
 
-        <a href="../portfolio/portfolio.html" class="sidebar-link">
+
+        <a href="../portfolio/portfolio.html"
+           class="sidebar-link">
+
             <i class="bi bi-wallet2"></i>
             <span>Portfolio</span>
+
         </a>
 
 
@@ -102,27 +114,42 @@
 
         </a>
 
-        <a href="../planner/planner.html" class="sidebar-link">
+
+        <a href="../planner/planner.html"
+           class="sidebar-link">
+
             <i class="bi bi-bullseye"></i>
             <span>Planner</span>
+
         </a>
 
-        <a href="../insights/insights.html" class="sidebar-link">
+
+        <a href="../insights/insights.html"
+           class="sidebar-link">
+
             <i class="bi bi-lightbulb"></i>
             <span>Insights</span>
+
         </a>
 
 
         <p class="nav-label mt-4">EXPLORE</p>
 
-        <a href="../news/news.html" class="sidebar-link">
+        <a href="../news/news.html"
+           class="sidebar-link">
+
             <i class="bi bi-newspaper"></i>
             <span>News</span>
+
         </a>
 
-        <a href="../learning/learning.html" class="sidebar-link">
+
+        <a href="../learning/learning.html"
+           class="sidebar-link">
+
             <i class="bi bi-book"></i>
             <span>Learning</span>
+
         </a>
 
     </nav>
@@ -130,10 +157,14 @@
 
     <div class="sidebar-bottom">
 
-        <a href="../profile/profile.html" class="sidebar-link">
+        <a href="../profile/profile.html"
+           class="sidebar-link">
+
             <i class="bi bi-person-circle"></i>
             <span>Profile</span>
+
         </a>
+
 
         <a href="../home/home.html"
            class="sidebar-link logout-link">
@@ -173,8 +204,6 @@
             </button>
 
 
-            <!-- Universal Search -->
-
             <div class="global-search">
 
                 <i class="bi bi-search"></i>
@@ -206,15 +235,14 @@
             </button>
 
 
-            <!-- Theme -->
-
             <button
                 class="header-icon-btn"
                 id="themeToggle"
                 type="button"
                 title="Toggle theme">
 
-                <i class="bi bi-moon-stars" id="themeIcon"></i>
+                <i class="bi bi-moon-stars"
+                   id="themeIcon"></i>
 
             </button>
 
@@ -222,14 +250,23 @@
             <a href="../profile/profile.html"
                class="profile-mini">
 
-                <span class="profile-avatar">
-                    A
+                <span
+                    class="profile-avatar"
+                    id="profileAvatar">
+
+                    U
+
                 </span>
 
                 <span class="profile-info d-none d-md-block">
 
-                    <strong>Anurag</strong>
-                    <small>Investor</small>
+                    <strong id="profileName">
+                        User
+                    </strong>
+
+                    <small>
+                        Investor
+                    </small>
 
                 </span>
 
@@ -264,7 +301,8 @@
                 </h1>
 
                 <p>
-                    Search and discover stocks, ETFs and mutual funds.
+                    Search and discover instruments available
+                    through Angel One market data.
                 </p>
 
             </div>
@@ -274,12 +312,14 @@
 
         <!-- =================================================
              LARGE SEARCH
-        ================================================== -->
+        ================================================= -->
 
         <section class="market-search-card">
 
             <div class="market-search-icon">
+
                 <i class="bi bi-search"></i>
+
             </div>
 
             <div class="market-search-content">
@@ -289,7 +329,7 @@
                 </h2>
 
                 <p>
-                    Search by company name, symbol or fund name.
+                    Search by company name, symbol or instrument name.
                 </p>
 
                 <div class="large-search">
@@ -299,7 +339,7 @@
                     <input
                         type="search"
                         id="assetSearch"
-                        placeholder="Try TCS, RELIANCE, NIFTYBEES, Parag Parikh..."
+                        placeholder="Try TCS, RELIANCE, INFY..."
                         autocomplete="off">
 
                     <button
@@ -314,8 +354,6 @@
                 </div>
 
 
-                <!-- Search suggestions/results -->
-
                 <div
                     class="search-results"
                     id="searchResults">
@@ -328,7 +366,7 @@
 
         <!-- =================================================
              MARKET OVERVIEW
-        ================================================== -->
+        ================================================= -->
 
         <section class="market-section">
 
@@ -341,7 +379,7 @@
                     </h2>
 
                     <p>
-                        Today's market snapshot
+                        Live market information
                     </p>
 
                 </div>
@@ -368,13 +406,16 @@
 
                         </div>
 
-                        <h3>
-                            24,850.40
+                        <h3 id="niftyPrice">
+                            Loading...
                         </h3>
 
-                        <span class="positive">
-                            <i class="bi bi-arrow-up"></i>
-                            +0.82%
+                        <span
+                            id="niftyChange"
+                            class="positive">
+
+                            --
+
                         </span>
 
                     </div>
@@ -398,13 +439,16 @@
 
                         </div>
 
-                        <h3>
-                            81,420.15
+                        <h3 id="sensexPrice">
+                            Loading...
                         </h3>
 
-                        <span class="positive">
-                            <i class="bi bi-arrow-up"></i>
-                            +0.71%
+                        <span
+                            id="sensexChange"
+                            class="positive">
+
+                            --
+
                         </span>
 
                     </div>
@@ -424,15 +468,18 @@
                                 Market Status
                             </span>
 
-                            <span class="status-dot"></span>
+                            <span
+                                class="status-dot"
+                                id="marketStatusDot">
+                            </span>
 
                         </div>
 
-                        <h3>
-                            Market Open
+                        <h3 id="marketStatus">
+                            Checking...
                         </h3>
 
-                        <span>
+                        <span id="marketStatusExchange">
                             NSE • BSE
                         </span>
 
@@ -460,7 +507,7 @@
                     </h2>
 
                     <p>
-                        Find assets that interest you.
+                        Live instruments available through Angel One.
                     </p>
 
                 </div>
@@ -468,7 +515,9 @@
             </div>
 
 
-            <div class="market-filters" id="marketFilters">
+            <div
+                class="market-filters"
+                id="marketFilters">
 
                 <button
                     type="button"
@@ -510,204 +559,38 @@
 
 
             <!-- =================================================
-                 POPULAR ASSETS
-            ================================================== -->
+                 LIVE ASSETS
+            ================================================= -->
 
-            <div class="row g-3" id="assetGrid">
+            <div
+                class="row g-3"
+                id="assetGrid">
 
+                <div class="col-12">
 
-                <!-- TCS -->
-
-                <div
-                    class="col-12 col-md-6 col-xl-3 asset-item"
-                    data-type="stock"
-                    data-name="TCS Tata Consultancy Services">
-
-                    <a
-                        href="../stock-details/stock-details.html?symbol=TCS"
-                        class="market-asset-card">
+                    <div class="market-asset-card">
 
                         <div class="asset-card-top">
 
                             <span class="asset-logo">
-                                T
+                                <i class="bi bi-arrow-repeat"></i>
                             </span>
 
                             <span class="asset-type">
-                                Stock
+                                LIVE
                             </span>
 
                         </div>
 
                         <h3>
-                            TCS
+                            Loading market data...
                         </h3>
 
                         <p>
-                            Tata Consultancy Services
+                            Fetching instruments from Angel One.
                         </p>
 
-                        <div class="asset-price">
-                            ₹3,421.50
-                        </div>
-
-                        <span class="positive">
-                            +1.24%
-                        </span>
-
-                        <div class="asset-card-footer">
-                            View Analysis
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-
-                    </a>
-
-                </div>
-
-
-                <!-- Reliance -->
-
-                <div
-                    class="col-12 col-md-6 col-xl-3 asset-item"
-                    data-type="stock"
-                    data-name="RELIANCE Reliance Industries">
-
-                    <a
-                        href="../stock-details/stock-details.html?symbol=RELIANCE"
-                        class="market-asset-card">
-
-                        <div class="asset-card-top">
-
-                            <span class="asset-logo">
-                                R
-                            </span>
-
-                            <span class="asset-type">
-                                Stock
-                            </span>
-
-                        </div>
-
-                        <h3>
-                            RELIANCE
-                        </h3>
-
-                        <p>
-                            Reliance Industries
-                        </p>
-
-                        <div class="asset-price">
-                            ₹1,425.20
-                        </div>
-
-                        <span class="positive">
-                            +0.84%
-                        </span>
-
-                        <div class="asset-card-footer">
-                            View Analysis
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-
-                    </a>
-
-                </div>
-
-
-                <!-- NIFTYBEES -->
-
-                <div
-                    class="col-12 col-md-6 col-xl-3 asset-item"
-                    data-type="etf"
-                    data-name="NIFTYBEES ETF Nifty BeES">
-
-                    <a
-                        href="../stock-details/stock-details.html?symbol=NIFTYBEES"
-                        class="market-asset-card">
-
-                        <div class="asset-card-top">
-
-                            <span class="asset-logo">
-                                N
-                            </span>
-
-                            <span class="asset-type">
-                                ETF
-                            </span>
-
-                        </div>
-
-                        <h3>
-                            NIFTYBEES
-                        </h3>
-
-                        <p>
-                            Nippon India ETF Nifty BeES
-                        </p>
-
-                        <div class="asset-price">
-                            ₹265.40
-                        </div>
-
-                        <span class="positive">
-                            +0.63%
-                        </span>
-
-                        <div class="asset-card-footer">
-                            View Analysis
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-
-                    </a>
-
-                </div>
-
-
-                <!-- Mutual Fund -->
-
-                <div
-                    class="col-12 col-md-6 col-xl-3 asset-item"
-                    data-type="mutual-fund"
-                    data-name="Parag Parikh Flexi Cap Mutual Fund">
-
-                    <a
-                        href="../stock-details/stock-details.html?symbol=PPFAS"
-                        class="market-asset-card">
-
-                        <div class="asset-card-top">
-
-                            <span class="asset-logo">
-                                P
-                            </span>
-
-                            <span class="asset-type">
-                                Mutual Fund
-                            </span>
-
-                        </div>
-
-                        <h3>
-                            PPFAS
-                        </h3>
-
-                        <p>
-                            Parag Parikh Flexi Cap Fund
-                        </p>
-
-                        <div class="asset-price">
-                            ₹82.36
-                        </div>
-
-                        <span class="positive">
-                            +0.42%
-                        </span>
-
-                        <div class="asset-card-footer">
-                            View Analysis
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-
-                    </a>
+                    </div>
 
                 </div>
 
@@ -718,7 +601,7 @@
 
         <!-- =================================================
              TOP GAINERS / LOSERS
-        ================================================== -->
+        ================================================= -->
 
         <section class="row g-4 market-section">
 
@@ -738,7 +621,7 @@
                             </h2>
 
                             <p>
-                                Strong performers today
+                                Live instruments with positive movement
                             </p>
 
                         </div>
@@ -760,81 +643,12 @@
 
                             </thead>
 
-                            <tbody>
+                            <tbody id="gainersBody">
 
                                 <tr>
 
-                                    <td>
-
-                                        <a
-                                            href="../stock-details/stock-details.html?symbol=TCS"
-                                            class="table-asset">
-
-                                            <strong>TCS</strong>
-                                            <small>NSE</small>
-
-                                        </a>
-
-                                    </td>
-
-                                    <td>
-                                        ₹3,421.50
-                                    </td>
-
-                                    <td class="positive">
-                                        +1.24%
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-
-                                        <a
-                                            href="../stock-details/stock-details.html?symbol=HDFCBANK"
-                                            class="table-asset">
-
-                                            <strong>HDFC BANK</strong>
-                                            <small>NSE</small>
-
-                                        </a>
-
-                                    </td>
-
-                                    <td>
-                                        ₹1,746.80
-                                    </td>
-
-                                    <td class="positive">
-                                        +1.12%
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-
-                                        <a
-                                            href="../stock-details/stock-details.html?symbol=RELIANCE"
-                                            class="table-asset">
-
-                                            <strong>RELIANCE</strong>
-                                            <small>NSE</small>
-
-                                        </a>
-
-                                    </td>
-
-                                    <td>
-                                        ₹1,425.20
-                                    </td>
-
-                                    <td class="positive">
-                                        +0.84%
+                                    <td colspan="3">
+                                        Loading live market data...
                                     </td>
 
                                 </tr>
@@ -865,7 +679,7 @@
                             </h2>
 
                             <p>
-                                Declining today
+                                Live instruments with negative movement
                             </p>
 
                         </div>
@@ -887,81 +701,12 @@
 
                             </thead>
 
-                            <tbody>
+                            <tbody id="losersBody">
 
                                 <tr>
 
-                                    <td>
-
-                                        <a
-                                            href="../stock-details/stock-details.html?symbol=INFY"
-                                            class="table-asset">
-
-                                            <strong>INFY</strong>
-                                            <small>NSE</small>
-
-                                        </a>
-
-                                    </td>
-
-                                    <td>
-                                        ₹1,512.30
-                                    </td>
-
-                                    <td class="negative">
-                                        -0.32%
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-
-                                        <a
-                                            href="../stock-details/stock-details.html?symbol=ITC"
-                                            class="table-asset">
-
-                                            <strong>ITC</strong>
-                                            <small>NSE</small>
-
-                                        </a>
-
-                                    </td>
-
-                                    <td>
-                                        ₹432.60
-                                    </td>
-
-                                    <td class="negative">
-                                        -0.21%
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-
-                                        <a
-                                            href="../stock-details/stock-details.html?symbol=SBIN"
-                                            class="table-asset">
-
-                                            <strong>SBIN</strong>
-                                            <small>NSE</small>
-
-                                        </a>
-
-                                    </td>
-
-                                    <td>
-                                        ₹812.40
-                                    </td>
-
-                                    <td class="negative">
-                                        -0.15%
+                                    <td colspan="3">
+                                        Loading live market data...
                                     </td>
 
                                 </tr>
@@ -981,7 +726,7 @@
 
         <!-- =================================================
              NEWS PREVIEW
-        ================================================== -->
+        ================================================= -->
 
         <section class="market-section">
 
@@ -1004,6 +749,7 @@
                     class="card-link">
 
                     View All
+
                     <i class="bi bi-arrow-right"></i>
 
                 </a>
@@ -1024,11 +770,11 @@
                         </span>
 
                         <h3>
-                            Indian markets trade higher as investors track global cues
+                            Open Market News
                         </h3>
 
                         <small>
-                            2 hours ago
+                            View latest updates
                         </small>
 
                     </a>
@@ -1046,11 +792,11 @@
                         </span>
 
                         <h3>
-                            IT sector remains in focus among investors
+                            Technology Market Updates
                         </h3>
 
                         <small>
-                            5 hours ago
+                            View latest updates
                         </small>
 
                     </a>
@@ -1068,11 +814,11 @@
                         </span>
 
                         <h3>
-                            Investors watch earnings and economic updates
+                            Business & Earnings Updates
                         </h3>
 
                         <small>
-                            Yesterday
+                            View latest updates
                         </small>
 
                     </a>
@@ -1086,7 +832,7 @@
 
         <!-- =================================================
              DISCLAIMER
-        ================================================== -->
+        ================================================= -->
 
         <div class="market-disclaimer">
 
@@ -1124,23 +870,13 @@
 </a>
 
 
-<!-- Bootstrap JS -->
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Supabase -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- Supabase Configuration -->
-
 <script src="../auth/supabase.js"></script>
 
-<!-- Session Handling -->
-
 <script src="../auth/session.js"></script>
-
-<!-- Market JS -->
 
 <script src="market.js"></script>
 

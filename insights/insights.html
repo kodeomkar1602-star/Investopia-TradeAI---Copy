@@ -273,9 +273,21 @@
                 href="../profile/profile.html"
                 class="profile-button">
 
-                <span class="profile-avatar">
-                    <i class="bi bi-person"></i>
+                <span
+                    class="profile-avatar"
+                    id="profileAvatar">
+
+                    U
+
                 </span>
+
+                <strong
+                    id="profileName"
+                    class="d-none d-md-inline">
+
+                    User
+
+                </strong>
 
             </a>
 
@@ -303,11 +315,11 @@
                     SMART MARKET INSIGHTS
                 </span>
 
-                <h2>
+                <h2 id="insightsHeading">
                     Understand what matters
                 </h2>
 
-                <p>
+                <p id="insightsIntroText">
                     Get simple insights about the market,
                     your portfolio and potential investment
                     risks without having to analyze everything
@@ -389,10 +401,10 @@
 
 
                     <div
-                        class="market-change positive"
+                        class="market-change"
                         id="niftyChange">
 
-                        Market data unavailable
+                        Loading live market data...
 
                     </div>
 
@@ -432,7 +444,7 @@
                         class="market-change"
                         id="sensexChange">
 
-                        Market data unavailable
+                        Loading live market data...
 
                     </div>
 
@@ -456,7 +468,7 @@
                             </span>
 
                             <strong id="marketMood">
-                                Neutral
+                                Calculating...
                             </strong>
 
                         </div>
@@ -472,7 +484,7 @@
                         class="market-change"
                         id="moodDescription">
 
-                        Waiting for market data
+                        Waiting for live index data
 
                     </div>
 
@@ -560,13 +572,12 @@
                             <div>
 
                                 <strong>
-                                    Portfolio data not available
+                                    Loading portfolio data...
                                 </strong>
 
                                 <p>
-                                    Add virtual holdings to your
-                                    portfolio to receive personalized
-                                    allocation and risk insights.
+                                    Your virtual portfolio analysis
+                                    will appear here.
                                 </p>
 
                             </div>
@@ -644,12 +655,12 @@
                         <div>
 
                             <strong id="riskLevel">
-                                Not enough data
+                                Calculating...
                             </strong>
 
                             <p id="riskText">
-                                Add portfolio holdings to
-                                calculate a simple risk view.
+                                Analyzing your current portfolio
+                                allocation.
                             </p>
 
                         </div>
@@ -705,6 +716,9 @@
 
                     <div class="allocation-bars">
 
+
+                        <!-- Equity -->
+
                         <div class="allocation-row">
 
                             <div>
@@ -713,7 +727,7 @@
                                     Equity
                                 </span>
 
-                                <strong>
+                                <strong id="equityPercent">
                                     0%
                                 </strong>
 
@@ -723,6 +737,7 @@
 
                                 <div
                                     class="allocation-fill"
+                                    id="equityBar"
                                     style="width:0%">
                                 </div>
 
@@ -730,6 +745,8 @@
 
                         </div>
 
+
+                        <!-- ETF -->
 
                         <div class="allocation-row">
 
@@ -739,7 +756,7 @@
                                     ETF
                                 </span>
 
-                                <strong>
+                                <strong id="etfPercent">
                                     0%
                                 </strong>
 
@@ -749,6 +766,7 @@
 
                                 <div
                                     class="allocation-fill"
+                                    id="etfBar"
                                     style="width:0%">
                                 </div>
 
@@ -756,6 +774,8 @@
 
                         </div>
 
+
+                        <!-- Mutual Funds -->
 
                         <div class="allocation-row">
 
@@ -765,7 +785,7 @@
                                     Mutual Funds
                                 </span>
 
-                                <strong>
+                                <strong id="mutualFundPercent">
                                     0%
                                 </strong>
 
@@ -775,6 +795,36 @@
 
                                 <div
                                     class="allocation-fill"
+                                    id="mutualFundBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Other -->
+
+                        <div class="allocation-row">
+
+                            <div>
+
+                                <span>
+                                    Other
+                                </span>
+
+                                <strong id="otherPercent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+                            <div class="allocation-track">
+
+                                <div
+                                    class="allocation-fill"
+                                    id="otherBar"
                                     style="width:0%">
                                 </div>
 
@@ -785,9 +835,13 @@
                     </div>
 
 
-                    <p class="card-note">
-                        Your allocation will appear here once
-                        portfolio data is available.
+                    <p
+                        class="card-note"
+                        id="allocationNote">
+
+                        Allocation is calculated from your
+                        current virtual portfolio.
+
                     </p>
 
                 </div>
@@ -836,13 +890,13 @@
                             <div>
 
                                 <strong>
-                                    Your AI insight will appear here
+                                    Analyzing your data...
                                 </strong>
 
                                 <p>
-                                    Connect market and portfolio
-                                    data to receive personalized
-                                    explanations from Investopia AI.
+                                    Investopia is preparing an
+                                    insight using your current
+                                    portfolio and live market view.
                                 </p>
 
                             </div>
@@ -889,8 +943,12 @@
 
             </div>
 
-            <span class="data-status">
-                Demo view
+            <span
+                class="data-status"
+                id="sectorStatus">
+
+                Based on available market data
+
             </span>
 
         </div>
@@ -1080,9 +1138,9 @@
             <i class="bi bi-info-circle"></i>
 
             <span>
-                Insights are educational and may use simulated
-                or delayed information until live market APIs
-                are connected. They are not financial advice.
+                Insights are educational and are based on
+                available market and virtual portfolio data.
+                They are not financial advice.
                 Invest at your own risk.
             </span>
 

@@ -1,32 +1,42 @@
 /* =========================================================
    INVESTOPIA TRADEAI - AI ADVISOR
+   SUPABASE USER + OPENROUTER BACKEND
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
+
 
     /* =====================================================
        SESSION PROTECTION
     ===================================================== */
 
-    const session = await requireAuth();
+    const session =
+        await requireAuth();
+
 
     if (!session) {
         return;
     }
 
+
     listenForAuthChanges();
 
-    const user = session.user;
+
+    const user =
+        session.user;
+
 
     console.log(
         "Investopia logged-in user:",
         user
     );
 
+
     console.log(
         "User ID:",
         user.id
     );
+
 
     console.log(
         "User Email:",
@@ -34,14 +44,122 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
+
     /* =====================================================
-       OPENROUTER CONFIGURATION
-
-       API key is stored securely in:
-       backend/.env
-
-       ai-advisor.js does NOT contain the API key.
+       CURRENT USER NAME
     ===================================================== */
+
+    function getUserName() {
+
+        const metadata =
+            user.user_metadata || {};
+
+
+        return (
+            metadata.full_name ||
+            metadata.name ||
+            metadata.username ||
+            user.email?.split("@")[0] ||
+            "User"
+        );
+
+    }
+
+
+    const userName =
+        getUserName();
+
+
+    console.log(
+        "Investopia user name:",
+        userName
+    );
+
+
+
+    /* =====================================================
+       UPDATE USER INFORMATION
+    ===================================================== */
+
+    function updateUserInformation() {
+
+        const profileName =
+            document.getElementById(
+                "profileName"
+            );
+
+
+        const profileAvatar =
+            document.getElementById(
+                "profileAvatar"
+            );
+
+
+        const contextUserName =
+            document.getElementById(
+                "contextUserName"
+            );
+
+
+        const aiWelcomeText =
+            document.getElementById(
+                "aiWelcomeText"
+            );
+
+
+        const initialGreeting =
+            document.getElementById(
+                "initialGreeting"
+            );
+
+
+        if (profileName) {
+
+            profileName.textContent =
+                userName;
+
+        }
+
+
+        if (profileAvatar) {
+
+            profileAvatar.textContent =
+                userName
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase();
+
+        }
+
+
+        if (contextUserName) {
+
+            contextUserName.textContent =
+                userName;
+
+        }
+
+
+        if (aiWelcomeText) {
+
+            aiWelcomeText.textContent =
+                `Your AI-powered investment research assistant for ${userName}.`;
+
+        }
+
+
+        if (initialGreeting) {
+
+            initialGreeting.textContent =
+                `Hi ${userName}, I'm Investopia AI`;
+
+        }
+
+    }
+
+
+    updateUserInformation();
+
 
 
     /* =====================================================
@@ -49,46 +167,88 @@ document.addEventListener("DOMContentLoaded", async () => {
     ===================================================== */
 
     const sidebar =
-        document.getElementById("sidebar");
+        document.getElementById(
+            "sidebar"
+        );
+
 
     const sidebarToggle =
-        document.getElementById("sidebarToggle");
+        document.getElementById(
+            "sidebarToggle"
+        );
+
 
     const sidebarClose =
-        document.getElementById("sidebarClose");
+        document.getElementById(
+            "sidebarClose"
+        );
+
 
     const sidebarOverlay =
-        document.getElementById("sidebarOverlay");
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
 
     const themeToggle =
-        document.getElementById("themeToggle");
+        document.getElementById(
+            "themeToggle"
+        );
+
 
     const themeIcon =
-        document.getElementById("themeIcon");
+        document.getElementById(
+            "themeIcon"
+        );
+
 
     const globalSearch =
-        document.getElementById("globalSearch");
+        document.getElementById(
+            "globalSearch"
+        );
+
 
     const chatMessages =
-        document.getElementById("chatMessages");
+        document.getElementById(
+            "chatMessages"
+        );
+
 
     const messageInput =
-        document.getElementById("messageInput");
+        document.getElementById(
+            "messageInput"
+        );
+
 
     const sendMessage =
-        document.getElementById("sendMessage");
+        document.getElementById(
+            "sendMessage"
+        );
+
 
     const typingIndicator =
-        document.getElementById("typingIndicator");
+        document.getElementById(
+            "typingIndicator"
+        );
+
 
     const characterCount =
-        document.getElementById("characterCount");
+        document.getElementById(
+            "characterCount"
+        );
+
 
     const newChatBtn =
-        document.getElementById("newChatBtn");
+        document.getElementById(
+            "newChatBtn"
+        );
+
 
     const clearChatBtn =
-        document.getElementById("clearChatBtn");
+        document.getElementById(
+            "clearChatBtn"
+        );
+
 
 
     /* =====================================================
@@ -104,12 +264,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     let waitingForAI = false;
 
 
+
     /* =====================================================
        INVESTOPIA AI SYSTEM PROMPT
     ===================================================== */
 
     const SYSTEM_PROMPT = `
 You are Investopia AI, the AI assistant inside Investopia TradeAI.
+
+The currently logged-in user is ${userName}.
 
 You are a general-purpose AI assistant with special expertise in
 investing, trading, financial education and virtual investing.
@@ -121,12 +284,14 @@ GENERAL BEHAVIOR
 You can answer both investment-related and general questions.
 
 Investment topics include:
+
 Stocks, ETFs, Mutual Funds, F&O, Trading, Portfolio,
 Risk, SIP, Financial Concepts, Market News, Investment Planning,
 Fundamental Analysis, Technical Analysis, Valuation,
 Asset Allocation, Diversification and Virtual Trading.
 
 You may also answer:
+
 Programming, Java, Python, HTML, CSS, JavaScript,
 Mathematics, Science, History, Geography, Technology,
 Education, Entertainment and General Knowledge.
@@ -140,11 +305,13 @@ ANSWER LENGTH
 Always answer briefly first.
 
 The first response should normally contain:
+
 - A direct answer
 - 2 to 5 important points when useful
 - A short conclusion
 
 Do not give a very long explanation unless the user asks:
+
 "expand", "explain more", "go deeper", "detailed explanation",
 "full analysis", "tell me more", or similar.
 
@@ -188,6 +355,21 @@ Final AI View
 Only include sections that are relevant.
 
 ==================================================
+CURRENT MARKET DATA
+==================================================
+
+Never invent current stock prices, financial results,
+market news or live information.
+
+If verified live market data is supplied by the application,
+use that data.
+
+If live market data is not supplied, clearly state that
+the information needs to be verified using current market data.
+
+Never guess a stock price.
+
+==================================================
 GENERAL QUESTIONS
 ==================================================
 
@@ -206,6 +388,7 @@ FORMATTING
 Use clean Markdown-style formatting.
 
 Use:
+
 - Short paragraphs
 - Bullet lists
 - Numbered lists
@@ -219,6 +402,7 @@ Do NOT use decorative symbols.
 Do NOT use repeated punctuation.
 
 Do NOT start with:
+
 "Sure!"
 "Certainly!"
 "Of course!"
@@ -226,30 +410,14 @@ Do NOT start with:
 "Here is the explanation."
 
 Do NOT end with:
+
 "I hope this helps."
 "Let me know if you need anything else."
 "Feel free to ask."
 
 Do NOT return HTML tags.
 
-Do NOT write:
-<strong>
-<br>
-<p>
-<ul>
-<li>
-
 Keep the wording professional, natural and concise.
-
-==================================================
-CURRENT INFORMATION
-==================================================
-
-Never invent current stock prices, financial results,
-market news or live information.
-
-If current information is unavailable, clearly state that
-the information needs to be verified using current market data.
 
 ==================================================
 FINANCIAL SAFETY
@@ -279,6 +447,7 @@ Do not add unnecessary closing sentences.
 `;
 
 
+
     /* =====================================================
        SIDEBAR
     ===================================================== */
@@ -289,9 +458,11 @@ Do not add unnecessary closing sentences.
             "sidebar-open"
         );
 
+
         sidebarOverlay?.classList.add(
             "active"
         );
+
     }
 
 
@@ -301,9 +472,11 @@ Do not add unnecessary closing sentences.
             "sidebar-open"
         );
 
+
         sidebarOverlay?.classList.remove(
             "active"
         );
+
     }
 
 
@@ -334,7 +507,9 @@ Do not add unnecessary closing sentences.
 
 
     document
-        .querySelectorAll(".sidebar-link")
+        .querySelectorAll(
+            ".sidebar-link"
+        )
         .forEach(link => {
 
             link.addEventListener(
@@ -344,7 +519,9 @@ Do not add unnecessary closing sentences.
                     if (
                         window.innerWidth <= 991
                     ) {
+
                         closeSidebar();
+
                     }
 
                 }
@@ -353,23 +530,29 @@ Do not add unnecessary closing sentences.
         });
 
 
+
     /* =====================================================
        THEME
     ===================================================== */
 
     function updateThemeIcon() {
 
-        if (!themeIcon) return;
+        if (!themeIcon) {
+            return;
+        }
+
 
         const dark =
             document.body.classList.contains(
                 "dark-theme"
             );
 
+
         themeIcon.className =
             dark
                 ? "bi bi-sun"
                 : "bi bi-moon-stars";
+
     }
 
 
@@ -380,12 +563,15 @@ Do not add unnecessary closing sentences.
             theme === "dark"
         );
 
+
         localStorage.setItem(
             "investopia-theme",
             theme
         );
 
+
         updateThemeIcon();
+
     }
 
 
@@ -398,6 +584,7 @@ Do not add unnecessary closing sentences.
         document.body.classList.add(
             "dark-theme"
         );
+
     }
 
 
@@ -413,6 +600,7 @@ Do not add unnecessary closing sentences.
                     "dark-theme"
                 );
 
+
             applyTheme(
                 dark
                     ? "light"
@@ -421,6 +609,7 @@ Do not add unnecessary closing sentences.
 
         }
     );
+
 
 
     /* =====================================================
@@ -434,16 +623,24 @@ Do not add unnecessary closing sentences.
             if (
                 event.key !== "Enter"
             ) {
+
                 return;
+
             }
+
 
             const query =
                 globalSearch.value.trim();
 
-            if (!query) return;
+
+            if (!query) {
+                return;
+            }
+
 
             window.location.href =
                 `../market/market.html?search=${encodeURIComponent(query)}`;
+
         }
     );
 
@@ -453,17 +650,22 @@ Do not add unnecessary closing sentences.
         event => {
 
             if (
-                (event.ctrlKey ||
-                    event.metaKey) &&
+                (
+                    event.ctrlKey ||
+                    event.metaKey
+                ) &&
                 event.key.toLowerCase() === "k"
             ) {
 
                 event.preventDefault();
 
                 globalSearch?.focus();
+
             }
+
         }
     );
+
 
 
     /* =====================================================
@@ -477,11 +679,15 @@ Do not add unnecessary closing sentences.
                 "div"
             );
 
+
         div.textContent =
             text ?? "";
 
+
         return div.innerHTML;
+
     }
+
 
 
     /* =====================================================
@@ -490,7 +696,10 @@ Do not add unnecessary closing sentences.
 
     function formatAIText(text) {
 
-        if (!text) return "";
+        if (!text) {
+            return "";
+        }
+
 
         let source =
             String(text)
@@ -501,15 +710,11 @@ Do not add unnecessary closing sentences.
                 .trim();
 
 
-        /* Remove common AI introductions */
-
         source = source.replace(
             /^(sure!?|certainly!?|of course!?|here(?:'|’)s (?:the )?(?:answer|analysis|explanation):?)\s*/i,
             ""
         );
 
-
-        /* Remove unnecessary closing phrases */
 
         source = source.replace(
             /\n(?:i hope this helps\.?|let me know if you need anything else\.?|feel free to ask\.?)\s*$/i,
@@ -517,15 +722,11 @@ Do not add unnecessary closing sentences.
         );
 
 
-        /* Remove decorative lines */
-
         source = source.replace(
             /^\s*[-_*]{3,}\s*$/gm,
             ""
         );
 
-
-        /* Remove emojis */
 
         source = source.replace(
             /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,
@@ -533,9 +734,8 @@ Do not add unnecessary closing sentences.
         );
 
 
-        /* Protect code blocks */
-
         const codeBlocks = [];
+
 
         source = source.replace(
             /```(?:[\w#+.-]+)?\s*([\s\S]*?)```/g,
@@ -544,34 +744,37 @@ Do not add unnecessary closing sentences.
                 const index =
                     codeBlocks.length;
 
+
                 codeBlocks.push(
                     escapeHTML(
                         code.trim()
                     )
                 );
 
+
                 return `@@CODE_${index}@@`;
+
             }
         );
 
 
-        /* Escape HTML */
-
         source =
-            escapeHTML(source);
+            escapeHTML(
+                source
+            );
 
-
-        /* Headings */
 
         source = source.replace(
             /^###\s+(.+)$/gm,
             '<h4 class="ai-heading">$1</h4>'
         );
 
+
         source = source.replace(
             /^##\s+(.+)$/gm,
             '<h3 class="ai-heading">$1</h3>'
         );
+
 
         source = source.replace(
             /^#\s+(.+)$/gm,
@@ -579,23 +782,17 @@ Do not add unnecessary closing sentences.
         );
 
 
-        /* Bold */
-
         source = source.replace(
             /\*\*(.*?)\*\*/g,
             "<strong>$1</strong>"
         );
 
 
-        /* Italic */
-
         source = source.replace(
-            /(?<!\*)\*([^*\n]+)\*(?!\*)/g,
+            /(?<!\*)\*([^\*\n]+)\*(?!\*)/g,
             "<em>$1</em>"
         );
 
-
-        /* Inline code */
 
         source = source.replace(
             /`([^`\n]+)`/g,
@@ -603,10 +800,9 @@ Do not add unnecessary closing sentences.
         );
 
 
-        /* Convert lines */
-
         const lines =
             source.split("\n");
+
 
         let output = "";
 
@@ -617,16 +813,21 @@ Do not add unnecessary closing sentences.
 
         function closeList() {
 
-            if (!inList) return;
+            if (!inList) {
+                return;
+            }
+
 
             output +=
                 listType === "ol"
                     ? "</ol>"
                     : "</ul>";
 
+
             inList = false;
 
             listType = "";
+
         }
 
 
@@ -636,20 +837,19 @@ Do not add unnecessary closing sentences.
                 line.trim();
 
 
-            /* Empty line */
-
             if (!trimmed) {
 
                 closeList();
 
+
                 output +=
                     '<div class="ai-space"></div>';
 
+
                 return;
+
             }
 
-
-            /* Code block */
 
             if (
                 /^@@CODE_\d+@@$/.test(
@@ -658,6 +858,7 @@ Do not add unnecessary closing sentences.
             ) {
 
                 closeList();
+
 
                 const index =
                     Number(
@@ -672,17 +873,18 @@ Do not add unnecessary closing sentences.
                             )
                     );
 
+
                 output += `
                     <pre class="ai-code">
                         <code>${codeBlocks[index]}</code>
                     </pre>
                 `;
 
+
                 return;
+
             }
 
-
-            /* Headings */
 
             if (
                 trimmed.startsWith(
@@ -701,10 +903,9 @@ Do not add unnecessary closing sentences.
                 output += trimmed;
 
                 return;
+
             }
 
-
-            /* Bullet list */
 
             const bullet =
                 trimmed.match(
@@ -721,22 +922,26 @@ Do not add unnecessary closing sentences.
 
                     closeList();
 
+
                     output +=
                         '<ul class="ai-list">';
+
 
                     inList = true;
 
                     listType = "ul";
+
                 }
+
 
                 output +=
                     `<li>${bullet[1]}</li>`;
 
+
                 return;
+
             }
 
-
-            /* Numbered list */
 
             const numbered =
                 trimmed.match(
@@ -753,25 +958,29 @@ Do not add unnecessary closing sentences.
 
                     closeList();
 
+
                     output +=
                         '<ol class="ai-list">';
+
 
                     inList = true;
 
                     listType = "ol";
+
                 }
+
 
                 output +=
                     `<li>${numbered[1]}</li>`;
 
+
                 return;
+
             }
 
 
             closeList();
 
-
-            /* Important labels */
 
             const label =
                 trimmed.match(
@@ -795,17 +1004,18 @@ Do not add unnecessary closing sentences.
                     </div>
                 `;
 
+
                 return;
+
             }
 
-
-            /* Normal paragraph */
 
             output += `
                 <p class="ai-paragraph">
                     ${trimmed}
                 </p>
             `;
+
         });
 
 
@@ -813,7 +1023,9 @@ Do not add unnecessary closing sentences.
 
 
         return output;
+
     }
+
 
 
     /* =====================================================
@@ -830,7 +1042,9 @@ Do not add unnecessary closing sentences.
                     minute: "2-digit"
                 }
             );
+
     }
+
 
 
     /* =====================================================
@@ -839,11 +1053,16 @@ Do not add unnecessary closing sentences.
 
     function scrollChat() {
 
-        if (!chatMessages) return;
+        if (!chatMessages) {
+            return;
+        }
+
 
         chatMessages.scrollTop =
             chatMessages.scrollHeight;
+
     }
+
 
 
     /* =====================================================
@@ -857,20 +1076,26 @@ Do not add unnecessary closing sentences.
                 "div"
             );
 
+
         message.className =
             "message user-message";
 
+
         message.innerHTML = `
             <div class="message-avatar">
+
                 <i class="bi bi-person"></i>
+
             </div>
 
             <div class="message-content">
 
                 <div class="message-bubble">
+
                     <p>
                         ${escapeHTML(text)}
                     </p>
+
                 </div>
 
                 <span class="message-time">
@@ -880,12 +1105,16 @@ Do not add unnecessary closing sentences.
             </div>
         `;
 
+
         chatMessages.appendChild(
             message
         );
 
+
         scrollChat();
+
     }
+
 
 
     /* =====================================================
@@ -901,6 +1130,7 @@ Do not add unnecessary closing sentences.
             document.createElement(
                 "div"
             );
+
 
         message.className =
             "message ai-message";
@@ -926,7 +1156,9 @@ Do not add unnecessary closing sentences.
 
         message.innerHTML = `
             <div class="message-avatar">
+
                 <i class="bi bi-stars"></i>
+
             </div>
 
             <div class="message-content">
@@ -934,7 +1166,9 @@ Do not add unnecessary closing sentences.
                 <div class="message-bubble ai-response">
 
                     <div class="ai-response-content">
+
                         ${formatAIText(text)}
+
                     </div>
 
                     ${expandButton}
@@ -942,7 +1176,9 @@ Do not add unnecessary closing sentences.
                 </div>
 
                 <span class="message-time">
+
                     ${getTime()}
+
                 </span>
 
             </div>
@@ -952,6 +1188,7 @@ Do not add unnecessary closing sentences.
         chatMessages.appendChild(
             message
         );
+
 
         scrollChat();
 
@@ -963,8 +1200,11 @@ Do not add unnecessary closing sentences.
                     ".expand-analysis"
                 )
             );
+
         }
+
     }
+
 
 
     /* =====================================================
@@ -978,26 +1218,33 @@ Do not add unnecessary closing sentences.
             show
         );
 
+
         waitingForAI =
             show;
+
 
         if (sendMessage) {
 
             sendMessage.disabled =
                 show;
+
         }
 
+
         if (show) {
+
             scrollChat();
+
         }
+
     }
+
 
 
     /* =====================================================
        OPENROUTER REQUEST
-
-       API request goes through Node.js backend.
-       API key is NOT stored in this JavaScript file.
+       
+       API key remains in backend/.env
     ===================================================== */
 
     async function askOpenRouter(
@@ -1009,11 +1256,14 @@ Do not add unnecessary closing sentences.
             await fetch(
                 "https://investopia-tradeai-copy.onrender.com",
                 {
+
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
                     body:
@@ -1028,9 +1278,20 @@ Do not add unnecessary closing sentences.
                             system_prompt:
                                 SYSTEM_PROMPT,
 
+                            user_name:
+                                userName,
+
+                            user_id:
+                                user.id,
+
+                            user_email:
+                                user.email,
+
                             expand:
                                 expand
+
                         })
+
                 }
             );
 
@@ -1045,6 +1306,7 @@ Do not add unnecessary closing sentences.
                 data.error ||
                 "AI request failed."
             );
+
         }
 
 
@@ -1057,11 +1319,14 @@ Do not add unnecessary closing sentences.
             throw new Error(
                 "No AI response received."
             );
+
         }
 
 
         return answer;
+
     }
+
 
 
     /* =====================================================
@@ -1082,7 +1347,9 @@ Do not add unnecessary closing sentences.
             !text ||
             waitingForAI
         ) {
+
             return;
+
         }
 
 
@@ -1092,13 +1359,17 @@ Do not add unnecessary closing sentences.
                 text
             );
 
+
             lastUserQuestion =
                 text;
+
 
             messageInput.value =
                 "";
 
+
             updateCharacterCount();
+
         }
 
 
@@ -1132,13 +1403,12 @@ Do not repeat unnecessary introductory text.
                 answer;
 
 
-            /* Save conversation */
-
             conversation.push({
 
                 role: "user",
 
                 content: question
+
             });
 
 
@@ -1147,6 +1417,7 @@ Do not repeat unnecessary introductory text.
                 role: "assistant",
 
                 content: answer
+
             });
 
 
@@ -1156,16 +1427,19 @@ Do not repeat unnecessary introductory text.
             addAIMessage(
                 answer,
                 {
+
                     expandable:
                         !expand,
 
                     question:
                         lastUserQuestion
+
                 }
             );
 
 
-        } catch (error) {
+        }
+        catch (error) {
 
             console.error(
                 "Investopia AI:",
@@ -1188,8 +1462,11 @@ Please check:
 - Internet connection
 - OpenRouter account or model availability
 `);
+
         }
+
     }
+
 
 
     /* =====================================================
@@ -1198,8 +1475,13 @@ Please check:
 
     sendMessage?.addEventListener(
         "click",
-        () => handleMessage()
+        () => {
+
+            handleMessage();
+
+        }
     );
+
 
 
     /* =====================================================
@@ -1218,9 +1500,12 @@ Please check:
                 event.preventDefault();
 
                 handleMessage();
+
             }
+
         }
     );
+
 
 
     /* =====================================================
@@ -1238,7 +1523,9 @@ Please check:
 
             characterCount.textContent =
                 `${length} / 2000`;
+
         }
+
     }
 
 
@@ -1248,46 +1535,25 @@ Please check:
 
             updateCharacterCount();
 
+
             messageInput.style.height =
                 "auto";
+
 
             messageInput.style.height =
                 `${Math.min(
                     messageInput.scrollHeight,
                     120
                 )}px`;
+
         }
     );
 
 
+
     /* =====================================================
-       CHATBOT SUGGESTIONS
+       QUICK QUESTIONS
     ===================================================== */
-
-    const suggestedQuestions = [
-
-        "Analyze TCS",
-
-        "Analyze Reliance",
-
-        "What is the risk of NIFTYBEES?",
-
-        "Review my portfolio",
-
-        "Explain P/E ratio",
-
-        "What is SIP?",
-
-        "How does diversification work?",
-
-        "What is polymorphism in Java?",
-
-        "Explain artificial intelligence",
-
-        "Write a simple HTML example"
-
-    ];
-
 
     document
         .querySelectorAll(
@@ -1302,17 +1568,26 @@ Please check:
                     const prompt =
                         button.dataset.prompt;
 
-                    if (!prompt) return;
+
+                    if (!prompt) {
+                        return;
+                    }
+
 
                     messageInput.value =
                         prompt;
 
+
                     updateCharacterCount();
 
+
                     messageInput.focus();
+
                 }
             );
+
         });
+
 
 
     /* =====================================================
@@ -1323,7 +1598,9 @@ Please check:
         button
     ) {
 
-        if (!button) return;
+        if (!button) {
+            return;
+        }
 
 
         button.addEventListener(
@@ -1332,6 +1609,7 @@ Please check:
 
                 button.disabled =
                     true;
+
 
                 button.innerHTML = `
                     <i class="bi bi-hourglass-split"></i>
@@ -1346,9 +1624,12 @@ Please check:
 
 
                 button.remove();
+
             }
         );
+
     }
+
 
 
     /* =====================================================
@@ -1367,10 +1648,13 @@ Please check:
 
 
             chatMessages.innerHTML = `
+
                 <div class="message ai-message">
 
                     <div class="message-avatar">
+
                         <i class="bi bi-stars"></i>
+
                     </div>
 
                     <div class="message-content">
@@ -1390,23 +1674,30 @@ Please check:
                         </div>
 
                         <span class="message-time">
+
                             ${getTime()}
+
                         </span>
 
                     </div>
 
                 </div>
+
             `;
 
 
             messageInput.value =
                 "";
 
+
             updateCharacterCount();
 
+
             messageInput.focus();
+
         }
     );
+
 
 
     /* =====================================================
@@ -1422,7 +1713,9 @@ Please check:
                     "Clear this conversation?"
                 )
             ) {
+
                 return;
+
             }
 
 
@@ -1434,10 +1727,13 @@ Please check:
 
 
             chatMessages.innerHTML = `
+
                 <div class="message ai-message">
 
                     <div class="message-avatar">
+
                         <i class="bi bi-stars"></i>
+
                     </div>
 
                     <div class="message-content">
@@ -1456,15 +1752,20 @@ Please check:
                         </div>
 
                         <span class="message-time">
+
                             ${getTime()}
+
                         </span>
 
                     </div>
 
                 </div>
+
             `;
+
         }
     );
+
 
 
     /* =====================================================
@@ -1483,9 +1784,12 @@ Please check:
             ) {
 
                 closeSidebar();
+
             }
+
         }
     );
+
 
 
     /* =====================================================
@@ -1494,10 +1798,10 @@ Please check:
 
     updateCharacterCount();
 
-    messageInput?.focus();
 
     console.log(
-        "Investopia AI initialized successfully."
+        "Investopia AI initialized successfully for:",
+        userName
     );
 
 });

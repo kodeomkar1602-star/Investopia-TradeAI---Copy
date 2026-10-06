@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Investment Planner | Investopia TradeAI</title>
 
-    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-    <!-- Planner CSS -->
     <link rel="stylesheet" href="planner.css">
 </head>
 
@@ -276,9 +274,21 @@
                 href="../profile/profile.html"
                 class="profile-button">
 
-                <span class="profile-avatar">
-                    <i class="bi bi-person"></i>
+                <span
+                    class="profile-avatar"
+                    id="profileAvatar">
+
+                    U
+
                 </span>
+
+                <strong
+                    class="profile-name"
+                    id="profileName">
+
+                    User
+
+                </strong>
 
             </a>
 
@@ -531,7 +541,8 @@
                                             id="targetValue"
                                             class="form-control"
                                             placeholder="5,00,000"
-                                            min="1">
+                                            min="1"
+                                            step="1">
 
                                     </div>
 
@@ -608,7 +619,8 @@
                                     id="initialAmount"
                                     class="form-control"
                                     placeholder="50,000"
-                                    min="0">
+                                    min="0"
+                                    step="1">
 
                             </div>
 
@@ -632,7 +644,8 @@
                                     id="monthlyAmount"
                                     class="form-control"
                                     placeholder="10,000"
-                                    min="0">
+                                    min="0"
+                                    step="1">
 
                             </div>
 
@@ -852,7 +865,7 @@
 
                 <div class="progress-labels">
 
-                    <span>
+                    <span id="progressCurrent">
                         Current: ₹0
                     </span>
 
@@ -863,6 +876,13 @@
                 </div>
 
             </div>
+
+            <small
+                id="progressSource"
+                class="progress-source">
+                Current value will update from your Investopia
+                paper-trading portfolio when available.
+            </small>
 
         </div>
 
@@ -947,8 +967,9 @@
             <i class="bi bi-info-circle"></i>
 
             <span>
-                Planner results are educational estimates and
-                simulations, not guaranteed returns or financial
+                Planner results are educational estimates based
+                on the assumptions selected in the planner.
+                They are not guaranteed returns or financial
                 advice. Invest at your own risk.
             </span>
 
@@ -959,28 +980,12 @@
 </main>
 
 
-<!-- =====================================================
-     BOOTSTRAP JS
-===================================================== -->
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- =====================================================
-     SUPABASE
-===================================================== -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="../auth/supabase.js"></script>
-
-<!-- =====================================================
-     SESSION HANDLING
-===================================================== -->
-
 <script src="../auth/session.js"></script>
-
-<!-- =====================================================
-     PLANNER JS
-===================================================== -->
 
 <script src="planner.js"></script>
 

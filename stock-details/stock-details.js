@@ -1,26 +1,48 @@
 /* =========================================================
-   INVESTOPIA TRADEAI - STOCK DETAILS JS
+   INVESTOPIA TRADEAI - STOCK DETAILS
+   Angel One Live Market Data + Supabase User
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
+
 
     /* =====================================================
        SESSION PROTECTION
     ===================================================== */
 
-    const session = await requireAuth();
+    const session =
+        await requireAuth();
+
 
     if (!session) {
         return;
     }
 
+
     listenForAuthChanges();
 
-    const user = session.user;
 
-    console.log("Investopia logged-in user:", user);
-    console.log("User ID:", user.id);
-    console.log("User Email:", user.email);
+    const user =
+        session.user;
+
+
+    console.log(
+        "Investopia logged-in user:",
+        user
+    );
+
+
+    console.log(
+        "User ID:",
+        user.id
+    );
+
+
+    console.log(
+        "User Email:",
+        user.email
+    );
+
 
 
     /* =====================================================
@@ -31,122 +53,197 @@ document.addEventListener("DOMContentLoaded", async () => {
         "https://investopia-tradeai-copy.onrender.com";
 
 
-    /* ==================== ELEMENTS ==================== */
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
     const sidebar =
         document.getElementById("sidebar");
 
+
     const sidebarToggle =
         document.getElementById("sidebarToggle");
+
 
     const sidebarClose =
         document.getElementById("sidebarClose");
 
+
     const sidebarOverlay =
         document.getElementById("sidebarOverlay");
+
 
     const themeToggle =
         document.getElementById("themeToggle");
 
+
     const themeIcon =
         document.getElementById("themeIcon");
+
 
     const stockSearch =
         document.getElementById("stockSearch");
 
+
     const quantity =
         document.getElementById("quantity");
+
 
     const tradeValue =
         document.getElementById("tradeValue");
 
+
     const buyButton =
         document.getElementById("buyButton");
+
 
     const sellButton =
         document.getElementById("sellButton");
 
 
+    const profileName =
+        document.getElementById("profileName");
+
+
+    const profileAvatar =
+        document.getElementById("profileAvatar");
+
+
+    const virtualCashElement =
+        document.getElementById("virtualCash");
+
+
+    const portfolioHolding =
+        document.getElementById(
+            "portfolioHolding"
+        );
+
+
+    const portfolioProgress =
+        document.getElementById(
+            "portfolioProgress"
+        );
+
+
+    const portfolioMessage =
+        document.getElementById(
+            "portfolioMessage"
+        );
+
+
+    const chartMessage =
+        document.getElementById(
+            "chartMessage"
+        );
+
+
+
     /* =====================================================
-       EXISTING ASSET INFORMATION
-       
-       Used for company names, logos, scores and risk labels.
-       LIVE PRICE DATA comes from Angel One.
+       USER-SPECIFIC STORAGE
     ===================================================== */
 
-    const assets = {
+    const userId =
+        user.id;
 
-        TCS: {
-            name: "TCS",
-            company: "Tata Consultancy Services",
-            type: "STOCK",
-            logo: "T",
-            price: 3421.50,
-            change: "+1.24%",
-            score: 78,
-            risk: "Moderate Risk"
-        },
 
-        RELIANCE: {
-            name: "RELIANCE",
-            company: "Reliance Industries",
-            type: "STOCK",
-            logo: "R",
-            price: 1425.20,
-            change: "+0.84%",
-            score: 75,
-            risk: "Moderate Risk"
-        },
+    const CASH_KEY =
+        `investopiaVirtualCash-${userId}`;
 
-        INFY: {
-            name: "INFY",
-            company: "Infosys",
-            type: "STOCK",
-            logo: "I",
-            price: 1512.30,
-            change: "-0.32%",
-            score: 72,
-            risk: "Moderate Risk"
-        },
 
-        HDFCBANK: {
-            name: "HDFCBANK",
-            company: "HDFC Bank",
-            type: "STOCK",
-            logo: "H",
-            price: 1746.80,
-            change: "+1.12%",
-            score: 81,
-            risk: "Low–Moderate Risk"
-        },
+    const HOLDINGS_KEY =
+        `investopiaHoldings-${userId}`;
 
-        NIFTYBEES: {
-            name: "NIFTYBEES",
-            company: "Nippon India ETF Nifty BeES",
-            type: "ETF",
-            logo: "N",
-            price: 265.40,
-            change: "+0.63%",
-            score: 80,
-            risk: "Moderate Risk"
-        },
 
-        PPFAS: {
-            name: "PPFAS",
-            company: "Parag Parikh Flexi Cap Fund",
-            type: "MUTUAL FUND",
-            logo: "P",
-            price: 82.36,
-            change: "+0.42%",
-            score: 83,
-            risk: "Moderate Risk"
-        }
+    const TRANSACTIONS_KEY =
+        `investopiaTransactions-${userId}`;
 
-    };
 
 
     /* =====================================================
-       GET URL PARAMETERS
+       LOGGED-IN USER NAME
+    ===================================================== */
+
+    function getUserName() {
+
+        const metadata =
+            user.user_metadata || {};
+
+
+        return (
+            metadata.full_name ||
+            metadata.name ||
+            metadata.username ||
+            user.email?.split("@")[0] ||
+            "User"
+        );
+
+    }
+
+
+
+    function getInitials(name) {
+
+        if (!name) {
+            return "U";
+        }
+
+
+        const parts =
+            name
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+
+        if (parts.length === 1) {
+
+            return parts[0]
+                .substring(0, 2)
+                .toUpperCase();
+
+        }
+
+
+        return (
+            parts[0][0] +
+            parts[parts.length - 1][0]
+        ).toUpperCase();
+
+    }
+
+
+
+    function updateLoggedInUser() {
+
+        const name =
+            getUserName();
+
+
+        if (profileName) {
+
+            profileName.textContent =
+                name;
+
+        }
+
+
+        if (profileAvatar) {
+
+            profileAvatar.textContent =
+                getInitials(name);
+
+        }
+
+    }
+
+
+    updateLoggedInUser();
+
+
+
+    /* =====================================================
+       URL PARAMETERS
     ===================================================== */
 
     const params =
@@ -158,11 +255,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const rawSymbol =
         (
             params.get("symbol") ||
-            "TCS"
+            "TCS-EQ"
         ).toUpperCase();
 
 
-    const exchange =
+    let exchange =
         (
             params.get("exchange") ||
             "NSE"
@@ -175,74 +272,78 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /*
-        Example:
-
-        symbol = RELIANCE-EQ
-        display symbol = RELIANCE
-    */
+     * Example:
+     *
+     * RELIANCE-EQ
+     *      ↓
+     * RELIANCE
+     */
 
     const baseSymbol =
         rawSymbol
-            .replace(/-EQ$/i, "")
+            .replace(
+                /-EQ$/i,
+                ""
+            )
             .toUpperCase();
 
 
-    /*
-        Existing asset information if available.
-    */
-
-    let asset =
-        assets[baseSymbol] || {
-
-            name: baseSymbol,
-
-            company: baseSymbol,
-
-            type: "STOCK",
-
-            logo:
-                baseSymbol.charAt(0) ||
-                "S",
-
-            price: 0,
-
-            change: "0.00%",
-
-            score: "—",
-
-            risk: "Market Data"
-
-        };
-
-
-    /*
-        Store the actual Angel One trading symbol.
-
-        Example:
-
-        RELIANCE-EQ
-    */
-
     let tradingSymbol =
         rawSymbol;
+
+
+
+    /* =====================================================
+       DYNAMIC ASSET INFORMATION
+    ===================================================== */
+
+    let asset = {
+
+        name:
+            baseSymbol,
+
+        company:
+            baseSymbol,
+
+        type:
+            "STOCK",
+
+        logo:
+            baseSymbol.charAt(0) ||
+            "S",
+
+        price:
+            0,
+
+        change:
+            0
+
+    };
 
 
     let liveDataAvailable =
         false;
 
 
+
     /* =====================================================
-       CHART DATA CACHE
+       CHART
     ===================================================== */
 
     const chartCache = {};
 
 
-    let stockChart = null;
+    let stockChart =
+        null;
 
-    let currentPeriod = "1D";
 
-    let chartRequestId = 0;
+    let currentPeriod =
+        "1D";
+
+
+    let chartRequestId =
+        0;
+
 
 
     /* =====================================================
@@ -251,7 +352,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function formatMoney(value) {
 
-        return `₹${Number(value).toLocaleString(
+        const number =
+            Number(value);
+
+
+        if (
+            !Number.isFinite(number)
+        ) {
+
+            return "₹--";
+
+        }
+
+
+        return `₹${number.toLocaleString(
             "en-IN",
             {
                 minimumFractionDigits: 2,
@@ -262,22 +376,51 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
-       SEARCH / RESOLVE STOCK
+       FORMAT QUANTITY
+    ===================================================== */
+
+    function formatQuantity(value) {
+
+        const number =
+            Number(value);
+
+
+        if (
+            !Number.isFinite(number)
+        ) {
+
+            return "0";
+
+        }
+
+
+        return number.toLocaleString(
+            "en-IN"
+        );
+
+    }
+
+
+
+    /* =====================================================
+       RESOLVE INSTRUMENT THROUGH ANGEL ONE
     ===================================================== */
 
     async function resolveStock() {
 
         /*
-            If Market page already supplied
-            a symbol token, use it directly.
-        */
+         * If URL already contains a token,
+         * use it directly.
+         */
 
         if (symbolToken) {
 
             return {
 
-                exchange: exchange,
+                exchange:
+                    exchange,
 
                 tradingSymbol:
                     tradingSymbol,
@@ -290,20 +433,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        /*
-            No token was supplied.
-
-            Search Angel One.
-
-            Example:
-
-            RELIANCE
-            ↓
-            RELIANCE-EQ
-            ↓
-            2885
-        */
-
         try {
 
             const searchTerm =
@@ -312,8 +441,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const url =
                 `${API_BASE_URL}/api/stocks/search` +
-                `?search=${encodeURIComponent(searchTerm)}` +
-                `&exchange=${encodeURIComponent(exchange)}`;
+                `?search=${encodeURIComponent(
+                    searchTerm
+                )}` +
+                `&exchange=${encodeURIComponent(
+                    exchange
+                )}`;
 
 
             const response =
@@ -336,36 +469,40 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (
                 !result ||
                 !result.success ||
-                !Array.isArray(result.data)
+                !Array.isArray(
+                    result.data
+                )
             ) {
 
                 throw new Error(
-                    "No stock search data returned."
+                    "No Angel One search data returned."
                 );
 
             }
 
 
             /*
-                Prefer normal EQ series.
-            */
+             * Prefer normal NSE equity.
+             */
 
             const equity =
-                result.data.find(stock => {
+                result.data.find(
+                    stock => {
 
-                    const currentSymbol =
-                        (
-                            stock.tradingsymbol ||
-                            ""
-                        ).toUpperCase();
+                        const symbol =
+                            (
+                                stock.tradingsymbol ||
+                                ""
+                            ).toUpperCase();
 
 
-                    return (
-                        currentSymbol ===
-                        `${baseSymbol}-EQ`
-                    );
+                        return (
+                            symbol ===
+                            `${baseSymbol}-EQ`
+                        );
 
-                });
+                    }
+                );
 
 
             const selected =
@@ -376,7 +513,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!selected) {
 
                 throw new Error(
-                    "Stock not found."
+                    "Instrument not found."
                 );
 
             }
@@ -392,10 +529,44 @@ document.addEventListener("DOMContentLoaded", async () => {
                 );
 
 
+            exchange =
+                (
+                    selected.exchange ||
+                    exchange
+                ).toUpperCase();
+
+
+            /*
+             * Build dynamic metadata.
+             */
+
+            asset.name =
+                selected.tradingsymbol ||
+                baseSymbol;
+
+
+            asset.company =
+                selected.name ||
+                selected.companyname ||
+                selected.description ||
+                selected.tradingsymbol ||
+                baseSymbol;
+
+
+            asset.type =
+                detectAssetType(
+                    selected.tradingsymbol
+                );
+
+
+            asset.logo =
+                baseSymbol.charAt(0) ||
+                "S";
+
+
             return {
 
                 exchange:
-                    selected.exchange ||
                     exchange,
 
                 tradingSymbol:
@@ -410,7 +581,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         catch (error) {
 
             console.error(
-                "Stock resolution error:",
+                "Angel One stock resolution error:",
                 error
             );
 
@@ -422,17 +593,38 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
+    /* =====================================================
+       DETECT ASSET TYPE
+    ===================================================== */
+
+    function detectAssetType(
+        symbol
+    ) {
+
+        const value =
+            String(symbol || "")
+                .toUpperCase();
+
+
+        if (
+            value.includes("ETF") ||
+            value.includes("BEES")
+        ) {
+
+            return "ETF";
+
+        }
+
+
+        return "STOCK";
+
+    }
+
+
+
     /* =====================================================
        FETCH LIVE MARKET DATA
-       
-       Uses FULL market-data mode so we get:
-       LTP
-       Open
-       High
-       Low
-       Close
-       Net change
-       Percentage change
     ===================================================== */
 
     async function fetchLiveMarketData(
@@ -446,7 +638,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     `${API_BASE_URL}/api/stocks/market-data`,
                     {
 
-                        method: "POST",
+                        method:
+                            "POST",
 
                         headers: {
 
@@ -458,7 +651,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         body:
                             JSON.stringify({
 
-                                mode: "FULL",
+                                mode:
+                                    "FULL",
 
                                 exchangeTokens: {
 
@@ -503,7 +697,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             if (
-                !Array.isArray(fetched) ||
+                !Array.isArray(
+                    fetched
+                ) ||
                 !fetched.length
             ) {
 
@@ -532,8 +728,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
-       UPDATE ASSET USING LIVE DATA
+       UPDATE ASSET FROM LIVE DATA
     ===================================================== */
 
     function updateAssetFromMarketData(
@@ -575,14 +772,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             livePrice;
 
 
-        /*
-            Use Angel One percentChange
-            when available.
-
-            If unavailable, calculate it
-            using previous close.
-        */
-
         let percentChange =
             Number(
                 marketData.percentChange
@@ -618,7 +807,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     ) *
                     100;
 
-            } else {
+            }
+            else {
 
                 percentChange =
                     0;
@@ -629,11 +819,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         asset.change =
-            `${
-                percentChange >= 0
-                    ? "+"
-                    : ""
-            }${percentChange.toFixed(2)}%`;
+            percentChange;
 
 
         liveDataAvailable =
@@ -641,11 +827,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         console.log(
-            "Live stock price:",
+            "Live Angel One price:",
             livePrice
         );
 
     }
+
 
 
     /* =====================================================
@@ -653,10 +840,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     ===================================================== */
 
     function loadAsset() {
-
-        document.title =
-            `${asset.name} | Investopia TradeAI`;
-
 
         const assetLogo =
             document.getElementById(
@@ -694,9 +877,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-        const investopiaScore =
+        const priceChange =
             document.getElementById(
-                "investopiaScore"
+                "priceChange"
+            );
+
+
+        const assetExchange =
+            document.getElementById(
+                "assetExchange"
             );
 
 
@@ -735,7 +924,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (breadcrumbAsset) {
 
             breadcrumbAsset.textContent =
-                asset.name;
+                baseSymbol;
+
+        }
+
+
+        if (assetExchange) {
+
+            assetExchange.textContent =
+                `${exchange} • ${tradingSymbol}`;
 
         }
 
@@ -743,10 +940,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (currentPrice) {
 
             if (
+                liveDataAvailable &&
                 Number.isFinite(
-                    Number(asset.price)
-                ) &&
-                Number(asset.price) > 0
+                    asset.price
+                )
             ) {
 
                 currentPrice.textContent =
@@ -754,7 +951,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         asset.price
                     );
 
-            } else {
+            }
+            else {
 
                 currentPrice.textContent =
                     "₹--";
@@ -764,72 +962,75 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        const change =
-            document.getElementById(
-                "priceChange"
-            );
+        if (priceChange) {
 
-
-        if (change) {
-
-            const numericChange =
-                parseFloat(
+            const change =
+                Number(
                     asset.change
                 );
 
 
-            const negative =
-                Number.isFinite(
-                    numericChange
-                ) &&
-                numericChange < 0;
+            if (
+                liveDataAvailable &&
+                Number.isFinite(change)
+            ) {
+
+                const negative =
+                    change < 0;
 
 
-            change.innerHTML = `
+                priceChange.innerHTML = `
 
-                <i class="bi ${
-                    negative
-                        ? "bi-arrow-down"
-                        : "bi-arrow-up"
-                }"></i>
+                    <i class="bi ${
+                        negative
+                            ? "bi-arrow-down"
+                            : "bi-arrow-up"
+                    }"></i>
 
-                ${asset.change} Today
+                    ${
+                        change >= 0
+                            ? "+"
+                            : ""
+                    }${change.toFixed(2)}% Today
 
-            `;
-
-
-            change.className =
-                `price-change ${
-                    negative
-                        ? "negative"
-                        : "positive"
-                }`;
-
-        }
+                `;
 
 
-        if (investopiaScore) {
+                priceChange.className =
+                    `price-change ${
+                        negative
+                            ? "negative"
+                            : "positive"
+                    }`;
 
-            investopiaScore.textContent =
-                asset.score;
+            }
+            else {
 
-        }
+                priceChange.innerHTML = `
+
+                    <i class="bi bi-dash"></i>
+
+                    Live data unavailable
+
+                `;
 
 
-        if (
-            quantity &&
-            !quantity.value
-        ) {
+                priceChange.className =
+                    "price-change";
 
-            quantity.value =
-                1;
+            }
 
         }
 
 
         updateTradeValue();
 
+        updateVirtualCashUI();
+
+        updatePortfolioImpact();
+
     }
+
 
 
     /* =====================================================
@@ -841,6 +1042,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         sidebar?.classList.add(
             "sidebar-open"
         );
+
 
         sidebarOverlay?.classList.add(
             "active"
@@ -855,6 +1057,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             "sidebar-open"
         );
 
+
         sidebarOverlay?.classList.remove(
             "active"
         );
@@ -866,11 +1069,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         "click",
         () => {
 
-            sidebar?.classList.contains(
-                "sidebar-open"
-            )
-                ? closeSidebar()
-                : openSidebar();
+            if (
+                sidebar?.classList.contains(
+                    "sidebar-open"
+                )
+            ) {
+
+                closeSidebar();
+
+            }
+            else {
+
+                openSidebar();
+
+            }
 
         }
     );
@@ -889,26 +1101,61 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     document
-        .querySelectorAll(".sidebar-link")
-        .forEach(link => {
+        .querySelectorAll(
+            ".sidebar-link"
+        )
+        .forEach(
+            link => {
 
-            link.addEventListener(
-                "click",
-                () => {
+                link.addEventListener(
+                    "click",
+                    () => {
 
-                    if (
-                        window.innerWidth <=
-                        991
-                    ) {
+                        if (
+                            window.innerWidth <=
+                            991
+                        ) {
 
-                        closeSidebar();
+                            closeSidebar();
+
+                        }
 
                     }
+                );
 
+            }
+        );
+
+
+
+    /* =====================================================
+       SIDEBAR LOGOUT
+    ===================================================== */
+
+    document
+        .getElementById(
+            "sidebarLogout"
+        )
+        ?.addEventListener(
+            "click",
+            async () => {
+
+                const confirmed =
+                    confirm(
+                        "Are you sure you want to log out?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
                 }
-            );
 
-        });
+
+                await logoutUser();
+
+            }
+        );
+
 
 
     /* =====================================================
@@ -917,7 +1164,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function updateThemeIcon() {
 
-        if (!themeIcon) return;
+        if (!themeIcon) {
+            return;
+        }
 
 
         const dark =
@@ -934,7 +1183,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    function applyTheme(theme) {
+    function applyTheme(
+        theme
+    ) {
 
         document.body.classList.toggle(
             "dark-theme",
@@ -996,16 +1247,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
+
     /* =====================================================
        DATE HELPERS
     ===================================================== */
 
-    function pad(value) {
+    function pad(
+        value
+    ) {
 
         return String(value)
-            .padStart(2, "0");
+            .padStart(
+                2,
+                "0"
+            );
 
     }
+
 
 
     function formatISTDateTime(
@@ -1039,30 +1297,37 @@ document.addEventListener("DOMContentLoaded", async () => {
                         "h23"
 
                 }
-            ).formatToParts(date);
+            ).formatToParts(
+                date
+            );
 
 
         const values = {};
 
 
-        parts.forEach(part => {
+        parts.forEach(
+            part => {
 
-            if (
-                part.type !==
-                "literal"
-            ) {
+                if (
+                    part.type !==
+                    "literal"
+                ) {
 
-                values[part.type] =
-                    part.value;
+                    values[
+                        part.type
+                    ] =
+                        part.value;
+
+                }
 
             }
-
-        });
+        );
 
 
         return `${values.year}-${values.month}-${values.day} ${values.hour}:${values.minute}`;
 
     }
+
 
 
     function getISTDate(
@@ -1084,8 +1349,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
-       HISTORICAL CHART CONFIGURATION
+       HISTORICAL CHART REQUEST
     ===================================================== */
 
     function getChartRequest(
@@ -1096,24 +1362,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             new Date();
 
 
-        if (period === "1D") {
+        if (
+            period === "1D"
+        ) {
 
             const today =
                 getISTDate(0);
-
-
-            const from =
-                `${today.getFullYear()}-${pad(
-                    today.getMonth() + 1
-                )}-${pad(
-                    today.getDate()
-                )} 09:15`;
-
-
-            const to =
-                formatISTDateTime(
-                    now
-                );
 
 
             return {
@@ -1122,32 +1376,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "FIVE_MINUTE",
 
                 from:
-                    from,
-
-                to:
-                    to
-
-            };
-
-        }
-
-
-        if (period === "1W") {
-
-            const fromDate =
-                getISTDate(7);
-
-
-            return {
-
-                interval:
-                    "ONE_DAY",
-
-                from:
-                    `${fromDate.getFullYear()}-${pad(
-                        fromDate.getMonth() + 1
+                    `${today.getFullYear()}-${pad(
+                        today.getMonth() + 1
                     )}-${pad(
-                        fromDate.getDate()
+                        today.getDate()
                     )} 09:15`,
 
                 to:
@@ -1160,88 +1392,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        if (period === "1M") {
+        const days = {
 
-            const fromDate =
-                getISTDate(30);
+            "1W":
+                7,
 
+            "1M":
+                30,
 
-            return {
+            "1Y":
+                365,
 
-                interval:
-                    "ONE_DAY",
+            "5Y":
+                1825
 
-                from:
-                    `${fromDate.getFullYear()}-${pad(
-                        fromDate.getMonth() + 1
-                    )}-${pad(
-                        fromDate.getDate()
-                    )} 09:15`,
-
-                to:
-                    formatISTDateTime(
-                        now
-                    )
-
-            };
-
-        }
+        };
 
 
-        if (period === "1Y") {
-
-            const fromDate =
-                getISTDate(365);
-
-
-            return {
-
-                interval:
-                    "ONE_DAY",
-
-                from:
-                    `${fromDate.getFullYear()}-${pad(
-                        fromDate.getMonth() + 1
-                    )}-${pad(
-                        fromDate.getDate()
-                    )} 09:15`,
-
-                to:
-                    formatISTDateTime(
-                        now
-                    )
-
-            };
-
-        }
-
-
-        if (period === "5Y") {
-
-            const fromDate =
-                getISTDate(1825);
-
-
-            return {
-
-                interval:
-                    "ONE_DAY",
-
-                from:
-                    `${fromDate.getFullYear()}-${pad(
-                        fromDate.getMonth() + 1
-                    )}-${pad(
-                        fromDate.getDate()
-                    )} 09:15`,
-
-                to:
-                    formatISTDateTime(
-                        now
-                    )
-
-            };
-
-        }
+        const fromDate =
+            getISTDate(
+                days[period] || 30
+            );
 
 
         return {
@@ -1250,9 +1421,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "ONE_DAY",
 
             from:
-                formatISTDateTime(
-                    getISTDate(30)
-                ),
+                `${fromDate.getFullYear()}-${pad(
+                    fromDate.getMonth() + 1
+                )}-${pad(
+                    fromDate.getDate()
+                )} 09:15`,
 
             to:
                 formatISTDateTime(
@@ -1262,6 +1435,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
     }
+
 
 
     /* =====================================================
@@ -1278,10 +1452,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
-
-        /*
-            Return cached data if already loaded.
-        */
 
         if (
             chartCache[period]
@@ -1342,12 +1512,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 await response.json();
 
 
-            console.log(
-                "Historical candle response:",
-                result
-            );
-
-
             const candles =
                 result
                     ?.data
@@ -1387,6 +1551,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
     }
+
 
 
     /* =====================================================
@@ -1447,8 +1612,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
-       RENDER CHART
+       CREATE CHART
     ===================================================== */
 
     function createChart(
@@ -1465,7 +1631,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (
             !canvas ||
             typeof Chart ===
-                "undefined"
+            "undefined"
         ) {
 
             return;
@@ -1474,7 +1640,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         const ctx =
-            canvas.getContext("2d");
+            canvas.getContext(
+                "2d"
+            );
 
 
         const dark =
@@ -1502,18 +1670,34 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        /*
-            No historical data available.
-        */
-
         if (
-            !Array.isArray(candles) ||
+            !Array.isArray(
+                candles
+            ) ||
             !candles.length
         ) {
 
-            stockChart = null;
+            stockChart =
+                null;
+
+
+            if (chartMessage) {
+
+                chartMessage.textContent =
+                    "No historical market data is available for this period.";
+
+            }
+
 
             return;
+
+        }
+
+
+        if (chartMessage) {
+
+            chartMessage.textContent =
+                "";
 
         }
 
@@ -1566,7 +1750,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     type:
                         "line",
 
-
                     data: {
 
                         labels:
@@ -1592,7 +1775,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                     true,
 
                                 tension:
-                                    .35,
+                                    0.35,
 
                                 pointRadius:
                                     0,
@@ -1777,8 +1960,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
-       LOAD CHART FOR PERIOD
+       LOAD CHART
     ===================================================== */
 
     async function loadChartPeriod(
@@ -1820,8 +2004,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
-       RENDER CURRENT CACHED CHART
+       RENDER CACHED CHART
     ===================================================== */
 
     function renderCurrentChart() {
@@ -1847,6 +2032,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
     /* =====================================================
        CHART PERIOD BUTTONS
     ===================================================== */
@@ -1855,60 +2041,317 @@ document.addEventListener("DOMContentLoaded", async () => {
         .querySelectorAll(
             "#chartPeriods button"
         )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                async () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    document
-                        .querySelectorAll(
-                            "#chartPeriods button"
-                        )
-                        .forEach(btn =>
-                            btn.classList.remove(
-                                "active"
+                        document
+                            .querySelectorAll(
+                                "#chartPeriods button"
                             )
+                            .forEach(
+                                btn =>
+                                    btn.classList.remove(
+                                        "active"
+                                    )
+                            );
+
+
+                        button.classList.add(
+                            "active"
                         );
 
 
-                    button.classList.add(
-                        "active"
-                    );
+                        currentPeriod =
+                            button.dataset.period;
 
 
-                    currentPeriod =
-                        button.dataset.period;
+                        await loadChartPeriod(
+                            currentPeriod
+                        );
 
+                    }
+                );
 
-                    await loadChartPeriod(
-                        currentPeriod
-                    );
+            }
+        );
 
-                }
-            );
-
-        });
 
 
     /* =====================================================
        VIRTUAL TRADING
+       USER-SPECIFIC
     ===================================================== */
 
     let virtualCash =
         Number(
             localStorage.getItem(
-                "investopiaVirtualCash"
+                CASH_KEY
             )
-        ) || 100000;
-
-
-    let holdings =
-        JSON.parse(
-            localStorage.getItem(
-                "investopiaHoldings"
-            ) || "{}"
         );
+
+
+    if (
+        !Number.isFinite(
+            virtualCash
+        )
+    ) {
+
+        virtualCash =
+            100000;
+
+    }
+
+
+    let holdings = {};
+
+
+    try {
+
+        holdings =
+            JSON.parse(
+                localStorage.getItem(
+                    HOLDINGS_KEY
+                ) || "{}"
+            );
+
+    }
+    catch {
+
+        holdings = {};
+
+    }
+
+
+
+    /* =====================================================
+       NORMALIZE HOLDING
+    ===================================================== */
+
+    function normalizeHolding(
+        value
+    ) {
+
+        if (
+            typeof value ===
+            "number"
+        ) {
+
+            return {
+
+                quantity:
+                    Math.max(
+                        0,
+                        value
+                    ),
+
+                avgPrice:
+                    0
+
+            };
+
+        }
+
+
+        if (
+            value &&
+            typeof value ===
+            "object"
+        ) {
+
+            return {
+
+                quantity:
+                    Number(
+                        value.quantity
+                    ) || 0,
+
+                avgPrice:
+                    Number(
+                        value.avgPrice
+                    ) || 0,
+
+                exchange:
+                    value.exchange ||
+                    "NSE",
+
+                token:
+                    value.token ||
+                    ""
+
+            };
+
+        }
+
+
+        return {
+
+            quantity:
+                0,
+
+            avgPrice:
+                0
+
+        };
+
+    }
+
+
+
+    /* =====================================================
+       GET CURRENT HOLDING
+    ===================================================== */
+
+    function getCurrentHolding() {
+
+        const holding =
+            normalizeHolding(
+                holdings[
+                    baseSymbol
+                ]
+            );
+
+
+        return holding;
+
+    }
+
+
+
+    /* =====================================================
+       SAVE TRADING DATA
+    ===================================================== */
+
+    function saveTradingData() {
+
+        localStorage.setItem(
+            CASH_KEY,
+            String(
+                virtualCash
+            )
+        );
+
+
+        localStorage.setItem(
+            HOLDINGS_KEY,
+            JSON.stringify(
+                holdings
+            )
+        );
+
+    }
+
+
+
+    /* =====================================================
+       TRANSACTION HISTORY
+    ===================================================== */
+
+    function saveTransaction(
+        type,
+        qty,
+        price,
+        total
+    ) {
+
+        let transactions = [];
+
+
+        try {
+
+            transactions =
+                JSON.parse(
+                    localStorage.getItem(
+                        TRANSACTIONS_KEY
+                    ) || "[]"
+                );
+
+        }
+        catch {
+
+            transactions = [];
+
+        }
+
+
+        transactions.unshift({
+
+            id:
+                crypto.randomUUID
+                ? crypto.randomUUID()
+                : `${Date.now()}-${Math.random()}`,
+
+            type:
+                type,
+
+            symbol:
+                baseSymbol,
+
+            tradingSymbol:
+                tradingSymbol,
+
+            exchange:
+                exchange,
+
+            quantity:
+                qty,
+
+            price:
+                price,
+
+            total:
+                total,
+
+            timestamp:
+                new Date().toISOString()
+
+        });
+
+
+        /*
+         * Keep latest 100 transactions.
+         */
+
+        transactions =
+            transactions.slice(
+                0,
+                100
+            );
+
+
+        localStorage.setItem(
+            TRANSACTIONS_KEY,
+            JSON.stringify(
+                transactions
+            )
+        );
+
+    }
+
+
+
+    /* =====================================================
+       UPDATE VIRTUAL CASH UI
+    ===================================================== */
+
+    function updateVirtualCashUI() {
+
+        if (
+            virtualCashElement
+        ) {
+
+            virtualCashElement.textContent =
+                formatMoney(
+                    virtualCash
+                );
+
+        }
+
+    }
+
 
 
     /* =====================================================
@@ -1926,15 +2369,36 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-        if (tradeValue) {
+        const price =
+            Number(
+                asset.price
+            );
 
-            tradeValue.textContent =
-                formatMoney(
-                    qty *
-                    Number(
-                        asset.price
-                    )
-                );
+
+        if (
+            tradeValue
+        ) {
+
+            if (
+                liveDataAvailable &&
+                Number.isFinite(
+                    price
+                ) &&
+                price > 0
+            ) {
+
+                tradeValue.textContent =
+                    formatMoney(
+                        qty * price
+                    );
+
+            }
+            else {
+
+                tradeValue.textContent =
+                    "₹--";
+
+            }
 
         }
 
@@ -1947,26 +2411,83 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
+
     /* =====================================================
-       SAVE TRADING DATA
+       UPDATE PORTFOLIO IMPACT
     ===================================================== */
 
-    function saveTradingData() {
+    function updatePortfolioImpact() {
 
-        localStorage.setItem(
-            "investopiaVirtualCash",
-            virtualCash
-        );
+        const holding =
+            getCurrentHolding();
 
 
-        localStorage.setItem(
-            "investopiaHoldings",
-            JSON.stringify(
-                holdings
-            )
-        );
+        const qty =
+            holding.quantity;
+
+
+        if (
+            portfolioHolding
+        ) {
+
+            portfolioHolding.textContent =
+                formatQuantity(
+                    qty
+                );
+
+        }
+
+
+        if (
+            portfolioProgress
+        ) {
+
+            /*
+             * This progress bar is only a
+             * visual holding indicator.
+             *
+             * It is not pretending to be
+             * sector exposure.
+             */
+
+            const percentage =
+                Math.min(
+                    100,
+                    qty > 0
+                        ? 100
+                        : 0
+                );
+
+
+            portfolioProgress.style.width =
+                `${percentage}%`;
+
+        }
+
+
+        if (
+            portfolioMessage
+        ) {
+
+            if (qty > 0) {
+
+                portfolioMessage.textContent =
+                    `You currently hold ${formatQuantity(
+                        qty
+                    )} unit(s) of ${baseSymbol} virtually.`;
+
+            }
+            else {
+
+                portfolioMessage.textContent =
+                    `You currently do not hold ${baseSymbol} virtually.`;
+
+            }
+
+        }
 
     }
+
 
 
     /* =====================================================
@@ -1974,13 +2495,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     ===================================================== */
 
     function showTradeMessage(
-        message,
-        success = true
+        message
     ) {
 
-        alert(message);
+        alert(
+            message
+        );
 
     }
+
 
 
     /* =====================================================
@@ -1991,19 +2514,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         "click",
         () => {
 
-            /*
-                Do not allow virtual trades
-                if live market data failed.
-            */
-
             if (
                 !liveDataAvailable ||
                 !asset.price
             ) {
 
                 showTradeMessage(
-                    "Live market data is unavailable. Please try again.",
-                    false
+                    "Live market data is unavailable. Please try again."
                 );
 
                 return;
@@ -2014,7 +2531,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const qty =
                 Math.floor(
                     Number(
-                        quantity.value
+                        quantity?.value
                     )
                 );
 
@@ -2025,8 +2542,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ) {
 
                 showTradeMessage(
-                    "Please enter a valid quantity.",
-                    false
+                    "Please enter a valid quantity."
                 );
 
                 return;
@@ -2046,10 +2562,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 showTradeMessage(
                     `Insufficient virtual cash.
-Available: ${formatMoney(
-                        virtualCash
-                    )}`,
-                    false
+
+Available:
+${formatMoney(
+    virtualCash
+)}
+
+Required:
+${formatMoney(
+    total
+)}`
                 );
 
                 return;
@@ -2057,35 +2579,108 @@ Available: ${formatMoney(
             }
 
 
+            const existing =
+                getCurrentHolding();
+
+
+            const existingQuantity =
+                existing.quantity;
+
+
+            const existingAvgPrice =
+                existing.avgPrice;
+
+
+            const newQuantity =
+                existingQuantity +
+                qty;
+
+
+            /*
+             * Calculate weighted average
+             * purchase price.
+             */
+
+            const newAveragePrice =
+                existingQuantity > 0 &&
+                existingAvgPrice > 0
+
+                    ? (
+                        (
+                            existingQuantity *
+                            existingAvgPrice
+                        ) +
+                        (
+                            qty *
+                            asset.price
+                        )
+                    ) /
+                    newQuantity
+
+                    : asset.price;
+
+
             virtualCash -=
                 total;
 
 
-            holdings[baseSymbol] =
-                (
-                    holdings[baseSymbol] ||
-                    0
-                ) +
-                qty;
+            holdings[baseSymbol] = {
+
+                quantity:
+                    newQuantity,
+
+                avgPrice:
+                    newAveragePrice,
+
+                exchange:
+                    exchange,
+
+                token:
+                    symbolToken
+
+            };
 
 
             saveTradingData();
 
 
+            saveTransaction(
+                "BUY",
+                qty,
+                asset.price,
+                total
+            );
+
+
+            updateVirtualCashUI();
+
+            updatePortfolioImpact();
+
+
             showTradeMessage(
                 `Virtual BUY successful!
 
-${qty} × ${asset.name}
-Price: ${formatMoney(
-                    asset.price
-                )}
-Value: ${formatMoney(
-                    total
-                )}`
+${qty} × ${tradingSymbol}
+
+Price:
+${formatMoney(
+    asset.price
+)}
+
+Value:
+${formatMoney(
+    total
+)}
+
+Average purchase price:
+${formatMoney(
+    newAveragePrice
+)}`
             );
 
         }
     );
+
 
 
     /* =====================================================
@@ -2102,8 +2697,7 @@ Value: ${formatMoney(
             ) {
 
                 showTradeMessage(
-                    "Live market data is unavailable. Please try again.",
-                    false
+                    "Live market data is unavailable. Please try again."
                 );
 
                 return;
@@ -2114,15 +2708,9 @@ Value: ${formatMoney(
             const qty =
                 Math.floor(
                     Number(
-                        quantity.value
+                        quantity?.value
                     )
                 );
-
-
-            const owned =
-                holdings[
-                    baseSymbol
-                ] || 0;
 
 
             if (
@@ -2131,13 +2719,20 @@ Value: ${formatMoney(
             ) {
 
                 showTradeMessage(
-                    "Please enter a valid quantity.",
-                    false
+                    "Please enter a valid quantity."
                 );
 
                 return;
 
             }
+
+
+            const existing =
+                getCurrentHolding();
+
+
+            const owned =
+                existing.quantity;
 
 
             if (
@@ -2146,9 +2741,12 @@ Value: ${formatMoney(
             ) {
 
                 showTradeMessage(
-                    `You do not own enough ${asset.name} virtually.
-Owned: ${owned}`,
-                    false
+                    `You do not own enough ${tradingSymbol} virtually.
+
+Owned:
+${formatQuantity(
+    owned
+)}`
                 );
 
                 return;
@@ -2165,16 +2763,13 @@ Owned: ${owned}`,
                 total;
 
 
-            holdings[
-                baseSymbol
-            ] -=
+            const remaining =
+                owned -
                 qty;
 
 
             if (
-                holdings[
-                    baseSymbol
-                ] <= 0
+                remaining <= 0
             ) {
 
                 delete holdings[
@@ -2182,25 +2777,57 @@ Owned: ${owned}`,
                 ];
 
             }
+            else {
+
+                holdings[
+                    baseSymbol
+                ] = {
+
+                    ...existing,
+
+                    quantity:
+                        remaining
+
+                };
+
+            }
 
 
             saveTradingData();
 
 
+            saveTransaction(
+                "SELL",
+                qty,
+                asset.price,
+                total
+            );
+
+
+            updateVirtualCashUI();
+
+            updatePortfolioImpact();
+
+
             showTradeMessage(
                 `Virtual SELL successful!
 
-${qty} × ${asset.name}
-Price: ${formatMoney(
-                    asset.price
-                )}
-Value: ${formatMoney(
-                    total
-                )}`
+${qty} × ${tradingSymbol}
+
+Price:
+${formatMoney(
+    asset.price
+)}
+
+Value:
+${formatMoney(
+    total
+)}`
             );
 
         }
     );
+
 
 
     /* =====================================================
@@ -2226,11 +2853,14 @@ Value: ${formatMoney(
 
 
             if (!query) {
-
                 return;
-
             }
 
+
+            /*
+             * Send search to Market.
+             * Market uses Angel One search.
+             */
 
             window.location.href =
                 `../market/market.html?search=${encodeURIComponent(
@@ -2240,6 +2870,11 @@ Value: ${formatMoney(
         }
     );
 
+
+
+    /* =====================================================
+       CTRL + K
+    ===================================================== */
 
     document.addEventListener(
         "keydown",
@@ -2251,7 +2886,7 @@ Value: ${formatMoney(
                     event.metaKey
                 ) &&
                 event.key.toLowerCase() ===
-                    "k"
+                "k"
             ) {
 
                 event.preventDefault();
@@ -2264,27 +2899,497 @@ Value: ${formatMoney(
     );
 
 
+
     /* =====================================================
-       RESPONSIVE SIDEBAR
+       SIMPLE TECHNICAL INFORMATION
+       ONLY FROM ACTUAL CANDLES
     ===================================================== */
 
-    window.addEventListener(
-        "resize",
-        () => {
+    function calculateSMA(
+        candles,
+        period
+    ) {
+
+        if (
+            !Array.isArray(candles) ||
+            candles.length < period
+        ) {
+
+            return null;
+
+        }
+
+
+        const recent =
+            candles.slice(
+                -period
+            );
+
+
+        const closes =
+            recent
+                .map(
+                    candle =>
+                        Number(
+                            candle[4]
+                        )
+                )
+                .filter(
+                    Number.isFinite
+                );
+
+
+        if (
+            closes.length <
+            period
+        ) {
+
+            return null;
+
+        }
+
+
+        const total =
+            closes.reduce(
+                (
+                    sum,
+                    value
+                ) =>
+                    sum + value,
+                0
+            );
+
+
+        return (
+            total /
+            closes.length
+        );
+
+    }
+
+
+
+    function calculateRSI(
+        candles,
+        period = 14
+    ) {
+
+        if (
+            !Array.isArray(candles) ||
+            candles.length <= period
+        ) {
+
+            return null;
+
+        }
+
+
+        const closes =
+            candles
+                .map(
+                    candle =>
+                        Number(
+                            candle[4]
+                        )
+                )
+                .filter(
+                    Number.isFinite
+                );
+
+
+        if (
+            closes.length <= period
+        ) {
+
+            return null;
+
+        }
+
+
+        let gains = 0;
+
+        let losses = 0;
+
+
+        for (
+            let i = 1;
+            i <= period;
+            i++
+        ) {
+
+            const difference =
+                closes[i] -
+                closes[i - 1];
+
 
             if (
-                window.innerWidth > 991 &&
-                sidebar?.classList.contains(
-                    "sidebar-open"
-                )
+                difference >= 0
             ) {
 
-                closeSidebar();
+                gains +=
+                    difference;
+
+            }
+            else {
+
+                losses +=
+                    Math.abs(
+                        difference
+                    );
 
             }
 
         }
-    );
+
+
+        let averageGain =
+            gains /
+            period;
+
+
+        let averageLoss =
+            losses /
+            period;
+
+
+        for (
+            let i = period + 1;
+            i < closes.length;
+            i++
+        ) {
+
+            const difference =
+                closes[i] -
+                closes[i - 1];
+
+
+            const gain =
+                difference > 0
+                    ? difference
+                    : 0;
+
+
+            const loss =
+                difference < 0
+                    ? Math.abs(
+                        difference
+                    )
+                    : 0;
+
+
+            averageGain =
+                (
+                    (
+                        averageGain *
+                        (period - 1)
+                    ) +
+                    gain
+                ) /
+                period;
+
+
+            averageLoss =
+                (
+                    (
+                        averageLoss *
+                        (period - 1)
+                    ) +
+                    loss
+                ) /
+                period;
+
+        }
+
+
+        if (
+            averageLoss === 0
+        ) {
+
+            return 100;
+
+        }
+
+
+        const relativeStrength =
+            averageGain /
+            averageLoss;
+
+
+        return (
+            100 -
+            (
+                100 /
+                (
+                    1 +
+                    relativeStrength
+                )
+            )
+        );
+
+    }
+
+
+
+    function updateTechnicalAnalysis(
+        candles
+    ) {
+
+        const trendElement =
+            document.getElementById(
+                "technicalTrend"
+            );
+
+
+        const ma50Element =
+            document.getElementById(
+                "ma50"
+            );
+
+
+        const ma200Element =
+            document.getElementById(
+                "ma200"
+            );
+
+
+        const rsiElement =
+            document.getElementById(
+                "rsiValue"
+            );
+
+
+        if (
+            !Array.isArray(
+                candles
+            ) ||
+            !candles.length
+        ) {
+
+            return;
+
+        }
+
+
+        const latestClose =
+            Number(
+                candles[
+                    candles.length - 1
+                ][4]
+            );
+
+
+        const ma50 =
+            calculateSMA(
+                candles,
+                50
+            );
+
+
+        const ma200 =
+            calculateSMA(
+                candles,
+                200
+            );
+
+
+        const rsi =
+            calculateRSI(
+                candles
+            );
+
+
+        if (
+            ma50Element
+        ) {
+
+            ma50Element.textContent =
+                ma50 !== null
+                    ? formatMoney(
+                        ma50
+                    )
+                    : "—";
+
+        }
+
+
+        if (
+            ma200Element
+        ) {
+
+            ma200Element.textContent =
+                ma200 !== null
+                    ? formatMoney(
+                        ma200
+                    )
+                    : "—";
+
+        }
+
+
+        if (
+            rsiElement
+        ) {
+
+            rsiElement.textContent =
+                rsi !== null
+                    ? rsi.toFixed(2)
+                    : "—";
+
+        }
+
+
+        if (
+            trendElement
+        ) {
+
+            if (
+                ma50 !== null &&
+                ma200 !== null
+            ) {
+
+                if (
+                    latestClose > ma50 &&
+                    ma50 > ma200
+                ) {
+
+                    trendElement.textContent =
+                        "Bullish";
+
+                }
+                else if (
+                    latestClose < ma50 &&
+                    ma50 < ma200
+                ) {
+
+                    trendElement.textContent =
+                        "Bearish";
+
+                }
+                else {
+
+                    trendElement.textContent =
+                        "Mixed";
+
+                }
+
+            }
+            else {
+
+                trendElement.textContent =
+                    "Insufficient data";
+
+            }
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       LOAD TECHNICAL DATA
+    ===================================================== */
+
+    async function loadTechnicalData() {
+
+        /*
+         * Use 1Y daily candles for technical calculations.
+         */
+
+        const candles =
+            await fetchHistoricalCandles(
+                "1Y"
+            );
+
+
+        updateTechnicalAnalysis(
+            candles
+        );
+
+    }
+
+
+
+    /* =====================================================
+       AI / SCORE PLACEHOLDER
+       NO FABRICATED SCORES
+    ===================================================== */
+
+    function updateAnalysisState() {
+
+        const score =
+            document.getElementById(
+                "investopiaScore"
+            );
+
+
+        const scoreLabel =
+            document.getElementById(
+                "scoreLabel"
+            );
+
+
+        const scoreDescription =
+            document.getElementById(
+                "scoreDescription"
+            );
+
+
+        const recommendation =
+            document.getElementById(
+                "aiRecommendation"
+            );
+
+
+        const confidence =
+            document.getElementById(
+                "aiConfidence"
+            );
+
+
+        if (score) {
+
+            score.textContent =
+                "—";
+
+        }
+
+
+        if (scoreLabel) {
+
+            scoreLabel.textContent =
+                "DATA REQUIRED";
+
+        }
+
+
+        if (scoreDescription) {
+
+            scoreDescription.textContent =
+                "A verified fundamentals data source is required for a complete score.";
+
+        }
+
+
+        if (recommendation) {
+
+            recommendation.textContent =
+                liveDataAvailable
+                    ? "Market data available for further research"
+                    : "Waiting for verified market data";
+
+        }
+
+
+        if (confidence) {
+
+            confidence.innerHTML =
+                "Confidence <strong>—</strong>";
+
+        }
+
+    }
+
 
 
     /* =====================================================
@@ -2294,16 +3399,15 @@ Value: ${formatMoney(
     async function initializeLiveStock() {
 
         /*
-            First display the existing UI.
-        */
+         * First show loading state.
+         */
 
         loadAsset();
 
 
         /*
-            Resolve the Angel One
-            trading symbol + token.
-        */
+         * Resolve instrument through Angel One.
+         */
 
         const stock =
             await resolveStock();
@@ -2312,10 +3416,20 @@ Value: ${formatMoney(
         if (!stock) {
 
             console.error(
-                "Unable to resolve stock through Angel One."
+                "Unable to resolve instrument through Angel One."
             );
 
-            loadAsset();
+
+            if (chartMessage) {
+
+                chartMessage.textContent =
+                    "Unable to resolve this instrument through Angel One.";
+
+            }
+
+
+            updateAnalysisState();
+
 
             return;
 
@@ -2323,8 +3437,8 @@ Value: ${formatMoney(
 
 
         /*
-            Store the actual values.
-        */
+         * Store actual resolved values.
+         */
 
         tradingSymbol =
             stock.tradingSymbol;
@@ -2334,9 +3448,13 @@ Value: ${formatMoney(
             stock.symbolToken;
 
 
+        exchange =
+            stock.exchange;
+
+
         /*
-            Get real-time market data.
-        */
+         * Fetch live market data.
+         */
 
         const marketData =
             await fetchLiveMarketData(
@@ -2350,55 +3468,56 @@ Value: ${formatMoney(
                 marketData
             );
 
+        }
+        else {
 
-            /*
-                Update company metadata
-                if this is a stock not already
-                in the local metadata list.
-            */
-
-            if (
-                !assets[baseSymbol]
-            ) {
-
-                asset.name =
-                    baseSymbol;
-
-                asset.company =
-                    baseSymbol;
-
-                asset.type =
-                    "STOCK";
-
-                asset.logo =
-                    baseSymbol.charAt(0) ||
-                    "S";
-
-            }
+            liveDataAvailable =
+                false;
 
         }
 
 
         /*
-            Render the real price.
-        */
+         * Render live data.
+         */
 
         loadAsset();
 
 
+        updateAnalysisState();
+
+
         /*
-            Load the default 1D
-            historical chart.
-        */
+         * Load default 1D chart.
+         */
 
         await loadChartPeriod(
             currentPeriod
         );
 
 
+        /*
+         * Load technical information
+         * from actual historical candles.
+         */
+
+        await loadTechnicalData();
+
+
+        /*
+         * Update portfolio information.
+         */
+
+        updatePortfolioImpact();
+
+
         console.log(
-            "Investopia Stock Details loaded:",
+            "Investopia Stock Details initialized:",
             {
+
+                userId:
+                    user.id,
+
                 exchange:
                     stock.exchange,
 
@@ -2410,10 +3529,33 @@ Value: ${formatMoney(
 
                 livePrice:
                     asset.price
+
             }
         );
 
     }
+
+
+
+    /* =====================================================
+       RESPONSIVE SIDEBAR
+    ===================================================== */
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            if (
+                window.innerWidth > 991
+            ) {
+
+                closeSidebar();
+
+            }
+
+        }
+    );
+
 
 
     /* =====================================================
@@ -2421,5 +3563,6 @@ Value: ${formatMoney(
     ===================================================== */
 
     await initializeLiveStock();
+
 
 });

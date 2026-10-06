@@ -264,11 +264,21 @@
                 href="../profile/profile.html"
                 class="profile-button">
 
-                <span class="profile-avatar">
+                <span
+                    class="profile-avatar"
+                    id="profileAvatar">
 
-                    <i class="bi bi-person"></i>
+                    U
 
                 </span>
+
+                <strong
+                    id="profileName"
+                    class="d-none d-md-inline">
+
+                    User
+
+                </strong>
 
             </a>
 
@@ -300,7 +310,7 @@
                     Learn investing with confidence
                 </h2>
 
-                <p>
+                <p id="learningIntroText">
                     Understand stocks, ETFs, mutual funds, trading,
                     risk and personal finance through simple,
                     beginner-friendly lessons.
@@ -319,6 +329,37 @@
 
 
         <!-- =================================================
+             LEARNING PROGRESS
+        ================================================= -->
+
+        <div class="learning-progress-card">
+
+            <div class="progress-info">
+
+                <span class="section-label">
+                    YOUR PROGRESS
+                </span>
+
+                <strong id="progressText">
+                    0 of 8 lessons completed
+                </strong>
+
+            </div>
+
+            <div class="learning-progress-track">
+
+                <div
+                    class="learning-progress-fill"
+                    id="learningProgressFill"
+                    style="width:0%">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
              SEARCH
         ================================================= -->
 
@@ -329,7 +370,8 @@
             <input
                 type="search"
                 id="learningSearch"
-                placeholder="Search a topic, lesson or concept...">
+                placeholder="Search a topic, lesson or concept..."
+                autocomplete="off">
 
         </div>
 
@@ -547,7 +589,7 @@
 
 
         <!-- =================================================
-             POPULAR LESSONS
+             LESSONS
         ================================================= -->
 
         <div class="section-header lessons-header">
@@ -588,9 +630,7 @@
                 data-title="What is a stock">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-building"></i>
-
                 </div>
 
 
@@ -648,9 +688,7 @@
                 data-title="What are mutual funds">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-collection"></i>
-
                 </div>
 
 
@@ -707,9 +745,7 @@
                 data-title="What is an ETF">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-layers"></i>
-
                 </div>
 
 
@@ -766,9 +802,7 @@
                 data-title="Trading vs investing">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-bar-chart-line"></i>
-
                 </div>
 
 
@@ -825,9 +859,7 @@
                 data-title="Understanding investment risk">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-shield-check"></i>
-
                 </div>
 
 
@@ -884,9 +916,7 @@
                 data-title="Building an emergency fund">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-wallet2"></i>
-
                 </div>
 
 
@@ -943,9 +973,7 @@
                 data-title="Understanding fundamental analysis">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-search"></i>
-
                 </div>
 
 
@@ -1002,9 +1030,7 @@
                 data-title="Understanding portfolio diversification">
 
                 <div class="lesson-icon">
-
                     <i class="bi bi-diagram-3"></i>
-
                 </div>
 
 
@@ -1051,6 +1077,68 @@
                 </button>
 
             </article>
+
+        </div>
+
+
+        <!-- =================================================
+             LESSON VIEWER
+        ================================================= -->
+
+        <div
+            class="lesson-viewer"
+            id="lessonViewer"
+            hidden>
+
+            <div class="lesson-viewer-header">
+
+                <div>
+
+                    <span
+                        class="section-label"
+                        id="viewerCategory">
+
+                        LESSON
+
+                    </span>
+
+                    <h3 id="viewerTitle">
+                        Lesson
+                    </h3>
+
+                </div>
+
+                <button
+                    class="icon-button"
+                    id="closeLesson"
+                    aria-label="Close lesson">
+
+                    <i class="bi bi-x-lg"></i>
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="lesson-viewer-content"
+                id="lessonViewerContent">
+            </div>
+
+
+            <div class="lesson-viewer-footer">
+
+                <button
+                    class="outline-button"
+                    id="completeLessonButton">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Mark as Completed
+
+                </button>
+
+            </div>
 
         </div>
 
@@ -1211,7 +1299,8 @@
 
             <a
                 href="../ai-advisor/ai-advisor.html"
-                class="ai-button">
+                class="ai-button"
+                id="aiLearningButton">
 
                 <i class="bi bi-chat-stars"></i>
 

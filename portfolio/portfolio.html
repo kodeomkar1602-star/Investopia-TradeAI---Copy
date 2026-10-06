@@ -2,152 +2,301 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Manage your virtual investment portfolio with Investopia TradeAI">
-    <title>Portfolio | Investopia TradeAI</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Manage your virtual investment portfolio with Investopia TradeAI">
+
+    <title>
+        Portfolio | Investopia TradeAI
+    </title>
+
+
+    <!-- Bootstrap -->
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
+
+    <!-- Bootstrap Icons -->
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="portfolio.css">
+
+    <!-- Portfolio CSS -->
+
+    <link
+        rel="stylesheet"
+        href="portfolio.css">
+
 </head>
+
 
 <body>
 
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- ==================== SIDEBAR ==================== -->
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
 
-<aside class="sidebar" id="sidebar">
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
 
     <div class="sidebar-header">
 
-        <a href="../home/home.html" class="brand">
+
+        <a
+            href="../home/home.html"
+            class="brand">
+
 
             <span class="brand-icon">
+
                 <i class="bi bi-graph-up-arrow"></i>
+
             </span>
+
 
             <span class="brand-text">
+
                 Investopia
-                <small>TradeAI</small>
+
+                <small>
+                    TradeAI
+                </small>
+
             </span>
 
+
         </a>
+
 
         <button
             class="sidebar-close d-lg-none"
             id="sidebarClose"
-            type="button">
+            type="button"
+            aria-label="Close menu">
 
             <i class="bi bi-x-lg"></i>
 
         </button>
+
 
     </div>
 
 
     <nav class="sidebar-nav">
 
-        <p class="nav-label">MAIN</p>
 
-        <a href="../dashboard/dashboard.html" class="sidebar-link">
+        <p class="nav-label">
+            MAIN
+        </p>
+
+
+        <a
+            href="../dashboard/dashboard.html"
+            class="sidebar-link">
+
             <i class="bi bi-grid-1x2-fill"></i>
-            <span>Dashboard</span>
+
+            <span>
+                Dashboard
+            </span>
+
         </a>
 
-        <a href="../market/market.html" class="sidebar-link">
+
+        <a
+            href="../market/market.html"
+            class="sidebar-link">
+
             <i class="bi bi-graph-up"></i>
-            <span>Market</span>
+
+            <span>
+                Market
+            </span>
+
         </a>
 
-        <a href="../stock-details/stock-details.html" class="sidebar-link">
+
+        <a
+            href="../stock-details/stock-details.html"
+            class="sidebar-link">
+
             <i class="bi bi-bar-chart-line"></i>
-            <span>Stock Details</span>
+
+            <span>
+                Stock Details
+            </span>
+
         </a>
 
-        <a href="portfolio.html" class="sidebar-link active">
+
+        <a
+            href="portfolio.html"
+            class="sidebar-link active">
+
             <i class="bi bi-wallet2"></i>
-            <span>Portfolio</span>
+
+            <span>
+                Portfolio
+            </span>
+
         </a>
 
 
-        <p class="nav-label mt-4">SMART TOOLS</p>
+        <p class="nav-label mt-4">
+            SMART TOOLS
+        </p>
 
-        <a href="../ai-advisor/ai-advisor.html"
-           class="sidebar-link ai-link">
+
+        <a
+            href="../ai-advisor/ai-advisor.html"
+            class="sidebar-link ai-link">
 
             <i class="bi bi-stars"></i>
-            <span>AI Advisor</span>
-            <span class="ai-badge">AI</span>
+
+            <span>
+                AI Advisor
+            </span>
+
+            <span class="ai-badge">
+                AI
+            </span>
 
         </a>
 
-        <a href="../planner/planner.html" class="sidebar-link">
+
+        <a
+            href="../planner/planner.html"
+            class="sidebar-link">
+
             <i class="bi bi-bullseye"></i>
-            <span>Planner</span>
+
+            <span>
+                Planner
+            </span>
+
         </a>
 
-        <a href="../insights/insights.html" class="sidebar-link">
+
+        <a
+            href="../insights/insights.html"
+            class="sidebar-link">
+
             <i class="bi bi-lightbulb"></i>
-            <span>Insights</span>
+
+            <span>
+                Insights
+            </span>
+
         </a>
 
 
-        <p class="nav-label mt-4">EXPLORE</p>
+        <p class="nav-label mt-4">
+            EXPLORE
+        </p>
 
-        <a href="../news/news.html" class="sidebar-link">
+
+        <a
+            href="../news/news.html"
+            class="sidebar-link">
+
             <i class="bi bi-newspaper"></i>
-            <span>News</span>
+
+            <span>
+                News
+            </span>
+
         </a>
 
-        <a href="../learning/learning.html" class="sidebar-link">
+
+        <a
+            href="../learning/learning.html"
+            class="sidebar-link">
+
             <i class="bi bi-book"></i>
-            <span>Learning</span>
+
+            <span>
+                Learning
+            </span>
+
         </a>
+
 
     </nav>
 
 
     <div class="sidebar-bottom">
 
-        <a href="../profile/profile.html" class="sidebar-link">
+
+        <a
+            href="../profile/profile.html"
+            class="sidebar-link">
+
             <i class="bi bi-person-circle"></i>
-            <span>Profile</span>
+
+            <span>
+                Profile
+            </span>
+
         </a>
+
 
         <a
             href="../home/home.html"
             class="sidebar-link logout-link">
 
             <i class="bi bi-box-arrow-left"></i>
-            <span>Logout</span>
+
+            <span>
+                Logout
+            </span>
 
         </a>
 
+
     </div>
+
 
 </aside>
 
 
-<!-- ==================== MAIN ==================== -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <div class="main-wrapper">
 
+
     <header class="top-header">
 
+
         <div class="header-left">
+
 
             <button
                 class="menu-btn"
                 id="sidebarToggle"
-                type="button">
+                type="button"
+                aria-label="Open menu">
 
                 <i class="bi bi-list"></i>
 
@@ -156,7 +305,9 @@
 
             <div class="global-search">
 
+
                 <i class="bi bi-search"></i>
+
 
                 <input
                     type="search"
@@ -164,18 +315,25 @@
                     placeholder="Search stocks, ETFs, mutual funds..."
                     autocomplete="off">
 
-                <kbd>⌘ K</kbd>
+
+                <kbd>
+                    Ctrl K
+                </kbd>
+
 
             </div>
+
 
         </div>
 
 
         <div class="header-actions">
 
+
             <button
                 class="header-icon-btn"
-                type="button">
+                type="button"
+                aria-label="Notifications">
 
                 <i class="bi bi-bell"></i>
 
@@ -188,7 +346,8 @@
                 class="header-icon-btn"
                 id="themeToggle"
                 type="button"
-                title="Toggle theme">
+                title="Toggle theme"
+                aria-label="Toggle theme">
 
                 <i
                     class="bi bi-moon-stars"
@@ -202,22 +361,43 @@
                 href="../profile/profile.html"
                 class="profile-mini">
 
-                <span class="profile-avatar">
-                    A
-                </span>
 
-                <span class="profile-info d-none d-md-block">
+                <span
+                    class="profile-avatar"
+                    id="profileAvatar">
 
-                    <strong>Anurag</strong>
-                    <small>Investor</small>
+                    U
 
                 </span>
 
-                <i class="bi bi-chevron-down d-none d-md-block"></i>
+
+                <span
+                    class="profile-info d-none d-md-block">
+
+
+                    <strong id="profileName">
+                        User
+                    </strong>
+
+
+                    <small>
+                        Investor
+                    </small>
+
+
+                </span>
+
+
+                <i
+                    class="bi bi-chevron-down d-none d-md-block">
+                </i>
+
 
             </a>
 
+
         </div>
+
 
     </header>
 
@@ -225,23 +405,31 @@
     <main class="portfolio-content">
 
 
-        <!-- ==================== PAGE HEADER ==================== -->
+        <!-- =================================================
+             PAGE HEADER
+        ================================================= -->
 
         <section class="page-header">
 
+
             <div>
+
 
                 <p class="eyebrow">
                     MY INVESTMENTS
                 </p>
 
+
                 <h1>
                     My Portfolio
                 </h1>
 
+
                 <p>
-                    Track your virtual investments and portfolio performance.
+                    Track your virtual investments and
+                    portfolio performance.
                 </p>
+
 
             </div>
 
@@ -251,119 +439,161 @@
                 class="btn btn-success">
 
                 <i class="bi bi-plus-lg"></i>
+
                 Explore Investments
 
             </a>
 
+
         </section>
 
 
-        <!-- ==================== PORTFOLIO SUMMARY ==================== -->
+        <!-- =================================================
+             PORTFOLIO SUMMARY
+        ================================================= -->
 
         <section class="summary-grid">
 
+
             <div class="summary-card primary-card">
 
+
                 <div class="summary-icon">
+
                     <i class="bi bi-wallet2"></i>
+
                 </div>
+
 
                 <span>
                     Total Portfolio Value
                 </span>
 
+
                 <h2 id="portfolioValue">
-                    ₹1,24,580
+                    ₹0.00
                 </h2>
 
-                <small class="positive">
 
-                    <i class="bi bi-arrow-up"></i>
-                    +₹12,480 (+11.13%)
+                <small
+                    id="portfolioReturn"
+                    class="positive">
+
+                    <i class="bi bi-dash"></i>
+
+                    ₹0.00 (0.00%)
 
                 </small>
+
 
             </div>
 
 
             <div class="summary-card">
 
+
                 <div class="summary-icon">
+
                     <i class="bi bi-graph-up-arrow"></i>
+
                 </div>
+
 
                 <span>
-                    Total P&L
+                    Total P&amp;L
                 </span>
 
+
                 <h2
-                    class="positive"
                     id="totalProfit">
 
-                    +₹12,480
+                    ₹0.00
 
                 </h2>
 
+
                 <small>
-                    Overall virtual profit
+                    Overall virtual profit/loss
                 </small>
+
 
             </div>
 
 
             <div class="summary-card">
 
+
                 <div class="summary-icon">
+
                     <i class="bi bi-cash-stack"></i>
+
                 </div>
+
 
                 <span>
                     Available Cash
                 </span>
 
+
                 <h2 id="availableCash">
-                    ₹75,420
+                    ₹0.00
                 </h2>
+
 
                 <small>
                     Virtual trading balance
                 </small>
+
 
             </div>
 
 
             <div class="summary-card">
 
+
                 <div class="summary-icon">
+
                     <i class="bi bi-pie-chart"></i>
+
                 </div>
+
 
                 <span>
                     Invested
                 </span>
 
+
                 <h2 id="investedAmount">
-                    ₹49,160
+                    ₹0.00
                 </h2>
 
-                <small>
-                    Across 4 assets
+
+                <small id="assetCount">
+                    Across 0 assets
                 </small>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- ==================== PERFORMANCE + ALLOCATION ==================== -->
+        <!-- =================================================
+             PERFORMANCE + ALLOCATION
+        ================================================= -->
 
         <section class="row g-4 mt-1">
 
+
             <div class="col-xl-8">
+
 
                 <div class="portfolio-card chart-card">
 
+
                     <div class="card-title-row">
+
 
                         <div>
 
@@ -372,7 +602,7 @@
                             </h2>
 
                             <p>
-                                Growth of your virtual portfolio
+                                Recorded virtual portfolio performance
                             </p>
 
                         </div>
@@ -404,25 +634,46 @@
 
                         </select>
 
+
                     </div>
 
 
                     <div class="portfolio-chart">
 
-                        <canvas id="portfolioChart"></canvas>
+
+                        <canvas
+                            id="portfolioChart">
+                        </canvas>
+
 
                     </div>
 
+
+                    <div
+                        id="performanceMessage"
+                        class="text-center mt-2">
+
+                        Portfolio history will appear here
+                        once historical portfolio snapshots
+                        are recorded.
+
+                    </div>
+
+
                 </div>
+
 
             </div>
 
 
             <div class="col-xl-4">
 
+
                 <div class="portfolio-card allocation-card">
 
+
                     <div class="card-title-row">
+
 
                         <div>
 
@@ -436,87 +687,68 @@
 
                         </div>
 
-                        <i class="bi bi-pie-chart title-icon"></i>
+
+                        <i
+                            class="bi bi-pie-chart title-icon">
+                        </i>
+
 
                     </div>
 
 
                     <div class="allocation-chart">
 
-                        <canvas id="allocationChart"></canvas>
+
+                        <canvas
+                            id="allocationChart">
+                        </canvas>
+
 
                         <div class="allocation-center">
 
-                            <strong>
-                                ₹49K
+
+                            <strong id="allocationCenter">
+                                ₹0
                             </strong>
+
 
                             <span>
                                 Invested
                             </span>
 
+
                         </div>
+
 
                     </div>
 
 
-                    <div class="allocation-legend">
-
-                        <div>
-
-                            <span>
-                                <i class="legend-dot stocks"></i>
-                                Stocks
-                            </span>
-
-                            <strong>
-                                58%
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                <i class="legend-dot funds"></i>
-                                Mutual Funds
-                            </span>
-
-                            <strong>
-                                27%
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                <i class="legend-dot cash"></i>
-                                Cash
-                            </span>
-
-                            <strong>
-                                15%
-                            </strong>
-
-                        </div>
+                    <div
+                        class="allocation-legend"
+                        id="allocationLegend">
 
                     </div>
+
 
                 </div>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- ==================== HOLDINGS ==================== -->
+        <!-- =================================================
+             HOLDINGS
+        ================================================= -->
 
-        <section class="portfolio-card holdings-card mt-4">
+        <section
+            class="portfolio-card holdings-card mt-4">
+
 
             <div class="card-title-row">
+
 
                 <div>
 
@@ -536,309 +768,121 @@
                     class="card-link">
 
                     Find Investments
+
                     <i class="bi bi-arrow-right"></i>
 
                 </a>
+
 
             </div>
 
 
             <div class="table-responsive">
 
+
                 <table class="holdings-table">
+
 
                     <thead>
 
                         <tr>
 
-                            <th>Asset</th>
-                            <th>Quantity</th>
-                            <th>Avg. Price</th>
-                            <th>Current Price</th>
-                            <th>Invested</th>
-                            <th>P&L</th>
-                            <th>Action</th>
+                            <th>
+                                Asset
+                            </th>
+
+                            <th>
+                                Quantity
+                            </th>
+
+                            <th>
+                                Avg. Price
+                            </th>
+
+                            <th>
+                                Current Price
+                            </th>
+
+                            <th>
+                                Invested
+                            </th>
+
+                            <th>
+                                P&amp;L
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
 
                         </tr>
 
                     </thead>
 
 
-                    <tbody>
-
-                        <tr>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=TCS"
-                                    class="holding-name">
-
-                                    <span class="holding-logo">
-                                        T
-                                    </span>
-
-                                    <span>
-
-                                        <strong>
-                                            TCS
-                                        </strong>
-
-                                        <small>
-                                            Tata Consultancy Services
-                                        </small>
-
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                            <td>
-                                5
-                            </td>
-
-                            <td>
-                                ₹3,250
-                            </td>
-
-                            <td>
-                                ₹3,421.50
-                            </td>
-
-                            <td>
-                                ₹16,250
-                            </td>
-
-                            <td class="positive">
-                                +₹857.50
-                            </td>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=TCS"
-                                    class="view-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=RELIANCE"
-                                    class="holding-name">
-
-                                    <span class="holding-logo">
-                                        R
-                                    </span>
-
-                                    <span>
-
-                                        <strong>
-                                            RELIANCE
-                                        </strong>
-
-                                        <small>
-                                            Reliance Industries
-                                        </small>
-
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                            <td>
-                                10
-                            </td>
-
-                            <td>
-                                ₹1,350
-                            </td>
-
-                            <td>
-                                ₹1,425.20
-                            </td>
-
-                            <td>
-                                ₹13,500
-                            </td>
-
-                            <td class="positive">
-                                +₹752
-                            </td>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=RELIANCE"
-                                    class="view-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=NIFTYBEES"
-                                    class="holding-name">
-
-                                    <span class="holding-logo">
-                                        N
-                                    </span>
-
-                                    <span>
-
-                                        <strong>
-                                            NIFTYBEES
-                                        </strong>
-
-                                        <small>
-                                            Nippon India ETF Nifty BeES
-                                        </small>
-
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                            <td>
-                                50
-                            </td>
-
-                            <td>
-                                ₹245
-                            </td>
-
-                            <td>
-                                ₹265.40
-                            </td>
-
-                            <td>
-                                ₹12,250
-                            </td>
-
-                            <td class="positive">
-                                +₹1,020
-                            </td>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=NIFTYBEES"
-                                    class="view-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=PPFAS"
-                                    class="holding-name">
-
-                                    <span class="holding-logo">
-                                        P
-                                    </span>
-
-                                    <span>
-
-                                        <strong>
-                                            PPFAS
-                                        </strong>
-
-                                        <small>
-                                            Parag Parikh Flexi Cap Fund
-                                        </small>
-
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                            <td>
-                                120
-                            </td>
-
-                            <td>
-                                ₹58
-                            </td>
-
-                            <td>
-                                ₹82.36
-                            </td>
-
-                            <td>
-                                ₹6,960
-                            </td>
-
-                            <td class="positive">
-                                +₹2,923
-                            </td>
-
-                            <td>
-
-                                <a
-                                    href="../stock-details/stock-details.html?symbol=PPFAS"
-                                    class="view-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-                        </tr>
+                    <tbody
+                        id="holdingsBody">
 
                     </tbody>
 
+
                 </table>
 
+
             </div>
+
+
+            <div
+                id="emptyPortfolio"
+                class="text-center p-4">
+
+                <i class="bi bi-wallet2 fs-2"></i>
+
+                <h4 class="mt-2">
+                    No virtual holdings yet
+                </h4>
+
+                <p>
+                    Search for an instrument in Market and
+                    place your first virtual trade.
+                </p>
+
+                <a
+                    href="../market/market.html"
+                    class="btn btn-success">
+
+                    Explore Market
+
+                </a>
+
+            </div>
+
 
         </section>
 
 
-        <!-- ==================== AI PORTFOLIO REVIEW ==================== -->
+        <!-- =================================================
+             AI PORTFOLIO REVIEW
+        ================================================= -->
 
         <section class="row g-4 mt-1">
 
+
             <div class="col-xl-7">
+
 
                 <div class="portfolio-card ai-review-card">
 
+
                     <div class="ai-header">
 
+
                         <div class="ai-icon">
+
                             <i class="bi bi-stars"></i>
+
                         </div>
+
 
                         <div>
 
@@ -852,61 +896,40 @@
 
                         </div>
 
-                        <span class="ai-score">
-                            76/100
+
+                        <span
+                            class="ai-score"
+                            id="aiScore">
+
+                            --
+
                         </span>
+
 
                     </div>
 
 
                     <div class="ai-review-message">
 
-                        <h3>
-                            Your portfolio looks moderately diversified.
+
+                        <h3 id="aiReviewTitle">
+                            Your portfolio is ready for analysis.
                         </h3>
 
-                        <p>
-                            Your current holdings have exposure to technology,
-                            financial services and broad-market investments.
-                            However, your IT exposure is relatively high.
+
+                        <p id="aiReviewText">
+                            Create virtual holdings to receive
+                            portfolio observations based on your
+                            current allocation and P&amp;L.
                         </p>
+
 
                     </div>
 
 
-                    <div class="ai-observations">
-
-                        <div class="observation positive-observation">
-
-                            <i class="bi bi-check-circle-fill"></i>
-
-                            <span>
-                                Good exposure to diversified assets
-                            </span>
-
-                        </div>
-
-
-                        <div class="observation positive-observation">
-
-                            <i class="bi bi-check-circle-fill"></i>
-
-                            <span>
-                                Healthy virtual cash reserve
-                            </span>
-
-                        </div>
-
-
-                        <div class="observation warning-observation">
-
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-
-                            <span>
-                                Technology-sector concentration should be monitored
-                            </span>
-
-                        </div>
+                    <div
+                        class="ai-observations"
+                        id="aiObservations">
 
                     </div>
 
@@ -921,18 +944,24 @@
 
                     </a>
 
+
                 </div>
+
 
             </div>
 
 
             <!-- RISK -->
 
+
             <div class="col-xl-5">
+
 
                 <div class="portfolio-card risk-card">
 
+
                     <div class="card-title-row">
+
 
                         <div>
 
@@ -946,12 +975,17 @@
 
                         </div>
 
-                        <i class="bi bi-shield-check title-icon"></i>
+
+                        <i
+                            class="bi bi-shield-check title-icon">
+                        </i>
+
 
                     </div>
 
 
                     <div class="risk-level">
+
 
                         <div class="risk-meter">
 
@@ -961,76 +995,101 @@
 
                         </div>
 
-                        <strong>
-                            Moderate Risk
+
+                        <strong id="riskLevel">
+                            Not available
                         </strong>
+
 
                     </div>
 
 
                     <div class="risk-item">
+
 
                         <span>
                             Sector Concentration
                         </span>
 
-                        <strong>
-                            Moderate
+
+                        <strong id="sectorRisk">
+                            Not available
                         </strong>
+
 
                     </div>
 
 
                     <div class="risk-item">
+
 
                         <span>
                             Asset Diversification
                         </span>
 
-                        <strong class="positive">
-                            Good
+
+                        <strong
+                            id="diversificationRisk">
+
+                            Not available
+
                         </strong>
+
 
                     </div>
 
 
                     <div class="risk-item">
+
 
                         <span>
                             Cash Position
                         </span>
 
-                        <strong class="positive">
-                            Healthy
+
+                        <strong id="cashRisk">
+                            Not available
                         </strong>
+
 
                     </div>
 
 
                     <div class="risk-item">
 
+
                         <span>
                             Overall Volatility
                         </span>
 
-                        <strong>
-                            Moderate
+
+                        <strong id="volatilityRisk">
+                            Not available
                         </strong>
+
 
                     </div>
 
+
                 </div>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- ==================== TRANSACTIONS ==================== -->
+        <!-- =================================================
+             TRANSACTIONS
+        ================================================= -->
 
-        <section class="portfolio-card transactions-card mt-4">
+        <section
+            class="portfolio-card transactions-card mt-4">
+
 
             <div class="card-title-row">
+
 
                 <div>
 
@@ -1050,121 +1109,89 @@
                     class="card-link">
 
                     View Insights
+
                     <i class="bi bi-arrow-right"></i>
 
                 </a>
 
-            </div>
-
-
-            <div class="transaction-list">
-
-                <div class="transaction-item">
-
-                    <span class="transaction-icon buy">
-
-                        <i class="bi bi-arrow-down-left"></i>
-
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Bought TCS
-                        </strong>
-
-                        <small>
-                            5 shares • Today
-                        </small>
-
-                    </div>
-
-                    <strong class="transaction-value">
-                        -₹17,107.50
-                    </strong>
-
-                </div>
-
-
-                <div class="transaction-item">
-
-                    <span class="transaction-icon buy">
-
-                        <i class="bi bi-arrow-down-left"></i>
-
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Bought NIFTYBEES
-                        </strong>
-
-                        <small>
-                            50 units • Yesterday
-                        </small>
-
-                    </div>
-
-                    <strong class="transaction-value">
-                        -₹13,270
-                    </strong>
-
-                </div>
-
-
-                <div class="transaction-item">
-
-                    <span class="transaction-icon sell">
-
-                        <i class="bi bi-arrow-up-right"></i>
-
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Sold INFY
-                        </strong>
-
-                        <small>
-                            5 shares • 3 days ago
-                        </small>
-
-                    </div>
-
-                    <strong class="positive transaction-value">
-                        +₹7,450
-                    </strong>
-
-                </div>
 
             </div>
+
+
+            <div
+                class="transaction-list"
+                id="transactionList">
+
+                <div class="transaction-item">
+
+
+                    <span class="transaction-icon">
+
+                        <i class="bi bi-clock-history"></i>
+
+                    </span>
+
+
+                    <div>
+
+                        <strong>
+                            No transactions recorded
+                        </strong>
+
+                        <small>
+                            Your virtual trades will appear here.
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
 
         </section>
 
 
-        <!-- ==================== DISCLAIMER ==================== -->
+        <!-- =================================================
+             DISCLAIMER
+        ================================================= -->
 
         <div class="portfolio-disclaimer">
 
+
             <i class="bi bi-shield-check"></i>
 
+
             <span>
-                Investopia TradeAI uses simulated investment data for
-                educational purposes. Portfolio values, AI analysis and
-                risk indicators are not guaranteed financial advice.
-                <strong>Invest at your own risk.</strong>
+
+                Investopia TradeAI uses simulated investment
+                data for educational purposes. Live market
+                prices are supplied through the connected
+                Angel One market-data service. Portfolio values,
+                AI analysis and risk indicators are not
+                guaranteed financial advice.
+
+                <strong>
+                    Invest at your own risk.
+                </strong>
+
             </span>
+
 
         </div>
 
+
     </main>
+
 
 </div>
 
 
-<!-- ==================== FLOATING AI ==================== -->
+<!-- =====================================================
+     FLOATING AI
+===================================================== -->
 
 <a
     href="../ai-advisor/ai-advisor.html"
@@ -1182,27 +1209,39 @@
 
 <!-- Bootstrap -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
 
 <!-- Chart.js -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js">
+</script>
+
 
 <!-- Supabase -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
 
 <!-- Supabase Configuration -->
 
 <script src="../auth/supabase.js"></script>
 
+
 <!-- Session Handling -->
 
 <script src="../auth/session.js"></script>
 
+
 <!-- Portfolio JS -->
 
 <script src="portfolio.js"></script>
+
 
 </body>
 </html>

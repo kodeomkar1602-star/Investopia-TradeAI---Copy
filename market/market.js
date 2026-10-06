@@ -1,5 +1,6 @@
 /* =========================================================
    INVESTOPIA TRADEAI - MARKET JS
+   Angel One Live Market Integration
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -18,9 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = session.user;
 
-    console.log("Investopia logged-in user:", user);
-    console.log("User ID:", user.id);
-    console.log("User Email:", user.email);
+    console.log(
+        "Investopia logged-in user:",
+        user
+    );
 
 
     /* =====================================================
@@ -29,6 +31,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const API_BASE_URL =
         "https://investopia-tradeai-copy.onrender.com";
+
+
+    /* =====================================================
+       USER NAME
+    ===================================================== */
+
+    const metadata =
+        user.user_metadata || {};
+
+    const userName =
+        metadata.full_name ||
+        metadata.name ||
+        metadata.username ||
+        (
+            user.email
+                ? user.email.split("@")[0]
+                : "User"
+        );
 
 
     /* =====================================================
@@ -65,11 +85,74 @@ document.addEventListener("DOMContentLoaded", async () => {
     const searchResults =
         document.getElementById("searchResults");
 
+    const assetGrid =
+        document.getElementById("assetGrid");
+
+    const gainersBody =
+        document.getElementById("gainersBody");
+
+    const losersBody =
+        document.getElementById("losersBody");
+
     const filterButtons =
         document.querySelectorAll(".filter-btn");
 
-    const assetItems =
-        document.querySelectorAll(".asset-item");
+    const niftyPrice =
+        document.getElementById("niftyPrice");
+
+    const niftyChange =
+        document.getElementById("niftyChange");
+
+    const sensexPrice =
+        document.getElementById("sensexPrice");
+
+    const sensexChange =
+        document.getElementById("sensexChange");
+
+    const marketStatus =
+        document.getElementById("marketStatus");
+
+    const marketStatusDot =
+        document.getElementById("marketStatusDot");
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const profileAvatar =
+        document.getElementById("profileAvatar");
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    if (profileName) {
+
+        profileName.textContent =
+            userName;
+
+    }
+
+
+    if (profileAvatar) {
+
+        const initials =
+            userName
+                .trim()
+                .split(/\s+/)
+                .map(
+                    part =>
+                        part.charAt(0)
+                )
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+
+        profileAvatar.textContent =
+            initials || "U";
+
+    }
 
 
     /* =====================================================
@@ -78,18 +161,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function openSidebar() {
 
-        sidebar?.classList.add("sidebar-open");
+        sidebar?.classList.add(
+            "sidebar-open"
+        );
 
-        sidebarOverlay?.classList.add("active");
+        sidebarOverlay?.classList.add(
+            "active"
+        );
 
     }
 
 
     function closeSidebar() {
 
-        sidebar?.classList.remove("sidebar-open");
+        sidebar?.classList.remove(
+            "sidebar-open"
+        );
 
-        sidebarOverlay?.classList.remove("active");
+        sidebarOverlay?.classList.remove(
+            "active"
+        );
 
     }
 
@@ -128,28 +219,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    /* Close sidebar after navigation */
+    document
+        .querySelectorAll(".sidebar-link")
+        .forEach(link => {
 
-    document.querySelectorAll(
-        ".sidebar-link"
-    ).forEach(link => {
+            link.addEventListener(
+                "click",
+                () => {
 
-        link.addEventListener(
-            "click",
-            () => {
+                    if (
+                        window.innerWidth <= 991
+                    ) {
 
-                if (
-                    window.innerWidth <= 991
-                ) {
+                        closeSidebar();
 
-                    closeSidebar();
+                    }
 
                 }
+            );
 
-            }
-        );
-
-    });
+        });
 
 
     /* =====================================================
@@ -158,7 +247,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function updateThemeIcon() {
 
-        if (!themeIcon) return;
+        if (!themeIcon) {
+            return;
+        }
 
 
         const dark =
@@ -177,29 +268,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function applyTheme(theme) {
 
-        if (theme === "dark") {
+        document.body.classList.toggle(
+            "dark-theme",
+            theme === "dark"
+        );
 
-            document.body.classList.add(
-                "dark-theme"
-            );
 
-            localStorage.setItem(
-                "investopia-theme",
-                "dark"
-            );
-
-        } else {
-
-            document.body.classList.remove(
-                "dark-theme"
-            );
-
-            localStorage.setItem(
-                "investopia-theme",
-                "light"
-            );
-
-        }
+        localStorage.setItem(
+            "investopia-theme",
+            theme
+        );
 
 
         updateThemeIcon();
@@ -207,15 +285,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* Load saved theme */
-
-    const savedTheme =
+    if (
         localStorage.getItem(
             "investopia-theme"
-        );
-
-
-    if (savedTheme === "dark") {
+        ) === "dark"
+    ) {
 
         document.body.classList.add(
             "dark-theme"
@@ -226,8 +300,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     updateThemeIcon();
 
-
-    /* Toggle theme */
 
     themeToggle?.addEventListener(
         "click",
@@ -250,77 +322,123 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
-       EXISTING MARKET ASSET DATA
-       
-       These are still used for the existing
-       filter/card section of the page.
-
-       Search itself now uses Angel One.
+       HELPERS
     ===================================================== */
 
-    const assets = [
+    function escapeHTML(value) {
 
-        {
-            symbol: "TCS",
-            name: "Tata Consultancy Services",
-            type: "stock"
-        },
+        const div =
+            document.createElement("div");
 
-        {
-            symbol: "RELIANCE",
-            name: "Reliance Industries",
-            type: "stock"
-        },
+        div.textContent =
+            String(value ?? "");
 
-        {
-            symbol: "INFY",
-            name: "Infosys",
-            type: "stock"
-        },
+        return div.innerHTML;
 
-        {
-            symbol: "HDFCBANK",
-            name: "HDFC Bank",
-            type: "stock"
-        },
+    }
 
-        {
-            symbol: "ITC",
-            name: "ITC Limited",
-            type: "stock"
-        },
 
-        {
-            symbol: "SBIN",
-            name: "State Bank of India",
-            type: "stock"
-        },
+    function formatPrice(value) {
 
-        {
-            symbol: "NIFTYBEES",
-            name: "Nippon India ETF Nifty BeES",
-            type: "etf"
-        },
+        const number =
+            Number(value);
 
-        {
-            symbol: "PPFAS",
-            name: "Parag Parikh Flexi Cap Fund",
-            type: "mutual-fund"
+
+        if (
+            !Number.isFinite(number)
+        ) {
+
+            return "--";
+
         }
 
-    ];
+
+        return number.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
+    }
 
 
-    /* =====================================================
-       SEARCH STATE
-    ===================================================== */
+    function formatPercent(value) {
 
-    let searchRequestId = 0;
+        const number =
+            Number(value);
 
 
-    /* =====================================================
-       SEARCH HELPERS
-    ===================================================== */
+        if (
+            !Number.isFinite(number)
+        ) {
+
+            return null;
+
+        }
+
+
+        const sign =
+            number > 0
+                ? "+"
+                : "";
+
+
+        return `${sign}${number.toFixed(2)}%`;
+
+    }
+
+
+    function getChangeClass(value) {
+
+        const number =
+            Number(value);
+
+
+        if (number > 0) {
+
+            return "positive";
+
+        }
+
+
+        if (number < 0) {
+
+            return "negative";
+
+        }
+
+
+        return "";
+
+    }
+
+
+    function getChangeIcon(value) {
+
+        const number =
+            Number(value);
+
+
+        if (number > 0) {
+
+            return "bi bi-arrow-up";
+
+        }
+
+
+        if (number < 0) {
+
+            return "bi bi-arrow-down";
+
+        }
+
+
+        return "bi bi-dash";
+
+    }
+
 
     function getTypeLabel(type) {
 
@@ -330,22 +448,70 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             etf: "ETF",
 
-            "mutual-fund": "Mutual Fund"
+            "mutual-fund":
+                "Mutual Fund",
+
+            index:
+                "Index",
+
+            instrument:
+                "Instrument"
 
         };
 
 
-        return labels[type] ||
-            "Investment";
+        return (
+            labels[type] ||
+            "Instrument"
+        );
+
+    }
+
+
+    function inferInstrumentType(
+        symbol,
+        name
+    ) {
+
+        const text =
+            `${symbol} ${name}`
+                .toUpperCase();
+
+
+        if (
+            text.includes("ETF") ||
+            text.includes("BEES") ||
+            text.includes("NIFTYBEES")
+        ) {
+
+            return "etf";
+
+        }
+
+
+        if (
+            text.includes("MF") ||
+            text.includes("MUTUAL") ||
+            text.includes("FUND")
+        ) {
+
+            return "mutual-fund";
+
+        }
+
+
+        return "stock";
 
     }
 
 
     /* =====================================================
-       ANGEL ONE STOCK SEARCH
+       ANGEL ONE SEARCH
     ===================================================== */
 
-    async function searchAngelOneStocks(query) {
+    async function searchAngelOneStocks(
+        query
+    ) {
 
         const cleanQuery =
             query.trim().toUpperCase();
@@ -366,10 +532,72 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `&exchange=NSE`;
 
 
-            console.log(
-                "Searching Angel One:",
-                cleanQuery
+            const response =
+                await fetch(url);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+
+            }
+
+
+            const result =
+                await response.json();
+
+
+            if (
+                !result ||
+                !result.success ||
+                !Array.isArray(
+                    result.data
+                )
+            ) {
+
+                return [];
+
+            }
+
+
+            return result.data;
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Angel One search error:",
+                error
             );
+
+
+            return [];
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ANGEL ONE LTP
+    ===================================================== */
+
+    async function getStockLTP(
+        exchange,
+        symbol,
+        token
+    ) {
+
+        try {
+
+            const url =
+                `${API_BASE_URL}/api/stocks/ltp` +
+                `?exchange=${encodeURIComponent(exchange)}` +
+                `&symbol=${encodeURIComponent(symbol)}` +
+                `&token=${encodeURIComponent(token)}`;
 
 
             const response =
@@ -389,16 +617,133 @@ document.addEventListener("DOMContentLoaded", async () => {
                 await response.json();
 
 
-            console.log(
-                "Angel One search response:",
-                result
+            if (
+                !result ||
+                !result.success
+            ) {
+
+                return null;
+
+            }
+
+
+            return (
+                result.data
+                    ?.data
+                    ?.fetched
+                    ?. [0] ||
+                null
             );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                `LTP error for ${symbol}:`,
+                error
+            );
+
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ANGEL ONE FULL MARKET DATA
+    ===================================================== */
+
+    async function getFullMarketData(
+        instruments
+    ) {
+
+        if (
+            !Array.isArray(
+                instruments
+            ) ||
+            !instruments.length
+        ) {
+
+            return [];
+
+        }
+
+
+        const exchangeTokens = {};
+
+
+        instruments.forEach(
+            instrument => {
+
+                const exchange =
+                    instrument.exchange ||
+                    "NSE";
+
+                const token =
+                    String(
+                        instrument.symboltoken
+                    );
+
+
+                if (
+                    !exchangeTokens[exchange]
+                ) {
+
+                    exchangeTokens[exchange] =
+                        [];
+
+                }
+
+
+                exchangeTokens[
+                    exchange
+                ].push(token);
+
+            }
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/api/stocks/market-data`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                mode: "FULL",
+                                exchangeTokens
+                            })
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+
+            }
+
+
+            const result =
+                await response.json();
 
 
             if (
                 !result ||
-                !result.success ||
-                !Array.isArray(result.data)
+                !result.success
             ) {
 
                 return [];
@@ -406,13 +751,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
-            return result.data;
+            return (
+                result.data
+                    ?.data
+                    ?.fetched ||
+                []
+            );
 
         }
+
         catch (error) {
 
             console.error(
-                "Angel One stock search error:",
+                "Angel One market data error:",
                 error
             );
 
@@ -425,12 +776,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
-       SHOW SEARCH LOADING
+       SEARCH RESULT UI
     ===================================================== */
 
     function showSearchLoading() {
 
-        if (!searchResults) return;
+        if (!searchResults) {
+            return;
+        }
 
 
         searchResults.innerHTML = `
@@ -438,7 +791,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div class="search-result">
 
                 <span>
-                    Searching stocks...
+                    Searching Angel One...
                 </span>
 
                 <i class="bi bi-arrow-repeat"></i>
@@ -450,13 +803,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       SHOW SEARCH ERROR
-    ===================================================== */
-
     function showSearchError() {
 
-        if (!searchResults) return;
+        if (!searchResults) {
+            return;
+        }
 
 
         searchResults.innerHTML = `
@@ -464,7 +815,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div class="search-result">
 
                 <span>
-                    Unable to search stocks. Please try again.
+                    Unable to search market data.
+                    Please try again.
                 </span>
 
                 <i class="bi bi-exclamation-circle"></i>
@@ -476,25 +828,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       SHOW SEARCH RESULTS
-    ===================================================== */
-
     function showSearchResults(
         query,
         results
     ) {
 
-        if (!searchResults) return;
+        if (!searchResults) {
+            return;
+        }
 
 
-        searchResults.innerHTML = "";
+        searchResults.innerHTML =
+            "";
 
 
         if (!query.trim()) {
-
             return;
-
         }
 
 
@@ -505,7 +854,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <div class="search-result">
 
                     <span>
-                        No matching NSE stock found.
+                        No matching NSE instrument found.
                     </span>
 
                     <i class="bi bi-search"></i>
@@ -520,87 +869,118 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         results
-            .slice(0, 6)
-            .forEach(stock => {
+            .slice(0, 10)
+            .forEach(
+                stock => {
 
-                const link =
-                    document.createElement("a");
-
-
-                link.className =
-                    "search-result";
-
-
-                const symbol =
-                    stock.tradingsymbol ||
-                    "";
+                    const link =
+                        document.createElement(
+                            "a"
+                        );
 
 
-                const token =
-                    stock.symboltoken ||
-                    "";
+                    link.className =
+                        "search-result";
 
 
-                const exchange =
-                    stock.exchange ||
-                    "NSE";
+                    const symbol =
+                        stock.tradingsymbol ||
+                        "";
 
 
-                link.href =
-                    `../stock-details/stock-details.html` +
-                    `?symbol=${encodeURIComponent(symbol)}` +
-                    `&token=${encodeURIComponent(token)}` +
-                    `&exchange=${encodeURIComponent(exchange)}`;
+                    const token =
+                        stock.symboltoken ||
+                        "";
 
 
-                link.innerHTML = `
-
-                    <div>
-
-                        <strong>
-                            ${symbol}
-                        </strong>
-
-                        <small style="
-                            display:block;
-                            color:var(--muted);
-                            margin-top:3px;
-                        ">
-                            ${exchange}
-                            • Token ${token}
-                        </small>
-
-                    </div>
-
-                    <span style="
-                        color:var(--primary);
-                        font-size:11px;
-                        font-weight:700;
-                    ">
-
-                        Stock
-
-                        <i class="bi bi-arrow-right ms-1"></i>
-
-                    </span>
-
-                `;
+                    const exchange =
+                        stock.exchange ||
+                        "NSE";
 
 
-                searchResults.appendChild(
-                    link
-                );
+                    const type =
+                        inferInstrumentType(
+                            symbol,
+                            stock.name ||
+                            stock.description ||
+                            ""
+                        );
 
-            });
+
+                    link.href =
+                        `../stock-details/stock-details.html` +
+                        `?symbol=${encodeURIComponent(symbol)}` +
+                        `&token=${encodeURIComponent(token)}` +
+                        `&exchange=${encodeURIComponent(exchange)}`;
+
+
+                    link.innerHTML = `
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(symbol)}
+                            </strong>
+
+                            <small
+                                style="
+                                    display:block;
+                                    color:var(--muted);
+                                    margin-top:3px;
+                                ">
+
+                                ${escapeHTML(exchange)}
+                                • Token
+                                ${escapeHTML(token)}
+
+                            </small>
+
+                        </div>
+
+                        <span
+                            style="
+                                color:var(--primary);
+                                font-size:11px;
+                                font-weight:700;
+                            ">
+
+                            ${escapeHTML(
+                                getTypeLabel(type)
+                            )}
+
+                            <i
+                                class="bi bi-arrow-right ms-1">
+                            </i>
+
+                        </span>
+
+                    `;
+
+
+                    searchResults.appendChild(
+                        link
+                    );
+
+                }
+            );
 
     }
+
+
+    /* =====================================================
+       SEARCH STATE
+    ===================================================== */
+
+    let searchRequestId = 0;
 
 
     /* =====================================================
        PERFORM SEARCH
     ===================================================== */
 
-    async function performSearch(input) {
+    async function performSearch(
+        input
+    ) {
 
         const query =
             input?.value.trim();
@@ -628,11 +1008,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-        /*
-            Ignore an older request if the user
-            searched again before it finished.
-        */
-
         if (
             currentRequest !==
             searchRequestId
@@ -652,38 +1027,34 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        /*
-            Prefer the normal NSE equity symbol.
-
-            Example:
-
-            RELIANCE
-            ↓
-            RELIANCE-EQ
-        */
-
-        const exactEquity =
-            results.find(stock => {
-
-                const symbol =
-                    (
-                        stock.tradingsymbol ||
-                        ""
-                    ).toUpperCase();
-
-
-                return (
-                    symbol ===
-                    `${query.toUpperCase()}-EQ`
+        const normalizedQuery =
+            query
+                .toUpperCase()
+                .replace(
+                    /-EQ$/,
+                    ""
                 );
 
-            });
+
+        const exactEquity =
+            results.find(
+                stock => {
+
+                    const symbol =
+                        (
+                            stock.tradingsymbol ||
+                            ""
+                        ).toUpperCase();
 
 
-        /*
-            If an exact -EQ match exists,
-            open Stock Details directly.
-        */
+                    return (
+                        symbol ===
+                        `${normalizedQuery}-EQ`
+                    );
+
+                }
+            );
+
 
         if (exactEquity) {
 
@@ -704,16 +1075,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `&token=${encodeURIComponent(token)}` +
                 `&exchange=${encodeURIComponent(exchange)}`;
 
-
             return;
 
         }
 
-
-        /*
-            If there is only one result,
-            open it directly.
-        */
 
         if (results.length === 1) {
 
@@ -721,22 +1086,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 results[0];
 
 
-            const symbol =
-                stock.tradingsymbol;
-
-            const token =
-                stock.symboltoken;
-
-            const exchange =
-                stock.exchange ||
-                "NSE";
-
-
-            window.location.href =
-                `../stock-details/stock-details.html` +
-                `?symbol=${encodeURIComponent(symbol)}` +
-                `&token=${encodeURIComponent(token)}` +
-                `&exchange=${encodeURIComponent(exchange)}`;
+            openStockDetails(
+                stock
+            );
 
 
             return;
@@ -744,15 +1096,50 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        /*
-            Otherwise show all matching
-            Angel One results.
-        */
-
         showSearchResults(
             query,
             results
         );
+
+    }
+
+
+    function openStockDetails(
+        stock
+    ) {
+
+        if (!stock) {
+            return;
+        }
+
+
+        const symbol =
+            stock.tradingsymbol ||
+            "";
+
+
+        const token =
+            stock.symboltoken ||
+            "";
+
+
+        const exchange =
+            stock.exchange ||
+            "NSE";
+
+
+        if (!symbol || !token) {
+
+            return;
+
+        }
+
+
+        window.location.href =
+            `../stock-details/stock-details.html` +
+            `?symbol=${encodeURIComponent(symbol)}` +
+            `&token=${encodeURIComponent(token)}` +
+            `&exchange=${encodeURIComponent(exchange)}`;
 
     }
 
@@ -815,7 +1202,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         "keydown",
         event => {
 
-            if (event.key === "Enter") {
+            if (
+                event.key === "Enter"
+            ) {
 
                 event.preventDefault();
 
@@ -849,7 +1238,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         "keydown",
         event => {
 
-            if (event.key !== "Enter") return;
+            if (
+                event.key !== "Enter"
+            ) {
+
+                return;
+
+            }
 
 
             event.preventDefault();
@@ -869,17 +1264,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             window.location.href =
-                `market.html?search=${encodeURIComponent(query)}`;
+                `market.html?search=${encodeURIComponent(
+                    query
+                )}`;
 
         }
     );
 
 
     /* =====================================================
-       LOAD SEARCH FROM URL
-
-       Example:
-       market.html?search=TCS
+       URL SEARCH
     ===================================================== */
 
     const params =
@@ -910,12 +1304,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        /*
-            Automatically search Angel One
-            when the page is opened with
-            ?search=...
-        */
-
         const currentRequest =
             ++searchRequestId;
 
@@ -945,8 +1333,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
-       SEARCH SHORTCUT
-       Ctrl + K / Cmd + K
+       CTRL + K
     ===================================================== */
 
     document.addEventListener(
@@ -963,19 +1350,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 event.preventDefault();
 
 
-                /*
-                    Prefer large search on market page.
-                */
-
-                if (assetSearch) {
-
-                    assetSearch.focus();
-
-                } else {
-
-                    marketSearch?.focus();
-
-                }
+                assetSearch?.focus();
 
             }
 
@@ -984,8 +1359,391 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
+       LIVE MARKET INSTRUMENTS
+    ===================================================== */
+
+    /*
+       These are only seed searches.
+
+       The user can search ANY Angel One
+       instrument using the search box.
+
+       We are NOT using hardcoded prices.
+    */
+
+    const seedSymbols = [
+        "TCS",
+        "RELIANCE",
+        "INFY",
+        "HDFCBANK",
+        "ITC",
+        "SBIN",
+        "NIFTYBEES"
+    ];
+
+
+    let liveInstruments = [];
+
+
+    async function loadSeedInstruments() {
+
+        const results = [];
+
+
+        for (
+            const query of seedSymbols
+        ) {
+
+            try {
+
+                const matches =
+                    await searchAngelOneStocks(
+                        query
+                    );
+
+
+                const cleanQuery =
+                    query.toUpperCase();
+
+
+                const exact =
+                    matches.find(
+                        stock =>
+                            (
+                                stock.tradingsymbol ||
+                                ""
+                            ).toUpperCase() ===
+                            `${cleanQuery}-EQ`
+                    );
+
+
+                const selected =
+                    exact ||
+                    matches[0];
+
+
+                if (selected) {
+
+                    results.push(
+                        selected
+                    );
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    `Unable to load ${query}:`,
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+           Remove duplicate tokens.
+        */
+
+        const unique =
+            new Map();
+
+
+        results.forEach(
+            instrument => {
+
+                const key =
+                    `${instrument.exchange || "NSE"}:${instrument.symboltoken}`;
+
+                unique.set(
+                    key,
+                    instrument
+                );
+
+            }
+        );
+
+
+        liveInstruments =
+            [...unique.values()];
+
+    }
+
+
+    /* =====================================================
+       RENDER LIVE ASSET CARDS
+    ===================================================== */
+
+    function renderAssetCards(
+        marketData
+    ) {
+
+        if (!assetGrid) {
+            return;
+        }
+
+
+        if (
+            !liveInstruments.length
+        ) {
+
+            assetGrid.innerHTML = `
+
+                <div class="col-12">
+
+                    <div class="market-asset-card">
+
+                        <h3>
+                            No market instruments available
+                        </h3>
+
+                        <p>
+                            Use the search box to search
+                            Angel One market instruments.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        const marketMap =
+            new Map();
+
+
+        marketData.forEach(
+            data => {
+
+                const key =
+                    `${data.exchange}:${data.symbolToken}`;
+
+                marketMap.set(
+                    key,
+                    data
+                );
+
+            }
+        );
+
+
+        assetGrid.innerHTML =
+            "";
+
+
+        liveInstruments
+            .forEach(
+                instrument => {
+
+                    const exchange =
+                        instrument.exchange ||
+                        "NSE";
+
+
+                    const token =
+                        String(
+                            instrument.symboltoken
+                        );
+
+
+                    const symbol =
+                        instrument.tradingsymbol ||
+                        "";
+
+
+                    const name =
+                        instrument.name ||
+                        instrument.description ||
+                        symbol;
+
+
+                    const type =
+                        inferInstrumentType(
+                            symbol,
+                            name
+                        );
+
+
+                    const data =
+                        marketMap.get(
+                            `${exchange}:${token}`
+                        );
+
+
+                    const price =
+                        data?.ltp;
+
+
+                    const change =
+                        data?.percentChange;
+
+
+                    const changeText =
+                        formatPercent(
+                            change
+                        );
+
+
+                    const changeClass =
+                        getChangeClass(
+                            change
+                        );
+
+
+                    const logo =
+                        symbol
+                            .replace(
+                                /[^A-Z0-9]/gi,
+                                ""
+                            )
+                            .charAt(0)
+                            .toUpperCase() ||
+                        "I";
+
+
+                    const column =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    column.className =
+                        "col-12 col-md-6 col-xl-3 asset-item";
+
+
+                    column.dataset.type =
+                        type;
+
+
+                    column.dataset.name =
+                        `${symbol} ${name}`
+                            .toLowerCase();
+
+
+                    column.innerHTML = `
+
+                        <a
+                            href="../stock-details/stock-details.html?symbol=${encodeURIComponent(symbol)}&token=${encodeURIComponent(token)}&exchange=${encodeURIComponent(exchange)}"
+                            class="market-asset-card">
+
+                            <div class="asset-card-top">
+
+                                <span class="asset-logo">
+                                    ${escapeHTML(logo)}
+                                </span>
+
+                                <span class="asset-type">
+                                    ${escapeHTML(
+                                        getTypeLabel(type)
+                                    )}
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                ${escapeHTML(symbol)}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(name)}
+                            </p>
+
+                            <div class="asset-price">
+                                ${
+                                    Number.isFinite(
+                                        Number(price)
+                                    )
+                                        ? `₹${formatPrice(price)}`
+                                        : "--"
+                                }
+                            </div>
+
+                            <span
+                                class="${changeClass}">
+
+                                ${
+                                    changeText
+                                        ? `
+                                            <i class="${getChangeIcon(change)}"></i>
+                                            ${changeText}
+                                          `
+                                        : "--"
+                                }
+
+                            </span>
+
+                            <div class="asset-card-footer">
+
+                                View Analysis
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </div>
+
+                        </a>
+
+                    `;
+
+
+                    assetGrid.appendChild(
+                        column
+                    );
+
+                }
+            );
+
+
+        applyActiveFilter();
+
+    }
+
+
+    /* =====================================================
        FILTERS
     ===================================================== */
+
+    let activeFilter =
+        "all";
+
+
+    function applyActiveFilter() {
+
+        document
+            .querySelectorAll(
+                ".asset-item"
+            )
+            .forEach(
+                item => {
+
+                    const type =
+                        item.dataset.type;
+
+
+                    const show =
+                        activeFilter ===
+                            "all" ||
+                        activeFilter ===
+                            type;
+
+
+                    item.classList.toggle(
+                        "d-none",
+                        !show
+                    );
+
+                }
+            );
+
+    }
+
 
     filterButtons.forEach(
         button => {
@@ -994,11 +1752,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "click",
                 () => {
 
-                    const selected =
-                        button.dataset.filter;
+                    activeFilter =
+                        button.dataset.filter ||
+                        "all";
 
-
-                    /* Active button */
 
                     filterButtons.forEach(
                         btn => {
@@ -1016,38 +1773,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     );
 
 
-                    /* Filter assets */
-
-                    assetItems.forEach(
-                        item => {
-
-                            const type =
-                                item.dataset.type;
-
-
-                            const show =
-                                selected ===
-                                    "all" ||
-                                selected ===
-                                    type;
-
-
-                            if (show) {
-
-                                item.classList.remove(
-                                    "d-none"
-                                );
-
-                            } else {
-
-                                item.classList.add(
-                                    "d-none"
-                                );
-
-                            }
-
-                        }
-                    );
+                    applyActiveFilter();
 
                 }
             );
@@ -1057,8 +1783,622 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
+       TOP GAINERS / LOSERS
+    ===================================================== */
+
+    function renderMovers(
+        marketData
+    ) {
+
+        const validData =
+            marketData
+                .filter(
+                    item =>
+                        Number.isFinite(
+                            Number(
+                                item.percentChange
+                            )
+                        )
+                )
+                .sort(
+                    (
+                        a,
+                        b
+                    ) =>
+                        Number(
+                            b.percentChange
+                        ) -
+                        Number(
+                            a.percentChange
+                        )
+                );
+
+
+        const gainers =
+            validData
+                .filter(
+                    item =>
+                        Number(
+                            item.percentChange
+                        ) > 0
+                )
+                .slice(0, 5);
+
+
+        const losers =
+            validData
+                .filter(
+                    item =>
+                        Number(
+                            item.percentChange
+                        ) < 0
+                )
+                .sort(
+                    (
+                        a,
+                        b
+                    ) =>
+                        Number(
+                            a.percentChange
+                        ) -
+                        Number(
+                            b.percentChange
+                        )
+                )
+                .slice(0, 5);
+
+
+        renderMoverTable(
+            gainersBody,
+            gainers,
+            true
+        );
+
+
+        renderMoverTable(
+            losersBody,
+            losers,
+            false
+        );
+
+    }
+
+
+    function renderMoverTable(
+        container,
+        data,
+        positive
+    ) {
+
+        if (!container) {
+            return;
+        }
+
+
+        container.innerHTML =
+            "";
+
+
+        if (!data.length) {
+
+            container.innerHTML = `
+
+                <tr>
+
+                    <td colspan="3">
+                        No live movement data available.
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        data.forEach(
+            item => {
+
+                const symbol =
+                    item.tradingSymbol ||
+                    "";
+
+
+                const token =
+                    item.symbolToken ||
+                    "";
+
+
+                const exchange =
+                    item.exchange ||
+                    "NSE";
+
+
+                const price =
+                    item.ltp;
+
+
+                const change =
+                    Number(
+                        item.percentChange
+                    );
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <a
+                            href="../stock-details/stock-details.html?symbol=${encodeURIComponent(symbol)}&token=${encodeURIComponent(token)}&exchange=${encodeURIComponent(exchange)}"
+                            class="table-asset">
+
+                            <strong>
+                                ${escapeHTML(symbol)}
+                            </strong>
+
+                            <small>
+                                ${escapeHTML(exchange)}
+                            </small>
+
+                        </a>
+
+                    </td>
+
+                    <td>
+                        ${
+                            Number.isFinite(
+                                Number(price)
+                            )
+                                ? `₹${formatPrice(price)}`
+                                : "--"
+                        }
+                    </td>
+
+                    <td
+                        class="${positive ? "positive" : "negative"}">
+
+                        ${
+                            formatPercent(
+                                change
+                            ) || "--"
+                        }
+
+                    </td>
+
+                `;
+
+
+                container.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       MARKET OVERVIEW
+    ===================================================== */
+
+    /*
+       Angel One search can locate the index instruments.
+       We search them dynamically instead of putting fake
+       index prices in HTML.
+    */
+
+    async function loadIndexData() {
+
+        try {
+
+            const [
+                niftyResults,
+                sensexResults
+            ] =
+                await Promise.all([
+                    searchAngelOneStocks(
+                        "NIFTY"
+                    ),
+                    searchAngelOneStocks(
+                        "SENSEX"
+                    )
+                ]);
+
+
+            const nifty =
+                niftyResults.find(
+                    item =>
+                        (
+                            item.tradingsymbol ||
+                            ""
+                        )
+                            .toUpperCase()
+                            .includes(
+                                "NIFTY"
+                            )
+                );
+
+
+            const sensex =
+                sensexResults.find(
+                    item =>
+                        (
+                            item.tradingsymbol ||
+                            ""
+                        )
+                            .toUpperCase()
+                            .includes(
+                                "SENSEX"
+                            )
+                );
+
+
+            const indexInstruments =
+                [
+                    nifty,
+                    sensex
+                ].filter(Boolean);
+
+
+            if (
+                !indexInstruments.length
+            ) {
+
+                return;
+
+            }
+
+
+            const indexData =
+                await getFullMarketData(
+                    indexInstruments
+                );
+
+
+            const findIndex =
+                (
+                    symbolText
+                ) =>
+                    indexData.find(
+                        item =>
+                            (
+                                item.tradingSymbol ||
+                                ""
+                            )
+                                .toUpperCase()
+                                .includes(
+                                    symbolText
+                                )
+                    );
+
+
+            const niftyData =
+                findIndex("NIFTY");
+
+
+            const sensexData =
+                findIndex("SENSEX");
+
+
+            if (niftyData) {
+
+                if (niftyPrice) {
+
+                    niftyPrice.textContent =
+                        formatPrice(
+                            niftyData.ltp
+                        );
+
+                }
+
+
+                updateChangeElement(
+                    niftyChange,
+                    niftyData.percentChange
+                );
+
+            }
+
+
+            if (sensexData) {
+
+                if (sensexPrice) {
+
+                    sensexPrice.textContent =
+                        formatPrice(
+                            sensexData.ltp
+                        );
+
+                }
+
+
+                updateChangeElement(
+                    sensexChange,
+                    sensexData.percentChange
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Index data error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    function updateChangeElement(
+        element,
+        value
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+
+        const formatted =
+            formatPercent(value);
+
+
+        element.className =
+            getChangeClass(value);
+
+
+        if (
+            formatted === null
+        ) {
+
+            element.textContent =
+                "--";
+
+            return;
+
+        }
+
+
+        element.innerHTML = `
+
+            <i class="${getChangeIcon(value)}"></i>
+
+            ${escapeHTML(formatted)}
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       MARKET STATUS
+    ===================================================== */
+
+    function updateMarketStatus() {
+
+        if (!marketStatus) {
+            return;
+        }
+
+
+        const now =
+            new Date();
+
+
+        /*
+           NSE/BSE regular equity trading is
+           generally during Indian market hours.
+        */
+
+        const indiaTime =
+            new Intl.DateTimeFormat(
+                "en-IN",
+                {
+                    timeZone:
+                        "Asia/Kolkata",
+
+                    hour:
+                        "2-digit",
+
+                    minute:
+                        "2-digit",
+
+                    hour12:
+                        false,
+
+                    weekday:
+                        "short"
+
+                }
+            ).formatToParts(
+                now
+            );
+
+
+        const parts = {};
+
+
+        indiaTime.forEach(
+            part => {
+
+                parts[
+                    part.type
+                ] =
+                    part.value;
+
+            }
+        );
+
+
+        const weekday =
+            parts.weekday;
+
+
+        const hour =
+            Number(parts.hour);
+
+
+        const minute =
+            Number(parts.minute);
+
+
+        const totalMinutes =
+            hour * 60 +
+            minute;
+
+
+        const weekdayClosed =
+            weekday === "Sun" ||
+            weekday === "Sat";
+
+
+        const open =
+            !weekdayClosed &&
+            totalMinutes >= 555 &&
+            totalMinutes <= 930;
+
+
+        marketStatus.textContent =
+            open
+                ? "Market Open"
+                : "Market Closed";
+
+
+        if (marketStatusDot) {
+
+            marketStatusDot.style.opacity =
+                open
+                    ? "1"
+                    : "0.45";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOAD LIVE MARKET
+    ===================================================== */
+
+    async function loadLiveMarket() {
+
+        try {
+
+            await loadSeedInstruments();
+
+
+            if (
+                !liveInstruments.length
+            ) {
+
+                return;
+
+            }
+
+
+            const marketData =
+                await getFullMarketData(
+                    liveInstruments
+                );
+
+
+            renderAssetCards(
+                marketData
+            );
+
+
+            renderMovers(
+                marketData
+            );
+
+
+            await loadIndexData();
+
+
+            updateMarketStatus();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Unable to load live market:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       INITIAL MARKET LOAD
+    ===================================================== */
+
+    await loadLiveMarket();
+
+
+    /* =====================================================
+       LIVE REFRESH
+    ===================================================== */
+
+    /*
+       Refresh displayed market data every 60 seconds.
+    */
+
+    setInterval(
+        async () => {
+
+            if (
+                !liveInstruments.length
+            ) {
+
+                return;
+
+            }
+
+
+            const marketData =
+                await getFullMarketData(
+                    liveInstruments
+                );
+
+
+            renderAssetCards(
+                marketData
+            );
+
+
+            renderMovers(
+                marketData
+            );
+
+
+            await loadIndexData();
+
+
+            updateMarketStatus();
+
+        },
+        60000
+    );
+
+
+    /* =====================================================
        CLOSE SEARCH RESULTS
-       When clicking elsewhere
     ===================================================== */
 
     document.addEventListener(
@@ -1105,6 +2445,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             }
 
+        }
+    );
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    updateMarketStatus();
+
+
+    console.log(
+        "Investopia Market initialized successfully.",
+        {
+            userName,
+            angelOne: true
         }
     );
 

@@ -1,5 +1,6 @@
 /* =========================================================
    INVESTOPIA TRADEAI - PROFILE
+   Supabase Logged-in User Profile
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -94,6 +95,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const memberSince =
         document.getElementById("memberSince");
 
+    const profileAvatar =
+        document.getElementById("profileAvatar");
+
+    const topbarProfileAvatar =
+        document.getElementById("topbarProfileAvatar");
+
 
     /* =====================================================
        PREFERENCE ELEMENTS
@@ -110,6 +117,100 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const savePreferences =
         document.getElementById("savePreferences");
+
+
+    /* =====================================================
+       USER-SPECIFIC STORAGE KEYS
+    ===================================================== */
+
+    const userId = user.id;
+
+    const PROFILE_STORAGE_KEY =
+        `investopia-profile-${userId}`;
+
+    const PREFERENCES_STORAGE_KEY =
+        `investopia-preferences-${userId}`;
+
+    const AI_CONTEXT_STORAGE_KEY =
+        `investopia-ai-profile-context-${userId}`;
+
+
+    /* =====================================================
+       HELPER - GET USER NAME
+    ===================================================== */
+
+    function getUserName() {
+
+        const metadata =
+            user.user_metadata || {};
+
+        return (
+            metadata.full_name ||
+            metadata.name ||
+            metadata.username ||
+            user.email?.split("@")[0] ||
+            "Investor"
+        );
+
+    }
+
+
+    /* =====================================================
+       HELPER - GET INITIALS
+    ===================================================== */
+
+    function getInitials(name) {
+
+        if (!name) {
+            return "U";
+        }
+
+        const parts =
+            name
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+        if (parts.length === 1) {
+
+            return parts[0]
+                .substring(0, 2)
+                .toUpperCase();
+
+        }
+
+        return (
+            parts[0][0] +
+            parts[parts.length - 1][0]
+        ).toUpperCase();
+
+    }
+
+
+    /* =====================================================
+       HELPER - SET AVATAR
+    ===================================================== */
+
+    function updateAvatar(name) {
+
+        const initials =
+            getInitials(name);
+
+        if (profileAvatar) {
+
+            profileAvatar.textContent =
+                initials;
+
+        }
+
+        if (topbarProfileAvatar) {
+
+            topbarProfileAvatar.textContent =
+                initials;
+
+        }
+
+    }
 
 
     /* =====================================================
@@ -331,6 +432,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         name:
             userMetadata.full_name ||
+            userMetadata.name ||
+            userMetadata.username ||
+            user.email?.split("@")[0] ||
             "Investor",
 
         email:
@@ -348,7 +452,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         year: "numeric"
                     }
                 )
-                : "August 2026"
+                : "—"
 
     };
 
@@ -360,7 +464,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const saved =
                 JSON.parse(
                     localStorage.getItem(
-                        "investopia-profile"
+                        PROFILE_STORAGE_KEY
                     ) || "{}"
                 );
 
@@ -371,9 +475,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 ...saved,
 
+                /*
+                 * Supabase remains the source of truth
+                 * for the authenticated email.
+                 */
+
                 email:
                     user.email ||
-                    saved.email ||
                     defaultProfile.email
 
             };
@@ -385,7 +493,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 error
             );
 
-            return defaultProfile;
+            return {
+                ...defaultProfile
+            };
 
         }
 
@@ -395,12 +505,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     function saveProfile(profile) {
 
         localStorage.setItem(
-            "investopia-profile",
+            PROFILE_STORAGE_KEY,
             JSON.stringify(profile)
         );
 
     }
 
+
+    /* =====================================================
+       UPDATE PROFILE UI
+    ===================================================== */
 
     function updateProfileUI() {
 
@@ -447,6 +561,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+
+        updateAvatar(
+            profile.name
+        );
+
     }
 
 
@@ -477,10 +596,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 profile.email;
 
             /*
-             * Supabase currently controls the authenticated
-             * email address. Therefore the email field is
-             * displayed but should not be used to change
-             * authentication email from this local profile form.
+             * Supabase controls the authenticated email.
+             * Therefore this field is read-only.
              */
 
             editEmail.readOnly = true;
@@ -548,6 +665,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
+    /* =====================================================
+       SAVE PROFILE
+    ===================================================== */
+
     profileForm?.addEventListener(
         "submit",
         async (event) => {
@@ -559,14 +680,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 editName?.value.trim();
 
 
-            const email =
-                editEmail?.value.trim();
-
-
-            if (!name || !email) {
+            if (!name) {
 
                 alert(
-                    "Please enter your name and email address."
+                    "Please enter your full name."
                 );
 
                 return;
@@ -577,6 +694,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             const current =
                 getProfile();
 
+
+            /*
+             * Save locally using this user's
+             * unique Supabase user ID.
+             */
 
             saveProfile({
 
@@ -592,11 +714,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             /*
-             * Also update the user's Supabase metadata
-             * so the name is associated with the account.
+             * Update Supabase user metadata.
              */
 
             const {
+                data,
                 error
             } =
                 await supabaseClient.auth.updateUser({
@@ -616,7 +738,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 );
 
                 alert(
-                    "Profile was saved locally, but the account name could not be updated."
+                    "Profile was saved locally, but the account name could not be updated in Supabase."
                 );
 
                 updateProfileUI();
@@ -628,8 +750,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
+            /*
+             * Update local user object immediately.
+             */
+
             user.user_metadata =
-                user.user_metadata || {};
+                data?.user?.user_metadata ||
+                user.user_metadata ||
+                {};
 
             user.user_metadata.full_name =
                 name;
@@ -670,15 +798,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
 
+            const saved =
+                JSON.parse(
+                    localStorage.getItem(
+                        PREFERENCES_STORAGE_KEY
+                    ) || "{}"
+                );
+
+
             return {
 
                 ...defaultPreferences,
 
-                ...JSON.parse(
-                    localStorage.getItem(
-                        "investopia-preferences"
-                    ) || "{}"
-                )
+                ...saved
 
             };
 
@@ -689,7 +821,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 error
             );
 
-            return defaultPreferences;
+            return {
+                ...defaultPreferences
+            };
 
         }
 
@@ -731,6 +865,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadPreferences();
 
 
+    /* =====================================================
+       SAVE PREFERENCES
+    ===================================================== */
+
     savePreferences?.addEventListener(
         "click",
         () => {
@@ -753,7 +891,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             localStorage.setItem(
-                "investopia-preferences",
+                PREFERENCES_STORAGE_KEY,
                 JSON.stringify(
                     preferences
                 )
@@ -769,7 +907,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
-       SETTINGS
+       ACCOUNT SETTINGS
     ===================================================== */
 
     document
@@ -807,7 +945,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             () => {
 
                 alert(
-                    "Your current profile preferences are stored locally in your browser. Account authentication is managed by Supabase."
+                    "Your profile preferences are stored separately for this account in this browser. Account authentication is managed by Supabase."
                 );
 
             }
@@ -862,8 +1000,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             () => {
 
                 localStorage.setItem(
-                    "investopia-ai-profile-context",
+                    AI_CONTEXT_STORAGE_KEY,
                     JSON.stringify({
+
+                        userId:
+                            user.id,
 
                         profile:
                             getProfile(),
@@ -907,6 +1048,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log(
         "Investopia Profile initialized successfully."
+    );
+
+    console.log(
+        "Profile storage key:",
+        PROFILE_STORAGE_KEY
+    );
+
+    console.log(
+        "Preferences storage key:",
+        PREFERENCES_STORAGE_KEY
     );
 
 });
